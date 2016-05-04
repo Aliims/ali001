@@ -13,7 +13,7 @@ class MainController {
       socket.unsyncUpdates('thing');
     });
 
-    // protect for testing
+    // trianglify skipped for testing
     if (document.body.getElementsByClassName('triangle-bg')[0]) {
       var element = document.body.getElementsByClassName('triangle-bg')[0];
       var pattern_height = element.clientHeight;

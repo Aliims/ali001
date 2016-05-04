@@ -14,6 +14,6 @@ describe('Main View', function() {
   it('should include jumbotron with correct data', function() {
     page.h1El.getText().should.eventually.equal('ALIIMS.IO');
     page.h1El.imgEl.getAttribute('src').should.eventually.match(/logo_aliims.png$/);
-    page.h1El.imgEl.getAttribute('alt').should.eventually.equal('Aliims Logo');
+    page.h1El.imgEl.getAttribute('alt').should.eventually.equal('logo_aliims');
   });
 });

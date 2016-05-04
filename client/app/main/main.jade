@@ -2,7 +2,7 @@ header#banner.hero-unit
   .container
     h1
       div.triangle-bg
-        img(src='assets/images/logo_aliims.png', alt='Aliims Logo')
+        img(src='assets/images/logo_aliims.png', alt='logo_aliims')
         |  ALIIMS.IO
         p.lead A Light Internet Ivd Manufacturer Service
     p.small Powered by WEB tech and MED love
@@ -10,7 +10,50 @@ header#banner.hero-unit
 .container
   .row
     .col-lg-12
-      h1.page-header Features:
+      h1.page-header Customers:
+      .row
+        ul.list-unstyled
+          li.col-md-6.col-lg-6.col-sm-6.font-size-large
+            ul.col-md-6.col-lg-6.col-sm-6.list-unstyled(style='text-align: right')
+              li
+                strong name: 
+                em sta
+              li
+                strong version: 
+                em 001
+              li 
+                strong status: 
+                em development
+              li
+                strong category: 
+                em identification
+              li.lead(style='text-align: right')
+                button.btn.btn-primary(type='submit', href='#') GO to app
+            a.img-responsive.col-md-6.col-lg-6.col-sm-6(href='#')
+              img(src='assets/images/logo_stago.png', alt='logo_stago')
+          li.col-md-6.col-lg-6.col-sm-6.font-size-large
+            ul.col-md-6.col-lg-6.col-sm-6.list-unstyled(style='text-align: right')
+              li
+                strong name: 
+                em tco
+              li
+                strong version: 
+                em 001
+              li
+                strong status: 
+                em specification
+              li
+                strong category: 
+                em identification
+              li.lead(style='text-align: right')
+                button.btn.btn-primary(type='submit', href='#') GO to app
+            a.img-responsive.col-md-6.col-lg-6.col-sm-6(href='#')
+              img(src='assets/images/logo_tcoag.png', alt='logo_tcoag')
+
+.container
+  .row
+    .col-lg-12
+      h1.page-header Enguiries:
       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in $ctrl.awesomeThings')
         li
           a(href='#', uib-tooltip='{{thing.info}}')
