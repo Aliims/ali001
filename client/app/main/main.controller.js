@@ -12,6 +12,22 @@ class MainController {
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
     });
+
+    // protect for testing
+    if (document.body.getElementsByClassName('triangle-bg')[0]) {
+      var element = document.body.getElementsByClassName('triangle-bg')[0];
+      var pattern_height = element.clientHeight;
+      var pattern_width = element.clientWidth;
+      var pattern_x_color = 'Blues';
+      var pattern_cell_size = Math.floor(Math.random() * 20) + 30;
+      var pattern = Trianglify({
+        height: pattern_height,
+        width: pattern_width,
+        x_colors: pattern_x_color,
+        cell_size: pattern_cell_size,
+      });
+      element.setAttribute('style', 'background-image: url('+pattern.canvas().toDataURL("image/png")+')');
+    }
   }
 
   $onInit() {
@@ -31,6 +47,7 @@ class MainController {
   deleteThing(thing) {
     this.$http.delete('/api/things/' + thing._id);
   }
+
 }
 
 angular.module('ali001App')
@@ -38,5 +55,4 @@ angular.module('ali001App')
     templateUrl: 'app/main/main.html',
     controller: MainController
   });
-
 })();
