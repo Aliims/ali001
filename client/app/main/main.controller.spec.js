@@ -21,10 +21,10 @@ describe('Component: mainComponent', function() {
     $state,
     socket) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('/api/things')
-        .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
-      // $httpBackend.expectGET('/api/messages')
+      // $httpBackend.expectGET('/api/things')
       //   .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
+      $httpBackend.expectGET('/api/messages')
+        .respond(['HTML5 Boilerplate', 'AngularJS', 'Karma', 'Express']);
 
       scope = $rootScope.$new();
       state = $state;
@@ -35,16 +35,16 @@ describe('Component: mainComponent', function() {
       });
   }));
 
-  it('should attach a list of things to the controller', function() {
-    mainComponent.$onInit();
-    $httpBackend.flush();
-    mainComponent.awesomeThings.length.should.equal(4);
-  });
-
-  // it('should attach a list of messages to the controller', function() {
+  // it('should attach a list of things to the controller', function() {
   //   mainComponent.$onInit();
   //   $httpBackend.flush();
-  //   mainComponent.messages.length.should.equal(4);
+  //   mainComponent.awesomeThings.length.should.equal(4);
   // });
+
+  it('should attach a list of messages to the controller', function() {
+    mainComponent.$onInit();
+    $httpBackend.flush();
+    mainComponent.messages.length.should.equal(4);
+  });
 
 });

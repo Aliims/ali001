@@ -5,7 +5,7 @@ header#banner.hero-unit
         img(src='assets/images/logo_aliims.png', alt='logo_aliims')
         |  ALIIMS.IO
         p.lead A Light Internet Ivd Manufacturer Service
-    p.small Powered by WEB tech and MED love
+    p.small Dedicated to robust product identification
 
 .container
   .row
@@ -56,27 +56,25 @@ header#banner.hero-unit
 //-       h1.page-header Things:
 //-       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in $ctrl.awesomeThings')
 //-         li
+//-           div(uib-tooltip='{{thing.info}}')
+//-             a(href='#', ng-click='$ctrl.showThing(thing.info, thing)')
+//-               | {{thing.name}}
+//-             button.close(type='button', ng-click='$ctrl.deleteThing(thing)') &times;
+//- .container
+//-   .row
+//-     .col-lg-12
+//-       h1.page-header Things:
+//-       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in $ctrl.awesomeThings')
+//-         li
 //-           a(href='#', uib-tooltip='{{thing.info}}')
 //-             | {{thing.name}}
 //-             button.close(type='button', ng-click='$ctrl.deleteThing(thing)') &times;
-
-.container
-  .row
-    .col-lg-12
-      h1.page-header Things:
-      ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in $ctrl.awesomeThings')
-        li
-          div(uib-tooltip='{{thing.info}}')
-            a(href='#', ng-click='$ctrl.showThing(thing.info, thing)')
-              | {{thing.name}}
-            button.close(type='button', ng-click='$ctrl.deleteThing(thing)') &times;
-
-  form.thing-form
-    label Syncs in realtime across clients
-    p.input-group
-      input.form-control(type='text', placeholder='Add a new thing here.', ng-model='$ctrl.newThing')
-      span.input-group-btn
-        button.btn.btn-primary(type='submit', ng-click='$ctrl.addThing()') Add New
+//-   form.thing-form
+//-     label Syncs in realtime across clients
+//-     p.input-group
+//-       input.form-control(type='text', placeholder='Add a new thing here.', ng-model='$ctrl.newThing')
+//-       span.input-group-btn
+//-         button.btn.btn-primary(type='submit', ng-click='$ctrl.addThing()') Add New
 
 .container
   .row
@@ -84,19 +82,16 @@ header#banner.hero-unit
       h1.page-header Messages:
       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='message in $ctrl.messages')
         li
-          a(href='#', uib-tooltip='{{message.email}}')
-            | {{message.object}}
+          div(uib-tooltip='{{message.email}}')
+            a(href='#', ng-click='$ctrl.showMessage(message.content, message)')
+              | {{message.info}}
             button.close(type='button', ng-click='$ctrl.deleteMessage(message)') &times;
-
   form.message-form
     label Leave a message here to know more or to be contacted
     div.form-group
-      //- label(for="messageInputEmail") Email address
       input.form-control(type="email", id="messageInputEmail", placeholder="Email", ng-model='$ctrl.newMessage.email')
     div.form-group
-      //- label(for="messageInputObject") Message object
-      input.form-control(type="text", id="messageInputObject", placeholder="Object", ng-model='$ctrl.newMessage.object')
+      input.form-control(type="text", id="messageInputInfo", placeholder="Info", ng-model='$ctrl.newMessage.info')
     div.form-group
-      //- label(for="messageInputContent") Message content
       textarea.form-control(rows="3", id="messageInputContent", placeholder="Content", ng-model='$ctrl.newMessage.content')
     button.btn.btn-primary(type='submit', ng-click='$ctrl.addMessage()') Submit

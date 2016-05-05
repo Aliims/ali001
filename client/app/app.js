@@ -11,7 +11,6 @@ angular.module('ali001App', [
   'ui.router',
   'ui.bootstrap',
   'validation.match',
-  // 'ui.bootstrap.modal',
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

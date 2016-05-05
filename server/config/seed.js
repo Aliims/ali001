@@ -4,6 +4,7 @@
  */
 
 'use strict';
+import Message from '../api/message/message.model';
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
 
@@ -36,6 +37,23 @@ Thing.find({}).remove()
       name: 'Deployment Ready',
       info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
              'and openshift subgenerators'
+    });
+  });
+
+Message.find({}).remove()
+  .then(() => {
+    Message.create({
+      email: 'a@b.com',
+      content: 'ab content',
+      info: 'ab info'
+    }, {
+      email: 'c@d.com',
+      content: 'cd content',
+      info: 'cd info'
+    }, {
+      email: 'e@f.com',
+      content: 'ef content',
+      info: 'ef info'
     });
   });
 

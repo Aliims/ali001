@@ -4,23 +4,22 @@
 
 class MainController {
 
-  // constructor($http, $scope, socket, $uibModal) {
   constructor($http, $scope, socket, Modal) {
     this.$http = $http;
     this.socket = socket;
-    this.awesomeThings = [];
-    // this.messages = [];
+    // this.awesomeThings = [];
+    this.messages = [];
 
     // Our callback function is called if/when the delete modal is confirmed
-    this.showThing = Modal.confirm.delete(thing => {
-      this.$http.delete('/api/things/' + thing._id);
-      // user.$remove();
-      // this.users.splice(this.users.indexOf(user), 1);
+    this.showMessage = Modal.confirm.delete(message => {
+      this.$http.delete('/api/messages/' + message._id);
+      // message.$remove();
+      // this.messages.splice(this.messages.indexOf(message), 1);
     });
 
     $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('thing');
-      // socket.unsyncUpdates('message');
+      // socket.unsyncUpdates('thing');
+      socket.unsyncUpdates('message');
     });
 
     if (document.body.getElementsByClassName('triangle-bg')[0]) {
@@ -37,38 +36,46 @@ class MainController {
       });
       element.setAttribute('style', 'background-image: url('+pattern.canvas().toDataURL("image/png")+')');
     }
+
   }
 
   $onInit() {
-    this.$http.get('/api/things').then(response => {
-      this.awesomeThings = response.data;
-      this.socket.syncUpdates('thing', this.awesomeThings);
-    });
-    // this.$http.get('/api/messages').then(response => {
-    //   this.messages = response.data;
-    //   this.socket.syncUpdates('message', this.messages);
+    // this.$http.get('/api/things').then(response => {
+    //   this.awesomeThings = response.data;
+    //   this.socket.syncUpdates('thing', this.awesomeThings);
     // });
+    this.$http.get('/api/messages').then(response => {
+      this.messages = response.data;
+      this.socket.syncUpdates('message', this.messages);
+    });
   }
 
-  addThing() {
-    if (this.newThing) {
-      this.$http.post('/api/things', { name: this.newThing });
-      this.newThing = '';
-    }
-  }
-  // addMessage() {
-  //   if (this.newMessage) {
-  //     this.$http.post('/api/messages', { name: this.newMessage });
-  //     this.newMessage = '';
+  // addThing() {
+  //   if (this.newThing) {
+  //     this.$http.post('/api/things', {
+  //       name: this.newThing
+  //     });
+  //     this.newThing = '';
   //   }
   // }
-
-  deleteThing(thing) {
-    this.$http.delete('/api/things/' + thing._id);
+  addMessage() {
+    if (this.newMessage) {
+      this.$http.post('/api/messages', this.newMessage);
+      // this.$http.post('/api/messages', {
+      //   email: this.newMessage.email,
+      //   content: this.newMessage.content,
+      //   info: this.newMessage.info
+      // });
+      this.newMessage = '';
+    }
   }
-  // deleteMessage(message) {
-  //   this.$http.delete('/api/messages/' + message._id);
+
+  // deleteThing(thing) {
+  //   this.$http.delete('/api/things/' + thing._id);
   // }
+  deleteMessage(message) {
+    this.$http.delete('/api/messages/' + message._id);
+  }
 
 }
 
