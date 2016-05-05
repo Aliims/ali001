@@ -5,12 +5,18 @@
 class MainController {
 
   // constructor($http, $scope, socket, $uibModal) {
-  constructor($http, $scope, socket) {
+  constructor($http, $scope, socket, Modal) {
     this.$http = $http;
     this.socket = socket;
     this.awesomeThings = [];
     // this.messages = [];
 
+    // Our callback function is called if/when the delete modal is confirmed
+    this.showThing = Modal.confirm.delete(thing => {
+      this.$http.delete('/api/things/' + thing._id);
+      // user.$remove();
+      // this.users.splice(this.users.indexOf(user), 1);
+    });
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
@@ -62,17 +68,6 @@ class MainController {
   }
   // deleteMessage(message) {
   //   this.$http.delete('/api/messages/' + message._id);
-  // }
-
-  // open() {
-  //   console.log("open clicked!");
-  //   this.showModal = true;
-  // }
-  // ok() {
-  //   this.showModal = false;
-  // }
-  // cancel() {
-  //   this.showModal = false;
   // }
 
 }

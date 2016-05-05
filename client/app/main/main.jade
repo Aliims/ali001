@@ -50,24 +50,25 @@ header#banner.hero-unit
             a.img-responsive.col-md-6.col-lg-6.col-sm-6(href='#')
               img(src='assets/images/logo_tcoag.png', alt='logo_tcoag')
 
+//- .container
+//-   .row
+//-     .col-lg-12
+//-       h1.page-header Things:
+//-       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in $ctrl.awesomeThings')
+//-         li
+//-           a(href='#', uib-tooltip='{{thing.info}}')
+//-             | {{thing.name}}
+//-             button.close(type='button', ng-click='$ctrl.deleteThing(thing)') &times;
+
 .container
   .row
     .col-lg-12
       h1.page-header Things:
-      
-      //- div(modal="showModal", close="cancel()")
-      //-   div.modal-header
-      //-     h4 Modal Dialog
-      //-   div.modal-body
-      //-     p Example paragraph with some text.
-      //-   div.modal-footer
-      //-     button.btn.btn-success(ng-click="ok()") Okay
-      //-     button.btn(ng-click="cancel()") Cancel
-      
       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in $ctrl.awesomeThings')
         li
-          a(href='#', uib-tooltip='{{thing.info}}', ng-click='$ctrl.open()')
-            | {{thing.name}}
+          div(uib-tooltip='{{thing.info}}')
+            a(href='#', ng-click='$ctrl.showThing(thing.info, thing)')
+              | {{thing.name}}
             button.close(type='button', ng-click='$ctrl.deleteThing(thing)') &times;
 
   form.thing-form
