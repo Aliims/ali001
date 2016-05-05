@@ -4,11 +4,19 @@
 
 class MainController {
 
-  constructor($http, $scope, socket, Modal) {
+  constructor($http, $scope, socket, Modal, Auth) {
     this.$http = $http;
     this.socket = socket;
     // this.awesomeThings = [];
     this.messages = [];
+    this.isAdmin = Auth.isAdmin;
+
+    // // Our callback function is called if/when the delete modal is confirmed
+    // this.showMessage = Modal.confirm.delete(message => {
+    //   this.$http.delete('/api/messages/' + message._id);
+    //   // message.$remove();
+    //   // this.messages.splice(this.messages.indexOf(message), 1);
+    // });
 
     // Our callback function is called if/when the delete modal is confirmed
     this.showMessage = Modal.confirm.delete(message => {
@@ -63,8 +71,8 @@ class MainController {
       this.$http.post('/api/messages', this.newMessage);
       // this.$http.post('/api/messages', {
       //   email: this.newMessage.email,
-      //   content: this.newMessage.content,
-      //   info: this.newMessage.info
+      //   description: this.newMessage.description
+      //   content: this.newMessage.content
       // });
       this.newMessage = '';
     }
@@ -75,6 +83,10 @@ class MainController {
   // }
   deleteMessage(message) {
     this.$http.delete('/api/messages/' + message._id);
+  }
+
+  isAdmin() {
+    this.isAdmin;
   }
 
 }

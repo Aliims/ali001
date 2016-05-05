@@ -44,16 +44,16 @@ Message.find({}).remove()
   .then(() => {
     Message.create({
       email: 'a@b.com',
-      content: 'ab content',
-      info: 'ab info'
+      description: 'ab description',
+      content: 'ab content'
     }, {
       email: 'c@d.com',
-      content: 'cd content',
-      info: 'cd info'
+      description: 'cd description',
+      content: 'cd content'
     }, {
       email: 'e@f.com',
-      content: 'ef content',
-      info: 'ef info'
+      description: 'ef description',
+      content: 'ef content'
     });
   });
 

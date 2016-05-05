@@ -36,7 +36,7 @@ describe('Message API:', function() {
         .post('/api/messages')
         .send({
           email: 'New Message email!',
-          info: 'New Message info!!',
+          description: 'New Message description!!',
           content: 'New Message content!!!'
         })
         .expect(201)
@@ -52,7 +52,7 @@ describe('Message API:', function() {
 
     it('should respond with the newly created message', function() {
       newMessage.email.should.equal('New Message email!');
-      newMessage.info.should.equal('New Message info!!');
+      newMessage.description.should.equal('New Message description!!');
       newMessage.content.should.equal('New Message content!!!');
     });
 
@@ -81,7 +81,7 @@ describe('Message API:', function() {
 
     it('should respond with the requested message', function() {
       message.email.should.equal('New Message email!');
-      message.info.should.equal('New Message info!!');
+      message.description.should.equal('New Message description!!');
       message.content.should.equal('New Message content!!!');
     });
 
@@ -95,7 +95,7 @@ describe('Message API:', function() {
         .put('/api/messages/' + newMessage._id)
         .send({
           email: 'Updated Message email!',
-          info: 'Updated Message info!!',
+          description: 'Updated Message description!!',
           content: 'Updated Message content!!!'
         })
         .expect(200)
@@ -115,7 +115,7 @@ describe('Message API:', function() {
 
     it('should respond with the updated message', function() {
       updatedMessage.email.should.equal('Updated Message email!');
-      updatedMessage.info.should.equal('Updated Message info!!');
+      updatedMessage.description.should.equal('Updated Message description!!');
       updatedMessage.content.should.equal('Updated Message content!!!');
     });
 

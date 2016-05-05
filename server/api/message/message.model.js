@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 var MessageSchema = new mongoose.Schema({
   email: String,
-  info: String,
+  description: String,
   content: String,
   active: Boolean
 });

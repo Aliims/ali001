@@ -10,7 +10,7 @@ header#banner.hero-unit
 .container
   .row
     .col-lg-12
-      h1.page-header Customers:
+      h1.page-header Customers
       .row
         ul.list-unstyled
           li.col-md-6.col-lg-6.col-sm-6.font-size-large
@@ -79,19 +79,19 @@ header#banner.hero-unit
 .container
   .row
     .col-lg-12
-      h1.page-header Messages:
-      ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='message in $ctrl.messages')
+      h1.page-header Messages
+      ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-show='$ctrl.isAdmin()',ng-repeat='message in $ctrl.messages')
         li
           div(uib-tooltip='{{message.email}}')
             a(href='#', ng-click='$ctrl.showMessage(message.content, message)')
-              | {{message.info}}
+              | {{message.description}}
             button.close(type='button', ng-click='$ctrl.deleteMessage(message)') &times;
   form.message-form
     label Leave a message here to know more or to be contacted
     div.form-group
       input.form-control(type="email", id="messageInputEmail", placeholder="Email", ng-model='$ctrl.newMessage.email')
     div.form-group
-      input.form-control(type="text", id="messageInputInfo", placeholder="Info", ng-model='$ctrl.newMessage.info')
+      input.form-control(type="text", id="messageInputDescription", placeholder="Description", ng-model='$ctrl.newMessage.description')
     div.form-group
       textarea.form-control(rows="3", id="messageInputContent", placeholder="Content", ng-model='$ctrl.newMessage.content')
     button.btn.btn-primary(type='submit', ng-click='$ctrl.addMessage()') Submit
