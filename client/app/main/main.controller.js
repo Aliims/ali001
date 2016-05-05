@@ -4,16 +4,19 @@
 
 class MainController {
 
+  // constructor($http, $scope, socket, $uibModal) {
   constructor($http, $scope, socket) {
     this.$http = $http;
     this.socket = socket;
     this.awesomeThings = [];
+    // this.messages = [];
+
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
+      // socket.unsyncUpdates('message');
     });
 
-    // trianglify skipped for testing
     if (document.body.getElementsByClassName('triangle-bg')[0]) {
       var element = document.body.getElementsByClassName('triangle-bg')[0];
       var pattern_height = element.clientHeight;
@@ -35,6 +38,10 @@ class MainController {
       this.awesomeThings = response.data;
       this.socket.syncUpdates('thing', this.awesomeThings);
     });
+    // this.$http.get('/api/messages').then(response => {
+    //   this.messages = response.data;
+    //   this.socket.syncUpdates('message', this.messages);
+    // });
   }
 
   addThing() {
@@ -43,10 +50,30 @@ class MainController {
       this.newThing = '';
     }
   }
+  // addMessage() {
+  //   if (this.newMessage) {
+  //     this.$http.post('/api/messages', { name: this.newMessage });
+  //     this.newMessage = '';
+  //   }
+  // }
 
   deleteThing(thing) {
     this.$http.delete('/api/things/' + thing._id);
   }
+  // deleteMessage(message) {
+  //   this.$http.delete('/api/messages/' + message._id);
+  // }
+
+  // open() {
+  //   console.log("open clicked!");
+  //   this.showModal = true;
+  // }
+  // ok() {
+  //   this.showModal = false;
+  // }
+  // cancel() {
+  //   this.showModal = false;
+  // }
 
 }
 

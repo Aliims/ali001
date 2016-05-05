@@ -53,10 +53,20 @@ header#banner.hero-unit
 .container
   .row
     .col-lg-12
-      h1.page-header Enguiries:
+      h1.page-header Things:
+      
+      //- div(modal="showModal", close="cancel()")
+      //-   div.modal-header
+      //-     h4 Modal Dialog
+      //-   div.modal-body
+      //-     p Example paragraph with some text.
+      //-   div.modal-footer
+      //-     button.btn.btn-success(ng-click="ok()") Okay
+      //-     button.btn(ng-click="cancel()") Cancel
+      
       ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in $ctrl.awesomeThings')
         li
-          a(href='#', uib-tooltip='{{thing.info}}')
+          a(href='#', uib-tooltip='{{thing.info}}', ng-click='$ctrl.open()')
             | {{thing.name}}
             button.close(type='button', ng-click='$ctrl.deleteThing(thing)') &times;
 
@@ -66,3 +76,26 @@ header#banner.hero-unit
       input.form-control(type='text', placeholder='Add a new thing here.', ng-model='$ctrl.newThing')
       span.input-group-btn
         button.btn.btn-primary(type='submit', ng-click='$ctrl.addThing()') Add New
+
+.container
+  .row
+    .col-lg-12
+      h1.page-header Messages:
+      ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='message in $ctrl.messages')
+        li
+          a(href='#', uib-tooltip='{{message.email}}')
+            | {{message.object}}
+            button.close(type='button', ng-click='$ctrl.deleteMessage(message)') &times;
+
+  form.message-form
+    label Leave a message here to know more or to be contacted
+    div.form-group
+      //- label(for="messageInputEmail") Email address
+      input.form-control(type="email", id="messageInputEmail", placeholder="Email", ng-model='$ctrl.newMessage.email')
+    div.form-group
+      //- label(for="messageInputObject") Message object
+      input.form-control(type="text", id="messageInputObject", placeholder="Object", ng-model='$ctrl.newMessage.object')
+    div.form-group
+      //- label(for="messageInputContent") Message content
+      textarea.form-control(rows="3", id="messageInputContent", placeholder="Content", ng-model='$ctrl.newMessage.content')
+    button.btn.btn-primary(type='submit', ng-click='$ctrl.addMessage()') Submit
