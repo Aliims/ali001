@@ -1,0 +1,36 @@
+//- div This is the sta001 view.
+
+.container
+  .row
+    .col-lg-12(style='background-color: grey')
+      h1.page-header Kit Barcode Generator
+      .container
+        .col-lg-12(style='background-color: pink')
+          pre {{$ctrl.newSta001 | json}}
+          label Generate kit barcode in stago format          
+          //- form.sta001-form(style='background-color: purple')
+          div(ng-form="sta001-form", style='background-color: purple')
+            .col-lg-12(style='background-color: red')
+              div.form-group.col-lg-4
+                input.form-control(type="text", id="sta001InputKitCode", placeholder="KitCode", ng-model='$ctrl.newSta001.input.kitCode')
+              div.form-group.col-lg-4
+                input.form-control(type="text", id="sta001InputLot", placeholder="Lot", ng-model='$ctrl.newSta001.input.lot')
+              div.form-group.col-lg-4
+                input.form-control(type="text", id="sta001InputExpiry", placeholder="Expiry", ng-model='$ctrl.newSta001.input.expiry')
+
+            .col-lg-6(style='background-color: green')
+              label Product(s)
+              button.btn.btn-default(type="button", ng-click="product_count = product_count + 1", ng-init="product_count = 1", ng-show="product_count < 10")
+                span.glyphicon.glyphicon-plus(aria-hidden="true")
+              button.btn.btn-default(type="button", ng-click="product_count = product_count - 1", ng-init="product_count = 1", ng-show="product_count > 0")
+                span.glyphicon.glyphicon-minus(aria-hidden="true")
+              | product_count: {{product_count}}
+
+              div.form-group(ng-form="sta001-form-product_{{$index}}", ng-repeat="x in $ctrl.getCount(product_count) track by $index")
+                input.form-control(type="text", id="sta001InputProductCode_{{$index}}", placeholder="ProductCode_{{$index}}", ng-model='$ctrl.newSta001.input.productCodes[$index]')
+
+            .col-lg-6(style='background-color: blue')
+              label Parameter(s)
+            div
+              button.btn.btn-primary(type='submit', ng-click='$ctrl.addSta001()') Submit
+              button.btn.btn-warning(type='reset', ng-click='$ctrl.resetSta001()') Reset
