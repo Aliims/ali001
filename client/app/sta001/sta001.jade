@@ -16,15 +16,19 @@
                 | kit barcode preview 
                 input(
                   type="checkbox",
-                  ng-model="$ctrl.iskitBarcodePreviewEnabled",
+                  ng-model="$ctrl.isKitBarcodePreviewEnabled",
                   ng-change="$ctrl.updateKitBarcode()")
             li(
-              ng-show="$ctrl.iskitBarcodePreviewEnabled && $ctrl.kitBarcode")
+              ng-show="$ctrl.isKitBarcodePreviewEnabled && $ctrl.kitBarcode")
               canvas.kitBarcodePreview
             li
               label kit barcode
             li
               pre.kitBarcode {{$ctrl.kitBarcode | json}}
+            li
+              label productCodes (debug only)
+            li
+              pre {{$ctrl.productCodes | json}}
             li
               label kit structure
             li
@@ -42,54 +46,56 @@
                   id="sta001InputKitCode",
                   placeholder="KitCode",
                   ng-model="$ctrl.newSta001.input.kitCode",
-                  ng-change="$ctrl.updateKitBarcode()")
+                  ng-change="$ctrl.updateKitBarcode('kitCode')")
               div.form-group.col-lg-4
                 input.form-control(
                   type="text",
                   id="sta001InputLot",
                   placeholder="Lot",
                   ng-model="$ctrl.newSta001.input.lot",
-                  ng-change="$ctrl.updateKitBarcode()")
+                  ng-change="$ctrl.updateKitBarcode('lot')")
               div.form-group.col-lg-4
                 input.form-control(
                   type="text",
                   id="sta001InputExpiry",
                   placeholder="Expiry",
                   ng-model="$ctrl.newSta001.input.expiry",
-                  ng-change="$ctrl.updateKitBarcode()")
+                  ng-change="$ctrl.updateKitBarcode('expiry')")
 
             .col-lg-6(
               style="background-color: green")
               ul.list-unstyled
                 li
                   label(
-                    ng-show="$ctrl.getProductCode() > 1") Products
-                  label Product
-                  | ({{$ctrl.getProductCode()}})
+                    ng-show="$ctrl.getProductCodesLength() > 1") Products
+                  label(
+                    ng-show="$ctrl.getProductCodesLength() < 2") Product
+                  |  ({{$ctrl.getProductCodesLength()}})
                   .pull-right
                     button.btn.btn-default(
                       type="button",
                       ng-click="$ctrl.addProductCode()",
-                      ng-show="$ctrl.getProductCode() < 10")
+                      ng-show="$ctrl.getProductCodesLength() < 10")
                       span.glyphicon.glyphicon-plus(
                         aria-hidden="true")
                     button.btn.btn-default(
                       type="button",
                       ng-click="$ctrl.removeProductCode()",
-                      ng-show="$ctrl.getProductCode() > 1")
+                      ng-show="$ctrl.getProductCodesLength() > 1")
                       span.glyphicon.glyphicon-minus(
                         aria-hidden="true")
-                li
-                  div.form-group.form-inline(
-                    ng-form="sta001-form-productCode_{{$index}}",
-                    ng-repeat="x in $ctrl.getProductCodeIterator() track by $index")
-                    input.form-control(
-                      type="text",
-                      id="sta001InputProductCode_{{$index}}",
-                      placeholder="ProductCode_{{$index}}",
-                      ng-model="$ctrl.newSta001.input.productCodes[$index]",
-                      ng-change="$ctrl.updateKitBarcode()")
-                    label pos: {{$index*5+17}}
+                li(ng-repeat="productCode in $ctrl.getProductCodes() track by $index")
+                  label product code ({{$index*5+17}})
+                  input.form-control(
+                    type="text",
+                    id="sta001InputProductCode{{$index}}",
+                    placeholder="ProductCode{{$index}}",
+                    ng-model="$ctrl.productCodes[$index]",
+                    ng-change="$ctrl.updateKitBarcode('productCode')")
+
+                  //- REFERENCE A GARDER
+                  //- ng-model="$ctrl.newSta001.input.productCodes[$index]",
+                  //- ng-change="$ctrl.updateKitBarcode('productCode')")
 
             .col-lg-6(style='background-color: blue')
               label Parameter(s)

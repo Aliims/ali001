@@ -3,42 +3,55 @@
 
 class Sta001Component {
   constructor() {
-    this.isBarcodeKitPreviewEnabled = false;
+    this.isKitBarcodePreviewEnabled = false;
     this.kitBarcode = "";
-    this.productCount = 1;
-    this.productCodes = Array(this.productCount);
+    this.productCodes = [];
   }
 
-  updateKitBarcode() {
+  updateKitBarcode(source) {
     var tmp = "";
-    if (this.newSta001.input.kitCode) {
-      tmp += "kC"+this.newSta001.input.kitCode;
+    switch(source) {
+      case 'kitCode':
+        if (this.newSta001.input.kitCode) {
+          tmp += "kC"+this.newSta001.input.kitCode;
+        }
+        break;
+      case 'lot':
+        if (this.newSta001.input.lot) {
+          tmp += "l"+this.newSta001.input.lot;
+        }
+        break;
+      case 'expiry':
+        if (this.newSta001.input.expiry) {
+          tmp += "e"+this.newSta001.input.expiry;
+        }
+        break;
+      case 'productCode':
+        
+        // REFERENCE A GARDER
+        // for (var key in this.newSta001.input.productCodes) {
+        //   console.log(key);
+        //   // console.log(this.newSta001.input.productCodes);
+        //   // console.log(JSON.stringify(this.newSta001.input.productCodes));
+        //   // console.log(this.newSta001.input.productCodes["0"]);
+        //   console.log(this.newSta001.input.productCodes[key.toString()]);
+        // }
+
+        for (var i = 0; i < this.productCodes.length; i++) {
+          if (this.productCodes[i] != "") {
+            tmp += "pC"+i+this.productCodes[i];
+          }
+        }
+        break;
+      default:
+        console.log("shit!");
     }
-    if (this.newSta001.input.lot) {
-      tmp += "l"+this.newSta001.input.lot;
-    }
-    if (this.newSta001.input.expiry) {
-      tmp += "e"+this.newSta001.input.expiry;
-    }
-    for (var productCode in this.newSta001.input.productCodes) {
-      console.log("XXXXXXXXXXXXXXXXXX");
-      if (productCode == "0") {
-      	console.log(this.newSta001.input.productCodes.0);
-        tmp += "pC"+productCode;
-      }
-    }
-    // console.log(this.newSta001.input.productCodes);
-    // for each (productCode in this.newSta001.input.productCodes) {
-    //   if (productCode) {
-    //     tmp += "pC"+productCode;
-    //   }
-    // }
-    // if (this.isBarcodeKitPreviewEnabled) { this.generateBarcodeKitPreview(tmp);}
+
     this.kitBarcode = tmp;
-    console.log("updateKitBarcode() with this.isBarcodeKitPreviewEnabled = "+this.isBarcodeKitPreviewEnabled+" and this.kitBarcode = "+this.kitBarcode);
+    console.log("updateKitBarcode() with this.isKitBarcodePreviewEnabled = "+this.isKitBarcodePreviewEnabled+" and this.kitBarcode = "+this.kitBarcode);
   }
 
-  generateBarcodeKitPreview(barcodeKit) {
+  generateKitBarcodePreview(barcodeKit) {
     if ( document.body.getElementsByClassName('barcodeKitPreview')[0] ) {
       var O = document.body.getElementsByClassName('barcodeKitPreview')[0];
       // var I = document.body.getElementsByClassName('barcodeKit')[0].innerHTML.replace(/['"]+/g, '');
@@ -50,28 +63,25 @@ class Sta001Component {
         height:30//,
         // displayValue: false
       });
-      console.log("generateBarcodeKitPreview()");
+      console.log("generateKitBarcodePreview()");
     };
   }
 
   addProductCode() {
-    this.productCount += 1;
+    this.productCodes.push("");
   }
 
   removeProductCode() {
-    this.productCount -= 1;
+    this.productCodes.pop();
+    this.updateKitBarcode();
   }
 
-  getProductCode() {
-    return this.productCount;
+  getProductCodesLength() {
+    return this.productCodes.length;
   }
 
-  getProductCodeIterator() {
-  	arr = new Array();
-  	for (var i = 0; i < this.productCount; i++) {
-  		Things[i]
-  	}
-    return new Array(this.productCount);
+  getProductCodes() {
+    return this.productCodes;
   }
 
   addSta001() {
