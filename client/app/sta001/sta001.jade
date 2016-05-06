@@ -6,12 +6,19 @@
       h1.page-header Kit Barcode Generator
       .container
         .col-lg-12(style='background-color: pink')
-          label barcode
-          pre.col-lg-6 {{$ctrl.barcodeData | json}}
-          div.col-lg-6 {{$ctrl.barcodeImage}}
-
-          label structure
-          pre {{$ctrl.newSta001 | json}}
+          ul.list-unstyled
+            li
+              label image
+            li(ng-show='$ctrl.barcodeData!==""')
+              canvas.barcodeImage
+            li
+              label barcode
+            li
+              pre.barcodeData {{$ctrl.barcodeData | json}}
+            li
+              label structure
+            li
+              pre {{$ctrl.newSta001 | json}}
 
           label Generate kit barcode in stago format
 
@@ -19,11 +26,11 @@
 
             .col-lg-12(style='background-color: red')
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputKitCode", placeholder="KitCode", ng-model='$ctrl.newSta001.input.kitCode')
+                input.form-control(type="text", id="sta001InputKitCode", placeholder="KitCode", ng-model='$ctrl.newSta001.input.kitCode', ng-change="$ctrl.generateBarcodeData()")
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputLot", placeholder="Lot", ng-model='$ctrl.newSta001.input.lot')
+                input.form-control(type="text", id="sta001InputLot", placeholder="Lot", ng-model='$ctrl.newSta001.input.lot', ng-change="$ctrl.generateBarcodeData()")
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputExpiry", placeholder="Expiry", ng-model='$ctrl.newSta001.input.expiry')
+                input.form-control(type="text", id="sta001InputExpiry", placeholder="Expiry", ng-model='$ctrl.newSta001.input.expiry', ng-change="$ctrl.generateBarcodeData()")
 
             .col-lg-6(style='background-color: green')
               label Product(s)
