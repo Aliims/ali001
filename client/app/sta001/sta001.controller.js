@@ -3,7 +3,8 @@
 
 class Sta001Component {
   constructor() {
-    this.barcodeData = "";
+    this.isBarcodeKitPreviewEnabled = false;
+    // this.barcodeKit = null;
   }
 
   getCount(num) {
@@ -15,56 +16,50 @@ class Sta001Component {
     console.log("sta001");
   }
 
-  generateBarcodeData() {
-    console.log("generateBarcodeData()");
-    this.barcodeData = "";
+  generateBarcodeKit() {
+    this.barcodeKit = null;
     if (this.newSta001.input.kitCode) {
-      this.barcodeData += this.newSta001.input.kitCode*1;
+      this.barcodeKit += this.newSta001.input.kitCode*1;
     }
     if (this.newSta001.input.lot) {
-      this.barcodeData += this.newSta001.input.lot*2;
+      this.barcodeKit += this.newSta001.input.lot*2;
     }
     if (this.newSta001.input.expiry) {
-      this.barcodeData += this.newSta001.input.expiry*3;
+      this.barcodeKit += this.newSta001.input.expiry*3;
     }
-    console.log(this.barcodeData);
-    // Protection of image generation
-    if (this.barcodeData>1) {
-      this.generateBarcodeImage();
-    }
-    
+    if (this.isBarcodeKitPreviewEnabled) { this.generateBarcodeKitPreview();}
+    console.log("generateBarcodeKit() with this.isBarcodeKitPreviewEnabled="+this.isBarcodeKitPreviewEnabled+" and this.barcodeKit="+this.barcodeKit);
   }
 
-  generateBarcodeImage() {
-    console.log("generateBarcodeImage()");
-    if (document.body.getElementsByClassName('barcodeImage')[0]) {
-      var O = document.body.getElementsByClassName('barcodeImage')[0];
-      var I = document.body.getElementsByClassName('barcodeData')[0].innerHTML.replace(/['"]+/g, '');
+  generateBarcodeKitPreview() {
+    // API
+    //   Option 	Default value 	Type
+    //   format 	"auto" (CODE128) 	String
+    //   width 	2 	Number
+    //   height 	100 	Number
+    //   displayValue 	true 	Boolean
+    //   fontOptions 	"" 	String
+    //   font 	"monospace" 	String
+    //   textAlign 	"center" 	String
+    //   textPosition 	"bottom" 	String
+    //   textMargin 	2 	Number
+    //   fontSize 	20 	Number
+    //   background 	"#ffffff" 	String (CSS color)
+    //   lineColor 	"#000000" 	String (CSS color)
+    //   margin 	10 	Number
+    //   marginTop 	undefined 	Number
+    //   marginBottom 	undefined 	Number
+    //   marginLeft 	undefined 	Number
+    //   marginRight 	undefined 	Number
+    //   valid 	function(valid){} 	Function
+    if ( document.body.getElementsByClassName('barcodeKitPreview')[0] && this.barcodeKit > 1 ) {
+      var O = document.body.getElementsByClassName('barcodeKitPreview')[0];
+      var I = document.body.getElementsByClassName('barcodeKit')[0].innerHTML.replace(/['"]+/g, '');
       JsBarcode(O, I, {
-        height:30,
-        displayValue: false
+        height:30//,
+        // displayValue: false
       });
-
-    // Option 	Default value 	Type
-    // format 	"auto" (CODE128) 	String
-    // width 	2 	Number
-    // height 	100 	Number
-    // displayValue 	true 	Boolean
-    // fontOptions 	"" 	String
-    // font 	"monospace" 	String
-    // textAlign 	"center" 	String
-    // textPosition 	"bottom" 	String
-    // textMargin 	2 	Number
-    // fontSize 	20 	Number
-    // background 	"#ffffff" 	String (CSS color)
-    // lineColor 	"#000000" 	String (CSS color)
-    // margin 	10 	Number
-    // marginTop 	undefined 	Number
-    // marginBottom 	undefined 	Number
-    // marginLeft 	undefined 	Number
-    // marginRight 	undefined 	Number
-    // valid 	function(valid){} 	Function
-
+      console.log("generateBarcodeKitPreview()");
     };
   }
 

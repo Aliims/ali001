@@ -6,31 +6,33 @@
       h1.page-header Kit Barcode Generator
       .container
         .col-lg-12(style='background-color: pink')
+
           ul.list-unstyled
+            li(ng-show="$ctrl.barcodeKit")
+              label
+                | barcode kit preview 
+                input(type="checkbox", ng-model="$ctrl.isBarcodeKitPreviewEnabled", ng-change="$ctrl.generateBarcodeKit()")
+            li(ng-show='$ctrl.isBarcodeKitPreviewEnabled && $ctrl.barcodeKit')
+              canvas.barcodeKitPreview
             li
-              label image
-            li(ng-show='$ctrl.barcodeData!==""')
-              canvas.barcodeImage
+              label barcode kit
             li
-              label barcode
+              pre.barcodeKit {{$ctrl.barcodeKit | json}}
             li
-              pre.barcodeData {{$ctrl.barcodeData | json}}
-            li
-              label structure
+              label structure kit
             li
               pre {{$ctrl.newSta001 | json}}
 
           label Generate kit barcode in stago format
-
           div(ng-form="sta001-form", style='background-color: purple')
 
             .col-lg-12(style='background-color: red')
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputKitCode", placeholder="KitCode", ng-model='$ctrl.newSta001.input.kitCode', ng-change="$ctrl.generateBarcodeData()")
+                input.form-control(type="text", id="sta001InputKitCode", placeholder="KitCode", ng-model='$ctrl.newSta001.input.kitCode', ng-change="$ctrl.generateBarcodeKit()")
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputLot", placeholder="Lot", ng-model='$ctrl.newSta001.input.lot', ng-change="$ctrl.generateBarcodeData()")
+                input.form-control(type="text", id="sta001InputLot", placeholder="Lot", ng-model='$ctrl.newSta001.input.lot', ng-change="$ctrl.generateBarcodeKit()")
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputExpiry", placeholder="Expiry", ng-model='$ctrl.newSta001.input.expiry', ng-change="$ctrl.generateBarcodeData()")
+                input.form-control(type="text", id="sta001InputExpiry", placeholder="Expiry", ng-model='$ctrl.newSta001.input.expiry', ng-change="$ctrl.generateBarcodeKit()")
 
             .col-lg-6(style='background-color: green')
               label Product(s)
