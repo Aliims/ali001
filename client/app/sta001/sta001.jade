@@ -2,50 +2,94 @@
 
 .container
   .row
-    .col-lg-12(style='background-color: grey')
+    .col-lg-12(
+      style="background-color: grey")
       h1.page-header Kit Barcode Generator
       .container
-        .col-lg-12(style='background-color: pink')
+        .col-lg-12(
+          style="background-color: pink")
 
           ul.list-unstyled
-            li(ng-show="$ctrl.barcodeKit")
+            li(
+              ng-show="$ctrl.kitBarcode")
               label
-                | barcode kit preview 
-                input(type="checkbox", ng-model="$ctrl.isBarcodeKitPreviewEnabled", ng-change="$ctrl.generateBarcodeKit()")
-            li(ng-show='$ctrl.isBarcodeKitPreviewEnabled && $ctrl.barcodeKit')
-              canvas.barcodeKitPreview
+                | kit barcode preview 
+                input(
+                  type="checkbox",
+                  ng-model="$ctrl.iskitBarcodePreviewEnabled",
+                  ng-change="$ctrl.updateKitBarcode()")
+            li(
+              ng-show="$ctrl.iskitBarcodePreviewEnabled && $ctrl.kitBarcode")
+              canvas.kitBarcodePreview
             li
-              label barcode kit
+              label kit barcode
             li
-              pre.barcodeKit {{$ctrl.barcodeKit | json}}
+              pre.kitBarcode {{$ctrl.kitBarcode | json}}
             li
-              label structure kit
+              label kit structure
             li
               pre {{$ctrl.newSta001 | json}}
 
-          label Generate kit barcode in stago format
-          div(ng-form="sta001-form", style='background-color: purple')
+          label kit input
+          div(
+            ng-form="sta001-form",
+            style="background-color: purple")
 
             .col-lg-12(style='background-color: red')
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputKitCode", placeholder="KitCode", ng-model='$ctrl.newSta001.input.kitCode', ng-change="$ctrl.generateBarcodeKit()")
+                input.form-control(
+                  type="text",
+                  id="sta001InputKitCode",
+                  placeholder="KitCode",
+                  ng-model="$ctrl.newSta001.input.kitCode",
+                  ng-change="$ctrl.updateKitBarcode()")
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputLot", placeholder="Lot", ng-model='$ctrl.newSta001.input.lot', ng-change="$ctrl.generateBarcodeKit()")
+                input.form-control(
+                  type="text",
+                  id="sta001InputLot",
+                  placeholder="Lot",
+                  ng-model="$ctrl.newSta001.input.lot",
+                  ng-change="$ctrl.updateKitBarcode()")
               div.form-group.col-lg-4
-                input.form-control(type="text", id="sta001InputExpiry", placeholder="Expiry", ng-model='$ctrl.newSta001.input.expiry', ng-change="$ctrl.generateBarcodeKit()")
+                input.form-control(
+                  type="text",
+                  id="sta001InputExpiry",
+                  placeholder="Expiry",
+                  ng-model="$ctrl.newSta001.input.expiry",
+                  ng-change="$ctrl.updateKitBarcode()")
 
-            .col-lg-6(style='background-color: green')
-              label Product(s)
-              | ({{product_count}})
-              .pull-right
-                button.btn.btn-default(type="button", ng-click="product_count = product_count + 1", ng-init="product_count = 3", ng-show="product_count < 10")
-                  span.glyphicon.glyphicon-plus(aria-hidden="true")
-                button.btn.btn-default(type="button", ng-click="product_count = product_count - 1", ng-show="product_count > 0")
-                  span.glyphicon.glyphicon-minus(aria-hidden="true")
-
-              div.form-group.form-inline(ng-form="sta001-form-product_{{$index}}", ng-repeat="x in $ctrl.getCount(product_count) track by $index")
-                input.form-control(type="text", id="sta001InputProductCode_{{$index}}", placeholder="ProductCode_{{$index}}", ng-model='$ctrl.newSta001.input.productCodes[$index]')
-                label pos: {{$index*3}}
+            .col-lg-6(
+              style="background-color: green")
+              ul.list-unstyled
+                li
+                  label(
+                    ng-show="$ctrl.getProductCode() > 1") Products
+                  label Product
+                  | ({{$ctrl.getProductCode()}})
+                  .pull-right
+                    button.btn.btn-default(
+                      type="button",
+                      ng-click="$ctrl.addProductCode()",
+                      ng-show="$ctrl.getProductCode() < 10")
+                      span.glyphicon.glyphicon-plus(
+                        aria-hidden="true")
+                    button.btn.btn-default(
+                      type="button",
+                      ng-click="$ctrl.removeProductCode()",
+                      ng-show="$ctrl.getProductCode() > 1")
+                      span.glyphicon.glyphicon-minus(
+                        aria-hidden="true")
+                li
+                  div.form-group.form-inline(
+                    ng-form="sta001-form-productCode_{{$index}}",
+                    ng-repeat="x in $ctrl.getProductCodeIterator() track by $index")
+                    input.form-control(
+                      type="text",
+                      id="sta001InputProductCode_{{$index}}",
+                      placeholder="ProductCode_{{$index}}",
+                      ng-model="$ctrl.newSta001.input.productCodes[$index]",
+                      ng-change="$ctrl.updateKitBarcode()")
+                    label pos: {{$index*5+17}}
 
             .col-lg-6(style='background-color: blue')
               label Parameter(s)
@@ -61,5 +105,9 @@
                 label pos: {{$index*2}}
 
             div
-              button.btn.btn-primary(type='submit', ng-click='$ctrl.addSta001()') Submit
-              button.btn.btn-warning(type='reset', ng-click='$ctrl.newSta001 = null') Reset
+              button.btn.btn-primary(
+                type='submit',
+                ng-click='$ctrl.addSta001()') Submit
+              button.btn.btn-warning(
+                type='reset',
+                ng-click='$ctrl.newSta001 = null') Reset
