@@ -6,10 +6,15 @@
       h1.page-header Kit Barcode Generator
       .container
         .col-lg-12(style='background-color: pink')
+          label barcode
+          pre {{$ctrl.barcode | json}}
+          label structure
           pre {{$ctrl.newSta001 | json}}
-          label Generate kit barcode in stago format          
-          //- form.sta001-form(style='background-color: purple')
+
+          label Generate kit barcode in stago format
+
           div(ng-form="sta001-form", style='background-color: purple')
+
             .col-lg-12(style='background-color: red')
               div.form-group.col-lg-4
                 input.form-control(type="text", id="sta001InputKitCode", placeholder="KitCode", ng-model='$ctrl.newSta001.input.kitCode')
@@ -20,17 +25,30 @@
 
             .col-lg-6(style='background-color: green')
               label Product(s)
-              button.btn.btn-default(type="button", ng-click="product_count = product_count + 1", ng-init="product_count = 1", ng-show="product_count < 10")
-                span.glyphicon.glyphicon-plus(aria-hidden="true")
-              button.btn.btn-default(type="button", ng-click="product_count = product_count - 1", ng-init="product_count = 1", ng-show="product_count > 0")
-                span.glyphicon.glyphicon-minus(aria-hidden="true")
-              | product_count: {{product_count}}
+              | ({{product_count}})
+              .pull-right
+                button.btn.btn-default(type="button", ng-click="product_count = product_count + 1", ng-init="product_count = 3", ng-show="product_count < 10")
+                  span.glyphicon.glyphicon-plus(aria-hidden="true")
+                button.btn.btn-default(type="button", ng-click="product_count = product_count - 1", ng-show="product_count > 0")
+                  span.glyphicon.glyphicon-minus(aria-hidden="true")
 
-              div.form-group(ng-form="sta001-form-product_{{$index}}", ng-repeat="x in $ctrl.getCount(product_count) track by $index")
+              div.form-group.form-inline(ng-form="sta001-form-product_{{$index}}", ng-repeat="x in $ctrl.getCount(product_count) track by $index")
                 input.form-control(type="text", id="sta001InputProductCode_{{$index}}", placeholder="ProductCode_{{$index}}", ng-model='$ctrl.newSta001.input.productCodes[$index]')
+                label pos: {{$index*3}}
 
             .col-lg-6(style='background-color: blue')
               label Parameter(s)
+              | ({{parameter_count}})
+              .pull-right
+                button.btn.btn-default(type="button", ng-click="parameter_count = parameter_count + 1", ng-init="parameter_count = 3", ng-show="parameter_count < 10")
+                  span.glyphicon.glyphicon-plus(aria-hidden="true")
+                button.btn.btn-default(type="button", ng-click="parameter_count = parameter_count - 1", ng-show="parameter_count > 0")
+                  span.glyphicon.glyphicon-minus(aria-hidden="true")
+
+              div.form-group.form-inline(ng-form="sta001-form-parameter_{{$index}}", ng-repeat="x in $ctrl.getCount(parameter_count) track by $index")
+                input.form-control(type="text", id="sta001InputParameterCode_{{$index}}", placeholder="ParameterCode_{{$index}}", ng-model='$ctrl.newSta001.input.parameterCodes[$index]')
+                label pos: {{$index*2}}
+
             div
               button.btn.btn-primary(type='submit', ng-click='$ctrl.addSta001()') Submit
-              button.btn.btn-warning(type='reset', ng-click='$ctrl.resetSta001()') Reset
+              button.btn.btn-warning(type='reset', ng-click='$ctrl.newSta001 = null') Reset
