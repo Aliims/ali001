@@ -7,7 +7,9 @@
       .container
         .col-lg-12(style='background-color: pink')
           label barcode
-          pre {{$ctrl.barcode | json}}
+          pre.col-lg-6 {{$ctrl.barcodeData | json}}
+          div.col-lg-6 {{$ctrl.barcodeImage}}
+
           label structure
           pre {{$ctrl.newSta001 | json}}
 
