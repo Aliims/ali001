@@ -74,15 +74,26 @@ class Sta001Component {
   generateKitBarcodePreview() {
     if ( document.body.getElementsByClassName('kitBarcodePreview')[0] ) {
       var O = document.body.getElementsByClassName('kitBarcodePreview')[0];
-      // var I = this.newSta001.input.kitBarcode;
-      var I = 'this.newSta001.input.kitBarcode';
+
+      while (O.firstChild) {
+        O.removeChild(O.firstChild);
+      }
+
+      var I = this.newSta001.input.kitBarcode;
+      // var I = 'this.newSta001.input.kitBarcode';
       // I = I.replace(/['"]+/g, '');
       console.log("generateKitBarcodePreview: I = "+I);
       var X = I.match(/(.{1,15})/g);
       for (var i = 0; i < X.length; i++) {
         var y = "A"+(X.length+i)+X[i]+"A";
         console.log(i+": "+X[i]+" -> "+y);
-        JsBarcode(O, y, {
+
+        var l = document.createElement("li");
+        O.appendChild(l);
+        var c = document.createElement("canvas");
+        l.appendChild(c);
+
+        JsBarcode(c, y, {
           height:30
         });
         // document.body.appendChild(canvas);
