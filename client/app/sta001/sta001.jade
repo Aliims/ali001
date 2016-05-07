@@ -13,14 +13,14 @@
           div.col-lg-12
             ul.list-unstyled.col-lg-6
               li
+                label parameters (debug only)
+              li
+                pre {{$ctrl.parameters | json}} 
+            ul.list-unstyled.col-lg-6
+              li
                 label productCodes (debug only)
               li
                 pre {{$ctrl.productCodes | json}}
-            ul.list-unstyled.col-lg-6
-              li
-                label parameters (debug only)
-              li
-                pre {{$ctrl.parameters | json}}
 
           div.col-lg-12
             div(ng-class="{'col-lg-9': $ctrl.isBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isBarcodePreviewEnabled}")
@@ -43,6 +43,31 @@
                     ng-change="$ctrl.updateKitBarcode('kitBarcode')"
                     disabled)
 
+              div.form-group.col-lg-4
+                label kit code
+                input.form-control(
+                  type="text"
+                  id="sta001InputKitCode"
+                  placeholder="KitCode"
+                  ng-model="$ctrl.newSta001.input.kitCode"
+                  ng-change="$ctrl.updateKitBarcode('kitCode')")
+              div.form-group.col-lg-4
+                label kit lot
+                input.form-control(
+                  type="text"
+                  id="sta001InputLot"
+                  placeholder="kitLot",
+                  ng-model="$ctrl.newSta001.input.kitLot"
+                  ng-change="$ctrl.updateKitBarcode('kitLot')")
+              div.form-group.col-lg-4
+                label kit expiry
+                input.form-control(
+                  type="text",
+                  id="sta001InputExpiry",
+                  placeholder="kitExpiry",
+                  ng-model="$ctrl.newSta001.input.kitExpiry",
+                  ng-change="$ctrl.updateKitBarcode('kitExpiry')")
+
             div(ng-class="{'col-lg-3': $ctrl.isBarcodePreviewEnabled, 'col-lg-1': !$ctrl.isBarcodePreviewEnabled}")
 
               ul.list-unstyled
@@ -62,79 +87,65 @@
                   canvas.kitBarcodePreview
 
           div.col-lg-12
-            div.form-group.col-lg-4
-              label kit code
-              input.form-control(
-                type="text"
-                id="sta001InputKitCode"
-                placeholder="KitCode"
-                ng-model="$ctrl.newSta001.input.kitCode"
-                ng-change="$ctrl.updateKitBarcode('kitCode')")
-            div.form-group.col-lg-4
-              label kit lot
-              input.form-control(
-                type="text"
-                id="sta001InputLot"
-                placeholder="kitLot",
-                ng-model="$ctrl.newSta001.input.kitLot"
-                ng-change="$ctrl.updateKitBarcode('kitLot')")
-            div.form-group.col-lg-4
-              label kit expiry
-              input.form-control(
-                type="text",
-                id="sta001InputExpiry",
-                placeholder="kitExpiry",
-                ng-model="$ctrl.newSta001.input.kitExpiry",
-                ng-change="$ctrl.updateKitBarcode('kitExpiry')")
+            div(ng-class="{'col-lg-12': $ctrl.isBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isBarcodePreviewEnabled}")
 
-          div.col-lg-12(
-            style="background-color: red")
+              div.form-group.col-lg-6(
+                ng-class="{'col-lg-4': $ctrl.isBarcodePreviewEnabled, 'col-lg-6': !$ctrl.isBarcodePreviewEnabled}"
+                style="background-color: blue")
+                label count parameters
+                input.form-control(
+                  type="number"
+                  id="sta001InputCountParameters"
+                  ng-model="$ctrl.newSta001.input.countParameters"
+                  ng-change="$ctrl.updateKitBarcode('countParameters')"
+                  min="1"
+                  max="9")
+                ul.list-unstyled
+                  li(ng-repeat="parameter in $ctrl.getParameters() track by $index")
+                    label product code ({{$index*5+17}})
+                    input.form-control(
+                      type="text",
+                      id="sta001InputParameter{{$index}}"
+                      placeholder="Parameter{{$index}}"
+                      ng-model="$ctrl.newSta001.input.parameters[$index]"
+                      ng-change="$ctrl.updateKitBarcode('parameter'+{{$index}})")
+                    //- ng-model="$ctrl.newSta001.input.parameters[$index]"
+                    //- ng-model="$ctrl.parameters[$index]"
+                    //- ng-change="$ctrl.updateKitBarcode('parameter')")
 
-            div.form-group.col-lg-6(
-              style="background-color: green")
-              label count product codes
-              input.form-control(
-                type="number"
-                id="sta001InputCountProductCodes"
-                ng-model="$ctrl.newSta001.input.countProductCodes"
-                ng-change="$ctrl.updateKitBarcode('countProductCodes')"
-                min="1"
-                max="9")
-              ul.list-unstyled
-                li(ng-repeat="productCode in $ctrl.getProductCodes() track by $index")
-                  label product code ({{$index*5+17}})
-                  input.form-control(
-                    type="text",
-                    id="sta001InputProductCode{{$index}}"
-                    placeholder="ProductCode{{$index}}"
-                    ng-model="$ctrl.newSta001.input.productCodes[$index]"
-                    ng-change="$ctrl.updateKitBarcode('productCode'+{{$index}})")
-                  //- ng-model="$ctrl.newSta001.input.productCodes[$index]"
-                  //- ng-model="$ctrl.productCodes[$index]"
-                  //- ng-change="$ctrl.updateKitBarcode('productCode')")
+              div.form-group.col-lg-6(
+                ng-class="{'col-lg-8': $ctrl.isBarcodePreviewEnabled, 'col-lg-6': !$ctrl.isBarcodePreviewEnabled}"
+                style="background-color: green")
+                label count product codes
+                input.form-control(
+                  type="number"
+                  id="sta001InputCountProductCodes"
+                  ng-model="$ctrl.newSta001.input.countProductCodes"
+                  ng-change="$ctrl.updateKitBarcode('countProductCodes')"
+                  min="1"
+                  max="9")
+                ul.list-unstyled
+                  li(ng-repeat="productCode in $ctrl.getProductCodes() track by $index")
+                    div(
+                      ng-class="{'col-lg-6': $ctrl.isBarcodePreviewEnabled, 'col-lg-12': !$ctrl.isBarcodePreviewEnabled}"
+                      style="background-color: black")
+                      label product code ({{$index*5+17}})
+                      input.form-control(
+                        type="text",
+                        id="sta001InputProductCode{{$index}}"
+                        placeholder="ProductCode{{$index}}"
+                        ng-model="$ctrl.newSta001.input.productCodes[$index]"
+                        ng-change="$ctrl.updateKitBarcode('productCode'+{{$index}})")
 
-            div.form-group.col-lg-6(
-              style="background-color: blue")
-              label count parameters
-              input.form-control(
-                type="number"
-                id="sta001InputCountParameters"
-                ng-model="$ctrl.newSta001.input.countParameters"
-                ng-change="$ctrl.updateKitBarcode('countParameters')"
-                min="1"
-                max="9")
-              ul.list-unstyled
-                li(ng-repeat="parameter in $ctrl.getParameters() track by $index")
-                  label product code ({{$index*5+17}})
-                  input.form-control(
-                    type="text",
-                    id="sta001InputParameter{{$index}}"
-                    placeholder="Parameter{{$index}}"
-                    ng-model="$ctrl.newSta001.input.parameters[$index]"
-                    ng-change="$ctrl.updateKitBarcode('parameter'+{{$index}})")
-                  //- ng-model="$ctrl.newSta001.input.parameters[$index]"
-                  //- ng-model="$ctrl.parameters[$index]"
-                  //- ng-change="$ctrl.updateKitBarcode('parameter')")
+                      //- ng-model="$ctrl.newSta001.input.productCodes[$index]"
+                      //- ng-model="$ctrl.productCodes[$index]"
+                      //- ng-change="$ctrl.updateKitBarcode('productCode')")
+                    div.col-lg-6(
+                      ng-show="$ctrl.isBarcodePreviewEnabled"
+                      style="background-color: GoldenRod")
+                      xxxx
+                      canvas.kitBarcodePreview
+
 
           div.col-lg-12(
             style="background-color: black")

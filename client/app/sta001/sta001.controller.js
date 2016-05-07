@@ -7,6 +7,7 @@ class Sta001Component {
     this.kitBarcode = "";
     this.productCodes = [];
     this.parameters = [];
+    // this.cutoff = 15;
   }
 
   updateKitBarcode(source) {
@@ -65,22 +66,27 @@ class Sta001Component {
     } else {      console.log("updateKitBarcode: oups!");
     }
     this.newSta001.input.kitBarcode = tmp;
-    if (this.isBarcodePreviewEnabled) {generateKitBarcodePreview(this.newSta001.input.kitBarcode)};
+    if (this.isBarcodePreviewEnabled) {
+      this.generateKitBarcodePreview();
+    };
   }
 
-  generateKitBarcodePreview(kitBarcode) {
+  generateKitBarcodePreview() {
     if ( document.body.getElementsByClassName('kitBarcodePreview')[0] ) {
       var O = document.body.getElementsByClassName('kitBarcodePreview')[0];
-      // var I = document.body.getElementsByClassName('kitBarcode')[0].innerHTML.replace(/['"]+/g, '');
-      console.log("kitBarcode: "+kitBarcode);
-      // console.log("I: "+I);
-      
-      // JsBarcode(O, I, {
-      JsBarcode(O, kitBarcode, {
-        height:30//,
-        // displayValue: false
-      });
-      console.log("generateKitBarcodePreview()");
+      // var I = this.newSta001.input.kitBarcode;
+      var I = 'this.newSta001.input.kitBarcode';
+      // I = I.replace(/['"]+/g, '');
+      console.log("generateKitBarcodePreview: I = "+I);
+      var X = I.match(/(.{1,15})/g);
+      for (var i = 0; i < X.length; i++) {
+        var y = "A"+(X.length+i)+X[i]+"A";
+        console.log(i+": "+X[i]+" -> "+y);
+        JsBarcode(O, y, {
+          height:30
+        });
+        // document.body.appendChild(canvas);
+      }
     };
   }
 
