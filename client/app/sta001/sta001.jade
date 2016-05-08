@@ -70,7 +70,7 @@
 
             div(ng-class="{'col-lg-3': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-1': !$ctrl.isKitBarcodePreviewEnabled}")
 
-              ul.list-unstyled
+              ul.list-unstyled.col-lg-12
                 li
                   button.btn.btn-primary(
                     ng-show="!$ctrl.isKitBarcodePreviewEnabled",
@@ -80,15 +80,15 @@
                     ng-show="$ctrl.isKitBarcodePreviewEnabled",
                     ng-click="$ctrl.isKitBarcodePreviewEnabled = false") HIDE barcodes
 
-              //- ul.list-unstyled.kitBarcodePreview(
-              //-   ng-show="$ctrl.isKitBarcodePreviewEnabled"
-              //-   style="background-color: GoldenRod")
-
-              ul.list-unstyled(
+              ul.list-unstyled.kitBarcodePreview.col-lg-12(
                 ng-show="$ctrl.isKitBarcodePreviewEnabled"
                 style="background-color: GoldenRod")
-                li
-                  canvas.kitBarcodePreview
+
+              //- ul.list-unstyled(
+              //-   ng-show="$ctrl.isKitBarcodePreviewEnabled"
+              //-   style="background-color: GoldenRod")
+              //-   li
+              //-     canvas.kitBarcodePreview
 
           div.col-lg-12
             div(ng-class="{'col-lg-9': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isKitBarcodePreviewEnabled}")
@@ -160,7 +160,7 @@
                 ng-show="$ctrl.isProductBarcodePreviewEnabled"
                 style="background-color: GoldenRod")
                 li
-                  canvas.kitBarcodePreview
+                  canvas.productBarcodePreview
 
 
           div.col-lg-12(
