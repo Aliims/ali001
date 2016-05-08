@@ -35,13 +35,12 @@
                 li
                   label kit barcode
                 li.form-group
-                  input.form-control.disabled(
+                  input.form-control(
                     type="text"
                     id="sta001InputKitBarcode"
                     placeholder="KitBarcode"
                     ng-model="$ctrl.newSta001.input.kitBarcode"
-                    ng-change="$ctrl.updateKitBarcode('kitBarcode')"
-                    disabled)
+                    ng-change="$ctrl.updateKitBarcode('kitBarcode')")
 
               div.form-group.col-lg-4
                 label kit code
@@ -101,11 +100,10 @@
                   id="sta001InputCountParameters"
                   ng-model="$ctrl.newSta001.input.countParameters"
                   ng-change="$ctrl.updateKitBarcode('countParameters')"
-                  min="1"
-                  max="9")
+                  min="1")
                 ul.list-unstyled
                   li(ng-repeat="parameter in $ctrl.getParameters() track by $index")
-                    label product code ({{$index*5+17}})
+                    label parameter ({{$index}})
                     input.form-control(
                       type="text",
                       id="sta001InputParameter{{$index}}"
@@ -128,7 +126,8 @@
                   max="9")
                 ul.list-unstyled
                   li(ng-repeat="productCode in $ctrl.getProductCodes() track by $index")
-                    label product code ({{$index*5+17}})
+                    //- label product code ({{$index*5+17}})
+                    label product code ({{$index}})
                     input.form-control(
                       type="text",
                       id="sta001InputProductCode{{$index}}"

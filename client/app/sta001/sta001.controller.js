@@ -14,19 +14,36 @@ class Sta001Component {
 
   updateKitBarcode(source) {
     var tmp = "";
+    if (this.newSta001.input.kitLot) tmp += this.newSta001.input.kitLot;
+    if (this.newSta001.input.kitCode) tmp += this.newSta001.input.kitCode;
+    if (this.newSta001.input.kitExpiry) tmp += this.newSta001.input.kitExpiry;
+    if (this.newSta001.input.countProductCodes) tmp += this.newSta001.input.countProductCodes;
+    for (var index in this.newSta001.input.productCodes) {
+      tmp += this.newSta001.input.productCodes[index.toString()];
+    }
+    for (var index in this.newSta001.input.parameters) {
+      tmp += this.newSta001.input.parameters[index.toString()].replace(/[.]+/g, '');
+    }
+    tmp+= "CS";
+    
+    // "113561006750117112350103100345103099121107097118134105107121096108112114106117345117130102CS"
+    // "11356100675011711235010310034510309912110709711813410510712109610811211410611734511713010245"
+
+
+
     if (source == 'kitCode') {
         if (this.newSta001.input.kitCode) {
-          tmp += "kC"+this.newSta001.input.kitCode;
+          // tmp += "kC"+this.newSta001.input.kitCode;
           console.log("updateKitBarcode: kitCode");
         }
     } else if (source == 'kitLot') {
         if (this.newSta001.input.kitLot) {
-          tmp += "kL"+this.newSta001.input.kitLot;
+          // tmp += "kL"+this.newSta001.input.kitLot;
           console.log("updateKitBarcode: kitLot");
         }
     } else if (source == 'kitExpiry') {
         if (this.newSta001.input.kitExpiry) {
-          tmp += "kE"+this.newSta001.input.kitExpiry;
+          // tmp += "kE"+this.newSta001.input.kitExpiry;
           console.log("updateKitBarcode: kitExpiry");
         }
     } else if (source == 'countProductCodes') {
@@ -37,14 +54,14 @@ class Sta001Component {
           while(this.productCodes.length > this.newSta001.input.countProductCodes) {
             this.productCodes.pop();
           }
-          tmp += "cPC"+this.newSta001.input.countProductCodes;
+          // tmp += "cPC"+this.newSta001.input.countProductCodes;
           console.log("updateKitBarcode: countProductCodes");
         }
     } else if (source.startsWith('productCode')) {
       var index = source.charAt(source.length-1);
       if (this.newSta001.input.productCodes[index.toString()]) {
         this.productCodes[index] = this.newSta001.input.productCodes[index.toString()];
-        tmp += "pC"+index+this.productCodes[index];
+        // tmp += "pC"+index+this.productCodes[index];
         console.log("updateKitBarcode: productCode "+index);
       }
     } else if (source == 'countParameters') {
@@ -55,14 +72,14 @@ class Sta001Component {
           while(this.parameters.length > this.newSta001.input.countParameters) {
             this.parameters.pop();
           }
-          tmp += "cP"+this.newSta001.input.countParameters;
+          // tmp += "cP"+this.newSta001.input.countParameters;
           console.log("updateKitBarcode: countParameters");
         }
     } else if (source.startsWith('parameter')) {
       var index = source.charAt(source.length-1);
       if (this.newSta001.input.parameters[index.toString()]) {
         this.parameters[index] = this.newSta001.input.parameters[index.toString()];
-        tmp += "p"+index+this.parameters[index];
+        // tmp += "p"+index+this.parameters[index];
         console.log("updateKitBarcode: parameter "+index);
       }
     } else {      console.log("updateKitBarcode: oups!");
