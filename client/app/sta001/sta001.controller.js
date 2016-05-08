@@ -3,7 +3,8 @@
 
 class Sta001Component {
   constructor() {
-    this.isBarcodePreviewEnabled = false;
+    this.isKitBarcodePreviewEnabled = false;
+    this.isProductBarcodePreviewEnabled = false;
     this.kitBarcode = "";
     this.productCodes = [];
     this.parameters = [];
@@ -66,7 +67,7 @@ class Sta001Component {
     } else {      console.log("updateKitBarcode: oups!");
     }
     this.newSta001.input.kitBarcode = tmp;
-    if (this.isBarcodePreviewEnabled) {
+    if (this.isKitBarcodePreviewEnabled) {
       this.generateKitBarcodePreview();
     };
   }
@@ -118,7 +119,7 @@ class Sta001Component {
   }
 
   clearSta001() {
-    this.isBarcodePreviewEnabled = false;
+    this.isKitBarcodePreviewEnabled = false;
     this.kitBarcode = "";
     this.productCodes = [];
     this.parameters = [];
