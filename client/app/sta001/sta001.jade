@@ -128,7 +128,7 @@
                   li(ng-repeat="productCode in $ctrl.getProductCodes() track by $index")
                     //- label product code ({{$index*5+17}})
                     label product code ({{$index}})
-                      em(ng-show="$ctrl.isProductBarcodesPreviewEnabled") {{productCode}}
+                      em(ng-show="$ctrl.isProductCodesPreviewEnabled") {{productCode}}
                     input.form-control(
                       type="text",
                       id="sta001InputProductCode{{$index}}"
@@ -140,24 +140,24 @@
                     //- ng-model="$ctrl.productCodes[$index]"
                     //- ng-change="$ctrl.updateKitBarcode('productCode')")
 
-            div(ng-class="{'col-lg-3': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductBarcodesPreviewEnabled}")
+            div(ng-class="{'col-lg-3': $ctrl.isProductCodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductCodesPreviewEnabled}")
 
               ul.list-unstyled
                 li
                   button.btn.btn-primary(
-                    ng-show="!$ctrl.isProductBarcodesPreviewEnabled",
-                    ng-click="$ctrl.isProductBarcodesPreviewEnabled = true; $ctrl.updateKitBarcode('kitExpiry');") SHOW barcodes
+                    ng-show="!$ctrl.isProductCodesPreviewEnabled",
+                    ng-click="$ctrl.isProductCodesPreviewEnabled = true; $ctrl.updateKitBarcode('kitExpiry');") SHOW barcodes
                 li
                   button.btn.btn-default(
-                    ng-show="$ctrl.isProductBarcodesPreviewEnabled",
-                    ng-click="$ctrl.isProductBarcodesPreviewEnabled = false") HIDE barcodes
+                    ng-show="$ctrl.isProductCodesPreviewEnabled",
+                    ng-click="$ctrl.isProductCodesPreviewEnabled = false") HIDE barcodes
 
               //- ul.list-unstyled.kitBarcodePreview(
-              //-   ng-show="$ctrl.isProductBarcodesPreviewEnabled"
+              //-   ng-show="$ctrl.isProductCodesPreviewEnabled"
               //-   style="background-color: GoldenRod")
 
               ul.list-unstyled(
-                ng-show="$ctrl.isProductBarcodesPreviewEnabled"
+                ng-show="$ctrl.isProductCodesPreviewEnabled"
                 style="background-color: GoldenRod")
                 li
                   canvas.productBarcodesImagePreview

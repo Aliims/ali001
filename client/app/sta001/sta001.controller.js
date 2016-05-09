@@ -4,7 +4,7 @@
 class Sta001Component {
   constructor() {
     this.isKitBarcodePreviewEnabled = false;
-    this.isProductBarcodesPreviewEnabled = false;
+    this.isProductCodesPreviewEnabled = false;
     this.kitBarcode = "";
     this.productCodes = [];
     this.parameters = [];
@@ -14,7 +14,7 @@ class Sta001Component {
 
   // refresh() {
   //   updateKitBarcode();
-  //   updateProductBarcodes();
+  //   processProductCodes();
   // }
 
   updateKitBarcode(source) {
@@ -33,17 +33,14 @@ class Sta001Component {
 
     if (source == 'kitCode') {
         if (this.newSta001.input.kitCode) {
-          // tmp += "kC"+this.newSta001.input.kitCode;
           console.log("updateKitBarcode: kitCode");
         }
     } else if (source == 'kitLot') {
         if (this.newSta001.input.kitLot) {
-          // tmp += "kL"+this.newSta001.input.kitLot;
           console.log("updateKitBarcode: kitLot");
         }
     } else if (source == 'kitExpiry') {
         if (this.newSta001.input.kitExpiry) {
-          // tmp += "kE"+this.newSta001.input.kitExpiry;
           console.log("updateKitBarcode: kitExpiry");
         }
     } else if (source == 'countProductCodes') {
@@ -54,14 +51,12 @@ class Sta001Component {
           while(this.productCodes.length > this.newSta001.input.countProductCodes) {
             this.productCodes.pop();
           }
-          // tmp += "cPC"+this.newSta001.input.countProductCodes;
           console.log("updateKitBarcode: countProductCodes");
         }
     } else if (source.startsWith('productCode')) {
       var index = source.charAt(source.length-1);
       if (this.newSta001.input.productCodes[index.toString()]) {
         this.productCodes[index] = this.newSta001.input.productCodes[index.toString()];
-        // tmp += "pC"+index+this.productCodes[index];
         console.log("updateKitBarcode: productCode "+index);
       }
     } else if (source == 'countParameters') {
@@ -72,7 +67,6 @@ class Sta001Component {
           while(this.parameters.length > this.newSta001.input.countParameters) {
             this.parameters.pop();
           }
-          // tmp += "cP"+this.newSta001.input.countParameters;
           console.log("updateKitBarcode: countParameters");
         }
     } else if (source.startsWith('parameter')) {
@@ -84,11 +78,16 @@ class Sta001Component {
       }
     } else {      console.log("updateKitBarcode: oups!");
     }
+
+
+    this.processProductCodes();
+
+
     this.newSta001.input.kitBarcode = tmp;
     if (this.isKitBarcodePreviewEnabled) {
       this.generateKitBarcodePreview();
     };
-    if (this.isProductBarcodesPreviewEnabled) {
+    if (this.isProductCodesPreviewEnabled) {
       this.generateProductBarcodesPreviews();
     };
   }
@@ -121,46 +120,47 @@ class Sta001Component {
     };
   }
 
-  // updateProductBarcodes() {
-  //   this.productCodes = [];
-  // }
+  processProductCodes() {
+    for (var i in this.newSta001.input.productCodes) {
+      var productCode = this.newSta001.input.productCodes[i.toString()]; //TODO protect
+      var kitLot = this.newSta001.input.kitLot; //TODO protect
+      var s = "";
+      s+= "C"; //TODO
+      console.log(Number(productCode).toString(16).toUpperCase());
+      s+= this.hex2cod(Number(productCode).toString(16).toUpperCase());
+      // to hex hexString = yourNumber.toString(16);
+      // reverse yourNumber = parseInt(hexString, 16);
+      s+= kitLot.substr(2);
+      s+= "B"; //TODO
+      this.productCodes[i] = s;
+      console.log("updateProductCodes() @["+i+
+        "] with productCode = ["+productCode+
+        "] and kitLot = ["+kitLot+
+        "] --> processedProductCode = ["+s+
+        "] pushed in productCodes table");
+    }
+    if (this.isProductCodesPreviewEnabled) {
+      this.processProductCodesPreview();
+    }
+  }
 
-  generateProductBarcodesPreviews() {
-    // Protection (Unit Test limits)
+  processProductCodesPreview() {
     if (document.body.getElementsByClassName('productBarcodesImagePreview')[0]) {
-      // Destroy image
-      var img = document.body.getElementsByClassName('productBarcodesImagePreview')[0];
+      var img = document.body.getElementsByClassName('productCodesPreview')[0];
       while (img.firstChild) {
         img.removeChild(img.firstChild);
       }
-      // loop over productCodes
-      for (var i in this.newSta001.input.productCodes) {
-        // Build string
-        var s = "";
-        s+= "i_";
-        s+= "_"+this.newSta001.input.productCodes[i.toString()].toString(16).toUpperCase()+"_";
-        s+= "_"+this.newSta001.input.kitLot[i.toString()].substr(2)+"_";
-        s+= "_o";
-        // Attach image
+      for (var i = 0; i < productCodes.length; i++) {
         var l = document.createElement("li");
         img.appendChild(l);
         var c = document.createElement("canvas");
-        // c.className += "col-lg-12";
         l.appendChild(c);
-        JsBarcode(c, y, {
+        JsBarcode(c, productCodes[i], {
           height:30
         });
-        // Protection (Unit Test limits)
-        if (document.body.getElementsById('productBarcodesImagePreview')[0]) {
-          // Attach comment
-          var cmt = document.body.getElementsByClassName('productBarcodeCommentPreview')[i];
-          cmt.innerHTML = s;
-        }
-
-        // Log result
-        console.log("generateProductBarcodesPreviews() productCode: "+
-          this.newSta001.input.productCodes[i.toString()]+
-          " -> "+s);      
+        console.log("processProductCodesPreview() @["+i+
+          "] with productCode: "+productCodes[i]+
+          "] --> canvas in productCodesPreview");
       }
     };
   }
@@ -198,68 +198,129 @@ class Sta001Component {
     }
     chk = (parseInt(chk, 16) | parseInt('40', 16)).toString(16).toUpperCase();
     var pF = ((parseInt(chk, 16) & parseInt('F0', 16)) / 16).toString(16).toUpperCase();
-    pF = this.hex2cod(pF);
+    // pF = this.hex2cod(pF);
     var pf = ((parseInt(chk, 16) & parseInt('0F', 16))).toString(16).toUpperCase();
-    pf = this.hex2cod(pf);
+    // pf = this.hex2cod(pf);
     var CS = pF+pf;
     return CS;
   }
 
-  hex2cod(c) {
-    switch (c) {
-      case '0':
-        return '0';
-        break;
-      case '1':
-        return '1';
-        break;
-      case '2':
-        return '2';
-        break;
-      case '3':
-        return '3';
-        break;
-      case '4':
-        return '4';
-        break;
-      case '5':
-        return '5';
-        break;
-      case '6':
-        return '6';
-        break;
-      case '7':
-        return '7';
-        break;
-      case '8':
-        return '8';
-        break;
-      case '9':
-        return '9';
-        break;
-      case 'A':
-        return '$';
-        break;
-      case 'B':
-        return '-';
-        break;
-      case 'C':
-        return ':';
-        break;
-      case 'D':
-        return '/';
-        break;
-      case 'E':
-        return '.';
-        break;
-      case 'F':
-        return '+';
-        break;
-      default:
-        console.log("error");
-        break;
+  hex2cod(si) {
+    var so = "";
+    for (var i = 0; i < si.length; i++) {
+      switch (si.charAt(i)) {
+        case '0':
+          so+=  '0';
+          break;
+        case '1':
+          so+=  '1';
+          break;
+        case '2':
+          so+=  '2';
+          break;
+        case '3':
+          so+=  '3';
+          break;
+        case '4':
+          so+=  '4';
+          break;
+        case '5':
+          so+=  '5';
+          break;
+        case '6':
+          so+=  '6';
+          break;
+        case '7':
+          so+=  '7';
+          break;
+        case '8':
+          so+=  '8';
+          break;
+        case '9':
+          so+=  '9';
+          break;
+        case 'A':
+          so+=  '$';
+          break;
+        case 'B':
+          so+=  '-';
+          break;
+        case 'C':
+          so+=  ':';
+          break;
+        case 'D':
+          so+=  '/';
+          break;
+        case 'E':
+          so+=  '.';
+          break;
+        case 'F':
+          so+=  '+';
+          break;
+        default:
+          console.log("\nerror in hex2cod for "+si+"\n");
+          break;
+      }
     }
+    return so;
   }
+
+
+  // hex2cod(s) {
+  //   switch (c) {
+  //     case '0':
+  //       return '0';
+  //       break;
+  //     case '1':
+  //       return '1';
+  //       break;
+  //     case '2':
+  //       return '2';
+  //       break;
+  //     case '3':
+  //       return '3';
+  //       break;
+  //     case '4':
+  //       return '4';
+  //       break;
+  //     case '5':
+  //       return '5';
+  //       break;
+  //     case '6':
+  //       return '6';
+  //       break;
+  //     case '7':
+  //       return '7';
+  //       break;
+  //     case '8':
+  //       return '8';
+  //       break;
+  //     case '9':
+  //       return '9';
+  //       break;
+  //     case 'A':
+  //       return '$';
+  //       break;
+  //     case 'B':
+  //       return '-';
+  //       break;
+  //     case 'C':
+  //       return ':';
+  //       break;
+  //     case 'D':
+  //       return '/';
+  //       break;
+  //     case 'E':
+  //       return '.';
+  //       break;
+  //     case 'F':
+  //       return '+';
+  //       break;
+  //     default:
+  //       console.log("error");
+  //       break;
+  //   }
+  // }
 
   cod2hex(c) {
     switch (c) {
