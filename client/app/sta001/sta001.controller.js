@@ -4,13 +4,18 @@
 class Sta001Component {
   constructor() {
     this.isKitBarcodePreviewEnabled = false;
-    this.isProductBarcodePreviewEnabled = false;
+    this.isProductBarcodesPreviewEnabled = false;
     this.kitBarcode = "";
     this.productCodes = [];
     this.parameters = [];
     this.encodingCut = 15;
     this.encodingTable = [[['A0', 'A']], [['A1', 'A'], ['A2', 'A']], [['A3', 'A'], ['A4', 'A'], ['A5', 'A']], [['A6', 'A'], ['A7', 'A'], ['A8', 'A'], ['A9', 'A']], [['A$', 'A'], ['A-', 'A'], ['A:', 'A'], ['A/', 'A'], ['A.', 'A']], [['A+', 'A'], ['A0', 'B'], ['A1', 'B'], ['A2', 'B'], ['A3', 'B'], ['A4', 'B']], [['A5', 'B'], ['A6', 'B'], ['A7', 'B'], ['A8', 'B'], ['A9', 'B'], ['A$', 'B'], ['A-', 'B']], [['A:', 'B'], ['A/', 'B'], ['A.', 'B'], ['A+', 'B'], ['A0', 'C'], ['A1', 'C'], ['A2', 'C'], ['A3', 'C']], [['A4', 'C'], ['A5', 'C'], ['A6', 'C'], ['A7', 'C'], ['A8', 'C'], ['A9', 'C'], ['A$', 'C'], ['A-', 'C'], ['A:', 'C']], [['A/', 'C'], ['A.', 'C'], ['A+', 'C'], ['A0', 'D'], ['A1', 'D'], ['A2', 'D'], ['A3', 'D'], ['A4', 'D'], ['A5', 'D'], ['A6', 'D']], [['A7', 'D'], ['A8', 'D'], ['A9', 'D'], ['A$', 'D'], ['A-', 'D'], ['A:', 'D'], ['A/', 'D'], ['A.', 'D'], ['A+', 'D'], ['B0', 'A'], ['B1', 'A']], [['B2', 'A'], ['B3', 'A'], ['B4', 'A'], ['B5', 'A'], ['B6', 'A'], ['B7', 'A'], ['B8', 'A'], ['B9', 'A'], ['B$', 'A'], ['B-', 'A'], ['B:', 'A'], ['B/', 'A']], [['B.', 'A'], ['B+', 'A'], ['B0', 'B'], ['B1', 'B'], ['B2', 'B'], ['B3', 'B'], ['B4', 'B'], ['B5', 'B'], ['B6', 'B'], ['B7', 'B'], ['B8', 'B'], ['B9', 'B'], ['B$', 'B']], [['B-', 'B'], ['B:', 'B'], ['B/', 'B'], ['B.', 'B'], ['B+', 'B'], ['B0', 'C'], ['B1', 'C'], ['B2', 'C'], ['B3', 'C'], ['B4', 'C'], ['B5', 'C'], ['B6', 'C'], ['B7', 'C'], ['B8', 'C']], [['B9', 'C'], ['B$', 'C'], ['B-', 'C'], ['B:', 'C'], ['B/', 'C'], ['B.', 'C'], ['B+', 'C'], ['B0', 'D'], ['B1', 'D'], ['B2', 'D'], ['B3', 'D'], ['B4', 'D'], ['B5', 'D'], ['B6', 'D'], ['B7', 'D']], [['B8', 'D'], ['B9', 'D'], ['B$', 'D'], ['B-', 'D'], ['B:', 'D'], ['B/', 'D'], ['B.', 'D'], ['B+', 'D'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A']], [['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B']], [['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C']], [['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D']], [['C', 'D'], ['C', 'D'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'B'], ['D', 'B']]];
   }
+
+  // refresh() {
+  //   updateKitBarcode();
+  //   updateProductBarcodes();
+  // }
 
   updateKitBarcode(source) {
     var tmp = "";
@@ -24,13 +29,7 @@ class Sta001Component {
     for (var index in this.newSta001.input.parameters) {
       tmp += this.newSta001.input.parameters[index.toString()].replace(/[.]+/g, '');
     }
-    tmp += "CS";
     tmp += this.getCS(tmp);
-    
-    // "113561006750117112350103100345103099121107097118134105107121096108112114106117345117130102CS"
-    // "11356100675011711235010310034510309912110709711813410510712109610811211410611734511713010245"
-
-
 
     if (source == 'kitCode') {
         if (this.newSta001.input.kitCode) {
@@ -89,6 +88,9 @@ class Sta001Component {
     if (this.isKitBarcodePreviewEnabled) {
       this.generateKitBarcodePreview();
     };
+    if (this.isProductBarcodesPreviewEnabled) {
+      this.generateProductBarcodesPreviews();
+    };
   }
 
   generateKitBarcodePreview() {
@@ -98,20 +100,10 @@ class Sta001Component {
         O.removeChild(O.firstChild);
       }
       var I = this.newSta001.input.kitBarcode;
-      // var I = "11356100675011711235010310034510309912110709711813410510712109610811211410611734511713010245";
-      // A5113561006750117B
-      // A6112350103100345B
-      // A7103099121107097B
-      // A8118134105107121B
-      // A9096108112114106B
-      // A$117345117130102B
-      // A-45B
-
       // I = I.replace(/['"]+/g, '');
       console.log("generateKitBarcodePreview: I = "+I);
 
       var re = new RegExp(".{1,"+this.encodingCut+"}","g")
-      // /.{1,15}/g
       var X = I.match(re);
 
       for (var i = 0; i < X.length; i++) {
@@ -125,6 +117,50 @@ class Sta001Component {
         JsBarcode(c, y, {
           height:30
         });
+      }
+    };
+  }
+
+  // updateProductBarcodes() {
+  //   this.productCodes = [];
+  // }
+
+  generateProductBarcodesPreviews() {
+    // Protection (Unit Test limits)
+    if (document.body.getElementsByClassName('productBarcodesImagePreview')[0]) {
+      // Destroy image
+      var img = document.body.getElementsByClassName('productBarcodesImagePreview')[0];
+      while (img.firstChild) {
+        img.removeChild(img.firstChild);
+      }
+      // loop over productCodes
+      for (var i in this.newSta001.input.productCodes) {
+        // Build string
+        var s = "";
+        s+= "i_";
+        s+= "_"+this.newSta001.input.productCodes[i.toString()].toString(16).toUpperCase()+"_";
+        s+= "_"+this.newSta001.input.kitLot[i.toString()].substr(2)+"_";
+        s+= "_o";
+        // Attach image
+        var l = document.createElement("li");
+        img.appendChild(l);
+        var c = document.createElement("canvas");
+        // c.className += "col-lg-12";
+        l.appendChild(c);
+        JsBarcode(c, y, {
+          height:30
+        });
+        // Protection (Unit Test limits)
+        if (document.body.getElementsById('productBarcodesImagePreview')[0]) {
+          // Attach comment
+          var cmt = document.body.getElementsByClassName('productBarcodeCommentPreview')[i];
+          cmt.innerHTML = s;
+        }
+
+        // Log result
+        console.log("generateProductBarcodesPreviews() productCode: "+
+          this.newSta001.input.productCodes[i.toString()]+
+          " -> "+s);      
       }
     };
   }
@@ -154,22 +190,23 @@ class Sta001Component {
     console.log("clearSta001()");
   }
 
-  getCS() {
+  getCS(s) {
+    var I = new String(s);
     var chk = I.charCodeAt(0).toString(16).toUpperCase(); //hex
     for (var i = 1; i < I.length; i++) {
       chk = (parseInt(chk, 16) ^ I.charCodeAt(i)).toString(16).toUpperCase(); // xor only work on javascript numeric values
     }
     chk = (parseInt(chk, 16) | parseInt('40', 16)).toString(16).toUpperCase();
     var pF = ((parseInt(chk, 16) & parseInt('F0', 16)) / 16).toString(16).toUpperCase();
-    pF = conv(pF);
+    pF = this.hex2cod(pF);
     var pf = ((parseInt(chk, 16) & parseInt('0F', 16))).toString(16).toUpperCase();
-    pf = this.conv(pf);
+    pf = this.hex2cod(pf);
     var CS = pF+pf;
     return CS;
   }
 
-  conv(c) {
-    switch (i) {
+  hex2cod(c) {
+    switch (c) {
       case '0':
         return '0';
         break;
@@ -224,7 +261,61 @@ class Sta001Component {
     }
   }
 
-
+  cod2hex(c) {
+    switch (c) {
+      case '0':
+        return '0';
+        break;
+      case '1':
+        return '1';
+        break;
+      case '2':
+        return '2';
+        break;
+      case '3':
+        return '3';
+        break;
+      case '4':
+        return '4';
+        break;
+      case '5':
+        return '5';
+        break;
+      case '6':
+        return '6';
+        break;
+      case '7':
+        return '7';
+        break;
+      case '8':
+        return '8';
+        break;
+      case '9':
+        return '9';
+        break;
+      case '$':
+        return 'A';
+        break;
+      case '-':
+        return 'B';
+        break;
+      case ':':
+        return 'C';
+        break;
+      case '/':
+        return 'D';
+        break;
+      case '.':
+        return 'E';
+        break;
+      case '+':
+        return 'F';
+        break;
+      default:
+        console.log("error");
+        break;
+    }
+  }
 
 }
 

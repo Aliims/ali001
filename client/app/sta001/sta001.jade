@@ -73,7 +73,7 @@
                 li
                   button.btn.btn-primary(
                     ng-show="!$ctrl.isKitBarcodePreviewEnabled",
-                    ng-click="$ctrl.isKitBarcodePreviewEnabled = true") SHOW barcodes
+                    ng-click="$ctrl.isKitBarcodePreviewEnabled = true; $ctrl.updateKitBarcode('kitExpiry');") SHOW barcodes
                 li
                   button.btn.btn-default(
                     ng-show="$ctrl.isKitBarcodePreviewEnabled",
@@ -100,7 +100,7 @@
                   id="sta001InputCountParameters"
                   ng-model="$ctrl.newSta001.input.countParameters"
                   ng-change="$ctrl.updateKitBarcode('countParameters')"
-                  min="1")
+                  min="0")
                 ul.list-unstyled
                   li(ng-repeat="parameter in $ctrl.getParameters() track by $index")
                     label parameter ({{$index}})
@@ -128,6 +128,7 @@
                   li(ng-repeat="productCode in $ctrl.getProductCodes() track by $index")
                     //- label product code ({{$index*5+17}})
                     label product code ({{$index}})
+                      em(ng-show="$ctrl.isProductBarcodesPreviewEnabled") {{productCode}}
                     input.form-control(
                       type="text",
                       id="sta001InputProductCode{{$index}}"
@@ -139,27 +140,27 @@
                     //- ng-model="$ctrl.productCodes[$index]"
                     //- ng-change="$ctrl.updateKitBarcode('productCode')")
 
-            div(ng-class="{'col-lg-3': $ctrl.isProductBarcodePreviewEnabled, 'col-lg-1': !$ctrl.isProductBarcodePreviewEnabled}")
+            div(ng-class="{'col-lg-3': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductBarcodesPreviewEnabled}")
 
               ul.list-unstyled
                 li
                   button.btn.btn-primary(
-                    ng-show="!$ctrl.isProductBarcodePreviewEnabled",
-                    ng-click="$ctrl.isProductBarcodePreviewEnabled = true") SHOW barcodes
+                    ng-show="!$ctrl.isProductBarcodesPreviewEnabled",
+                    ng-click="$ctrl.isProductBarcodesPreviewEnabled = true; $ctrl.updateKitBarcode('kitExpiry');") SHOW barcodes
                 li
                   button.btn.btn-default(
-                    ng-show="$ctrl.isProductBarcodePreviewEnabled",
-                    ng-click="$ctrl.isProductBarcodePreviewEnabled = false") HIDE barcodes
+                    ng-show="$ctrl.isProductBarcodesPreviewEnabled",
+                    ng-click="$ctrl.isProductBarcodesPreviewEnabled = false") HIDE barcodes
 
               //- ul.list-unstyled.kitBarcodePreview(
-              //-   ng-show="$ctrl.isProductBarcodePreviewEnabled"
+              //-   ng-show="$ctrl.isProductBarcodesPreviewEnabled"
               //-   style="background-color: GoldenRod")
 
               ul.list-unstyled(
-                ng-show="$ctrl.isProductBarcodePreviewEnabled"
+                ng-show="$ctrl.isProductBarcodesPreviewEnabled"
                 style="background-color: GoldenRod")
                 li
-                  canvas.productBarcodePreview
+                  canvas.productBarcodesImagePreview
 
 
           div.col-lg-12(
