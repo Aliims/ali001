@@ -24,7 +24,8 @@ class Sta001Component {
     for (var index in this.newSta001.input.parameters) {
       tmp += this.newSta001.input.parameters[index.toString()].replace(/[.]+/g, '');
     }
-    tmp+= "CS";
+    tmp += "CS";
+    tmp += this.getCS(tmp);
     
     // "113561006750117112350103100345103099121107097118134105107121096108112114106117345117130102CS"
     // "11356100675011711235010310034510309912110709711813410510712109610811211410611734511713010245"
@@ -152,6 +153,79 @@ class Sta001Component {
     this.newSta001 = null;
     console.log("clearSta001()");
   }
+
+  getCS() {
+    var chk = I.charCodeAt(0).toString(16).toUpperCase(); //hex
+    for (var i = 1; i < I.length; i++) {
+      chk = (parseInt(chk, 16) ^ I.charCodeAt(i)).toString(16).toUpperCase(); // xor only work on javascript numeric values
+    }
+    chk = (parseInt(chk, 16) | parseInt('40', 16)).toString(16).toUpperCase();
+    var pF = ((parseInt(chk, 16) & parseInt('F0', 16)) / 16).toString(16).toUpperCase();
+    pF = conv(pF);
+    var pf = ((parseInt(chk, 16) & parseInt('0F', 16))).toString(16).toUpperCase();
+    pf = this.conv(pf);
+    var CS = pF+pf;
+    return CS;
+  }
+
+  conv(c) {
+    switch (i) {
+      case '0':
+        return '0';
+        break;
+      case '1':
+        return '1';
+        break;
+      case '2':
+        return '2';
+        break;
+      case '3':
+        return '3';
+        break;
+      case '4':
+        return '4';
+        break;
+      case '5':
+        return '5';
+        break;
+      case '6':
+        return '6';
+        break;
+      case '7':
+        return '7';
+        break;
+      case '8':
+        return '8';
+        break;
+      case '9':
+        return '9';
+        break;
+      case 'A':
+        return '$';
+        break;
+      case 'B':
+        return '-';
+        break;
+      case 'C':
+        return ':';
+        break;
+      case 'D':
+        return '/';
+        break;
+      case 'E':
+        return '.';
+        break;
+      case 'F':
+        return '+';
+        break;
+      default:
+        console.log("error");
+        break;
+    }
+  }
+
+
+
 }
 
 angular.module('ali001App')
