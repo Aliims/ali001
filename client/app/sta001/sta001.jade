@@ -11,16 +11,16 @@
           style="background-color: pink")
 
           div.col-lg-12
-            ul.list-unstyled.col-lg-6
+            ul.list-unstyled.col-lg-4
               li
                 label parameters (debug only)
               li
-                pre {{$ctrl.parameters | json}} 
-            ul.list-unstyled.col-lg-6
+                pre {{$ctrl.parameters | json}}
+            ul.list-unstyled.col-lg-4
               li
-                label productCodes (debug only)
+                label productBarcodes (debug only)
               li
-                pre {{$ctrl.productCodes | json}}
+                pre {{$ctrl.productBarcodes | json}}
 
           div.col-lg-12
             div(ng-class="{'col-lg-9': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isKitBarcodePreviewEnabled}")
@@ -90,16 +90,17 @@
               //-     canvas.kitBarcodePreview
 
           div.col-lg-12
-            div(ng-class="{'col-lg-9': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isKitBarcodePreviewEnabled}")
 
-              div.form-group.col-lg-6(
-                style="background-color: blue")
-                label count parameters
+            div(
+              ng-class="{'col-lg-9': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-11': !$ctrl.isProductBarcodesPreviewEnabled}")
+
+              div.form-group.col-lg-4
+                label parameters count
                 input.form-control(
                   type="number"
-                  id="sta001InputCountParameters"
-                  ng-model="$ctrl.newSta001.input.countParameters"
-                  ng-change="$ctrl.updateKitBarcode('countParameters')"
+                  id="sta001InputParametersCount"
+                  ng-model="$ctrl.newSta001.input.parametersCount"
+                  ng-change="$ctrl.parametersCountChange()"
                   min="0")
                 ul.list-unstyled
                   li(ng-repeat="parameter in $ctrl.getParameters() track by $index")
@@ -114,54 +115,46 @@
                     //- ng-model="$ctrl.parameters[$index]"
                     //- ng-change="$ctrl.updateKitBarcode('parameter')")
 
-              div.form-group.col-lg-6(
-                style="background-color: green")
-                label count product codes
+              div.form-group.col-lg-8
+                label products count
                 input.form-control(
                   type="number"
-                  id="sta001InputCountProductCodes"
-                  ng-model="$ctrl.newSta001.input.countProductCodes"
-                  ng-change="$ctrl.updateKitBarcode('countProductCodes')"
+                  id="sta001InputProductsCount"
+                  ng-model="$ctrl.newSta001.input.productsCount"
+                  ng-change="$ctrl.productsCountChange()"
                   min="1"
                   max="9")
                 ul.list-unstyled
                   li(ng-repeat="productCode in $ctrl.getProductCodes() track by $index")
-                    //- label product code ({{$index*5+17}})
-                    label product code ({{$index}})
-                      em(ng-show="$ctrl.isProductCodesPreviewEnabled") {{productCode}}
-                    input.form-control(
-                      type="text",
-                      id="sta001InputProductCode{{$index}}"
-                      placeholder="ProductCode{{$index}}"
-                      ng-model="$ctrl.newSta001.input.productCodes[$index]"
-                      ng-change="$ctrl.updateKitBarcode('productCode'+{{$index}})")
-
-                    //- ng-model="$ctrl.newSta001.input.productCodes[$index]"
-                    //- ng-model="$ctrl.productCodes[$index]"
+                    div.form-group.col-lg-6
+                      label product code ({{$index}})
+                      input.form-control(
+                        type="text",
+                        id="sta001InputProductCode{{$index}}"
+                        placeholder="ProductCode{{$index}}"
+                        ng-model="$ctrl.newSta001.input.productCodes[$index]"
+                        ng-change="$ctrl.updateKitBarcode('productCode'+{{$index}})")
+                    div.form-group.col-lg-6
+                      label product barcode ({{$index}})
+                      pre {{$ctrl.productBarcodes[$index] | json}}
+                    //- ng-model="$ctrl.newSta001.input.productBarcodes[$index]"
+                    //- ng-model="$ctrl.productBarcodes[$index]"
                     //- ng-change="$ctrl.updateKitBarcode('productCode')")
 
-            div(ng-class="{'col-lg-3': $ctrl.isProductCodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductCodesPreviewEnabled}")
+            div(ng-class="{'col-lg-3': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductBarcodesPreviewEnabled}")
 
               ul.list-unstyled
                 li
                   button.btn.btn-primary(
-                    ng-show="!$ctrl.isProductCodesPreviewEnabled",
-                    ng-click="$ctrl.isProductCodesPreviewEnabled = true; $ctrl.updateKitBarcode('kitExpiry');") SHOW barcodes
+                    ng-show="!$ctrl.isProductBarcodesPreviewEnabled",
+                    ng-click="$ctrl.isProductBarcodesPreviewEnabled = true; $ctrl.updateKitBarcode('kitExpiry');") SHOW barcodes
                 li
                   button.btn.btn-default(
-                    ng-show="$ctrl.isProductCodesPreviewEnabled",
-                    ng-click="$ctrl.isProductCodesPreviewEnabled = false") HIDE barcodes
+                    ng-show="$ctrl.isProductBarcodesPreviewEnabled",
+                    ng-click="$ctrl.isProductBarcodesPreviewEnabled = false") HIDE barcodes
 
-              //- ul.list-unstyled.kitBarcodePreview(
-              //-   ng-show="$ctrl.isProductCodesPreviewEnabled"
-              //-   style="background-color: GoldenRod")
-
-              ul.list-unstyled(
-                ng-show="$ctrl.isProductCodesPreviewEnabled"
+              ul.list-unstyled.productBarcodesPreview.col-lg-12(
                 style="background-color: GoldenRod")
-                li
-                  canvas.productBarcodesImagePreview
-
 
           div.col-lg-12(
             style="background-color: black")
