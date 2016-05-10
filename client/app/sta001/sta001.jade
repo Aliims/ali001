@@ -22,6 +22,12 @@
               li
                 pre {{$ctrl.productBarcodes | json}}
 
+            ul.list-unstyled.col-lg-4
+              li
+                label kitBarcode (debug only)
+              li
+                pre {{$ctrl.kitBarcode | json}}
+
           div.col-lg-12
             div(ng-class="{'col-lg-9': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isKitBarcodePreviewEnabled}")
 

@@ -13,8 +13,8 @@ class Sta001Component {
     this.isKitBarcodePreviewEnabled = false;
     this.kitBarcode = "";
 
-    this.encodingCut = 15;
-    this.encodingTable = [[['A0', 'A']], [['A1', 'A'], ['A2', 'A']], [['A3', 'A'], ['A4', 'A'], ['A5', 'A']], [['A6', 'A'], ['A7', 'A'], ['A8', 'A'], ['A9', 'A']], [['A$', 'A'], ['A-', 'A'], ['A:', 'A'], ['A/', 'A'], ['A.', 'A']], [['A+', 'A'], ['A0', 'B'], ['A1', 'B'], ['A2', 'B'], ['A3', 'B'], ['A4', 'B']], [['A5', 'B'], ['A6', 'B'], ['A7', 'B'], ['A8', 'B'], ['A9', 'B'], ['A$', 'B'], ['A-', 'B']], [['A:', 'B'], ['A/', 'B'], ['A.', 'B'], ['A+', 'B'], ['A0', 'C'], ['A1', 'C'], ['A2', 'C'], ['A3', 'C']], [['A4', 'C'], ['A5', 'C'], ['A6', 'C'], ['A7', 'C'], ['A8', 'C'], ['A9', 'C'], ['A$', 'C'], ['A-', 'C'], ['A:', 'C']], [['A/', 'C'], ['A.', 'C'], ['A+', 'C'], ['A0', 'D'], ['A1', 'D'], ['A2', 'D'], ['A3', 'D'], ['A4', 'D'], ['A5', 'D'], ['A6', 'D']], [['A7', 'D'], ['A8', 'D'], ['A9', 'D'], ['A$', 'D'], ['A-', 'D'], ['A:', 'D'], ['A/', 'D'], ['A.', 'D'], ['A+', 'D'], ['B0', 'A'], ['B1', 'A']], [['B2', 'A'], ['B3', 'A'], ['B4', 'A'], ['B5', 'A'], ['B6', 'A'], ['B7', 'A'], ['B8', 'A'], ['B9', 'A'], ['B$', 'A'], ['B-', 'A'], ['B:', 'A'], ['B/', 'A']], [['B.', 'A'], ['B+', 'A'], ['B0', 'B'], ['B1', 'B'], ['B2', 'B'], ['B3', 'B'], ['B4', 'B'], ['B5', 'B'], ['B6', 'B'], ['B7', 'B'], ['B8', 'B'], ['B9', 'B'], ['B$', 'B']], [['B-', 'B'], ['B:', 'B'], ['B/', 'B'], ['B.', 'B'], ['B+', 'B'], ['B0', 'C'], ['B1', 'C'], ['B2', 'C'], ['B3', 'C'], ['B4', 'C'], ['B5', 'C'], ['B6', 'C'], ['B7', 'C'], ['B8', 'C']], [['B9', 'C'], ['B$', 'C'], ['B-', 'C'], ['B:', 'C'], ['B/', 'C'], ['B.', 'C'], ['B+', 'C'], ['B0', 'D'], ['B1', 'D'], ['B2', 'D'], ['B3', 'D'], ['B4', 'D'], ['B5', 'D'], ['B6', 'D'], ['B7', 'D']], [['B8', 'D'], ['B9', 'D'], ['B$', 'D'], ['B-', 'D'], ['B:', 'D'], ['B/', 'D'], ['B.', 'D'], ['B+', 'D'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A']], [['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B']], [['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C']], [['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D']], [['C', 'D'], ['C', 'D'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'B'], ['D', 'B']]];
+    this.kitBarcodeEncodingCut = 15;
+    this.kitBarcodeEncoding = [[['A0', 'A']], [['A1', 'A'], ['A2', 'A']], [['A3', 'A'], ['A4', 'A'], ['A5', 'A']], [['A6', 'A'], ['A7', 'A'], ['A8', 'A'], ['A9', 'A']], [['A$', 'A'], ['A-', 'A'], ['A:', 'A'], ['A/', 'A'], ['A.', 'A']], [['A+', 'A'], ['A0', 'B'], ['A1', 'B'], ['A2', 'B'], ['A3', 'B'], ['A4', 'B']], [['A5', 'B'], ['A6', 'B'], ['A7', 'B'], ['A8', 'B'], ['A9', 'B'], ['A$', 'B'], ['A-', 'B']], [['A:', 'B'], ['A/', 'B'], ['A.', 'B'], ['A+', 'B'], ['A0', 'C'], ['A1', 'C'], ['A2', 'C'], ['A3', 'C']], [['A4', 'C'], ['A5', 'C'], ['A6', 'C'], ['A7', 'C'], ['A8', 'C'], ['A9', 'C'], ['A$', 'C'], ['A-', 'C'], ['A:', 'C']], [['A/', 'C'], ['A.', 'C'], ['A+', 'C'], ['A0', 'D'], ['A1', 'D'], ['A2', 'D'], ['A3', 'D'], ['A4', 'D'], ['A5', 'D'], ['A6', 'D']], [['A7', 'D'], ['A8', 'D'], ['A9', 'D'], ['A$', 'D'], ['A-', 'D'], ['A:', 'D'], ['A/', 'D'], ['A.', 'D'], ['A+', 'D'], ['B0', 'A'], ['B1', 'A']], [['B2', 'A'], ['B3', 'A'], ['B4', 'A'], ['B5', 'A'], ['B6', 'A'], ['B7', 'A'], ['B8', 'A'], ['B9', 'A'], ['B$', 'A'], ['B-', 'A'], ['B:', 'A'], ['B/', 'A']], [['B.', 'A'], ['B+', 'A'], ['B0', 'B'], ['B1', 'B'], ['B2', 'B'], ['B3', 'B'], ['B4', 'B'], ['B5', 'B'], ['B6', 'B'], ['B7', 'B'], ['B8', 'B'], ['B9', 'B'], ['B$', 'B']], [['B-', 'B'], ['B:', 'B'], ['B/', 'B'], ['B.', 'B'], ['B+', 'B'], ['B0', 'C'], ['B1', 'C'], ['B2', 'C'], ['B3', 'C'], ['B4', 'C'], ['B5', 'C'], ['B6', 'C'], ['B7', 'C'], ['B8', 'C']], [['B9', 'C'], ['B$', 'C'], ['B-', 'C'], ['B:', 'C'], ['B/', 'C'], ['B.', 'C'], ['B+', 'C'], ['B0', 'D'], ['B1', 'D'], ['B2', 'D'], ['B3', 'D'], ['B4', 'D'], ['B5', 'D'], ['B6', 'D'], ['B7', 'D']], [['B8', 'D'], ['B9', 'D'], ['B$', 'D'], ['B-', 'D'], ['B:', 'D'], ['B/', 'D'], ['B.', 'D'], ['B+', 'D'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A']], [['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B']], [['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C']], [['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D']], [['C', 'D'], ['C', 'D'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'B'], ['D', 'B']]];
   }
 
   generateParameters() {
@@ -29,7 +29,6 @@ class Sta001Component {
         "] stored in parameters table");
     }
   }
-
   parametersCountChange() {
     var fromLength = this.parameters.length;
     var toLength = this.newSta001.input.parametersCount;
@@ -48,15 +47,14 @@ class Sta001Component {
       "] to toLength = ["+toLength+
       "]");
   }
-
   getParameters() {
     return this.parameters;
   }
 
   generateProductBarcodes() {
     for (var i in this.newSta001.input.productCodes) {
-      var productCode = this.newSta001.input.productCodes[i.toString()]; //TODO protect
-      var kitLot = this.newSta001.input.kitLot; //TODO protect
+      var productCode = this.newSta001.input.productCodes[i.toString()];
+      var kitLot = this.newSta001.input.kitLot;
       var s = "";
       s+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][0];
       s+= this.hex2cod(Number(productCode).toString(16).toUpperCase()); // to hex hexString = yourNumber.toString(16); reverse with yourNumber = parseInt(hexString, 16);
@@ -73,7 +71,6 @@ class Sta001Component {
       this.generateProductBarcodesPreview();
     }
   }
-
   generateProductBarcodesPreview() {
     if (document.body.getElementsByClassName('list-unstyled productBarcodesPreview col-lg-12')[0]) {
       var img = document.body.getElementsByClassName('list-unstyled productBarcodesPreview col-lg-12')[0];
@@ -95,7 +92,6 @@ class Sta001Component {
       }
     };
   }
-
   productsCountChange() {
     var fromLength = this.productBarcodes.length;
     var toLength = this.newSta001.input.productsCount;
@@ -114,12 +110,60 @@ class Sta001Component {
       "] to toLength = ["+toLength+
       "]");
   }
-
   getProductCodes() {
     return this.productBarcodes;
   }
 
-
+  generateKitBarcode() {
+    var kit = "";
+    if (this.newSta001.input.kitLot) {
+      var kitLot = this.newSta001.input.kitLot;
+      kit += kitLot;
+      console.log("generateKitBarcode() with kitLot = ["+kitLot+
+        "]");
+    }
+    if (this.newSta001.input.kitCode) {
+      var kitCode = this.newSta001.input.kitCode;
+      kit += kitCode;
+      console.log("generateKitBarcode() with kitCode = ["+kitCode+
+        "]");
+    }
+    if (this.newSta001.input.kitExpiry) {
+      var kitExpiry = this.newSta001.input.kitExpiry;
+      kit += kitExpiry;
+      console.log("generateKitBarcode() with kitExpiry = ["+kitExpiry+
+        "]");
+    }
+    if (this.newSta001.input.productsCount) {
+      var productsCount = this.newSta001.input.productsCount;
+      kit += productsCount;
+      console.log("generateKitBarcode() with productsCount = ["+productsCount+
+        "]");
+    }
+    if (this.newSta001.input.productCodes) {
+      for (var i in this.newSta001.input.productCodes) {
+        var productCode = this.newSta001.input.productCodes[i.toString()];
+        kit += productCode;
+        console.log("generateKitBarcode() @["+i+
+          "] productCode = ["+productCode+
+          "]");
+      }
+    }
+    for (var i = 0; i < this.parameters.length; i++) {
+      var parameter = this.parameters[i];
+      kit += parameter;
+      console.log("generateKitBarcode() @["+i+
+        "] paramter = ["+parameter+
+        "]");
+    }
+    // var CS = this.generateKitBarcodeCS(s);
+    // kit += CS;
+    console.log("generateKitBarcode() --> kit = ["+kit+
+      "] stored as kitBarcode value");
+    if (this.isKitBarcodePreviewEnabled) {
+      this.generateKitBarcodePreview();
+    }
+  }
 
 
 
@@ -191,10 +235,9 @@ class Sta001Component {
     } else {      console.log("updateKitBarcode: oups!");
     }
 
-
-    this.generateProductBarcodes();
     this.generateParameters();
-
+    this.generateProductBarcodes();
+    this.generateKitBarcode();
 
     // this.newSta001.input.kitBarcode = tmp;
     // if (this.isKitBarcodePreviewEnabled) {
@@ -215,11 +258,11 @@ class Sta001Component {
       // I = I.replace(/['"]+/g, '');
       console.log("generateKitBarcodePreview: I = "+I);
 
-      var re = new RegExp(".{1,"+this.encodingCut+"}","g")
+      var re = new RegExp(".{1,"+this.kitBarcodeEncodingCut+"}","g")
       var X = I.match(re);
 
       for (var i = 0; i < X.length; i++) {
-        var y = this.encodingTable[X.length-1][i][0]+X[i]+this.encodingTable[X.length-1][i][1];
+        var y = this.kitBarcodeEncoding[X.length-1][i][0]+X[i]+this.kitBarcodeEncoding[X.length-1][i][1];
         console.log(i+": "+X[i]+" -> "+y);
         var l = document.createElement("li");
         O.appendChild(l);
@@ -232,16 +275,6 @@ class Sta001Component {
       }
     };
   }
-
-
-
-  getProductCodesLength() {
-    return this.productBarcodes.length;
-  }
-
-
-
-
 
   saveSta001() {
     console.log("saveSta001()");
