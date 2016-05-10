@@ -4,18 +4,103 @@
 class Sta001Component {
   constructor() {
 
+    this.parameters = [];
+
     this.isProductBarcodesPreviewEnabled = false;
     this.productBarcodes = [];
     this.productBarcodeEncoding = [['A', 'A'], ['A', 'B'], ['A', 'C'], ['A', 'D'], ['B', 'A'], ['B', 'B'], ['B', 'C'], ['B', 'D'], ['C', 'A'], ['C', 'B']];
 
-    this.parameters = [];
-
     this.isKitBarcodePreviewEnabled = false;
     this.kitBarcode = "";
+    this.kitBarcodeLines = [];
 
     this.kitBarcodeEncodingCut = 15;
     this.kitBarcodeEncoding = [[['A0', 'A']], [['A1', 'A'], ['A2', 'A']], [['A3', 'A'], ['A4', 'A'], ['A5', 'A']], [['A6', 'A'], ['A7', 'A'], ['A8', 'A'], ['A9', 'A']], [['A$', 'A'], ['A-', 'A'], ['A:', 'A'], ['A/', 'A'], ['A.', 'A']], [['A+', 'A'], ['A0', 'B'], ['A1', 'B'], ['A2', 'B'], ['A3', 'B'], ['A4', 'B']], [['A5', 'B'], ['A6', 'B'], ['A7', 'B'], ['A8', 'B'], ['A9', 'B'], ['A$', 'B'], ['A-', 'B']], [['A:', 'B'], ['A/', 'B'], ['A.', 'B'], ['A+', 'B'], ['A0', 'C'], ['A1', 'C'], ['A2', 'C'], ['A3', 'C']], [['A4', 'C'], ['A5', 'C'], ['A6', 'C'], ['A7', 'C'], ['A8', 'C'], ['A9', 'C'], ['A$', 'C'], ['A-', 'C'], ['A:', 'C']], [['A/', 'C'], ['A.', 'C'], ['A+', 'C'], ['A0', 'D'], ['A1', 'D'], ['A2', 'D'], ['A3', 'D'], ['A4', 'D'], ['A5', 'D'], ['A6', 'D']], [['A7', 'D'], ['A8', 'D'], ['A9', 'D'], ['A$', 'D'], ['A-', 'D'], ['A:', 'D'], ['A/', 'D'], ['A.', 'D'], ['A+', 'D'], ['B0', 'A'], ['B1', 'A']], [['B2', 'A'], ['B3', 'A'], ['B4', 'A'], ['B5', 'A'], ['B6', 'A'], ['B7', 'A'], ['B8', 'A'], ['B9', 'A'], ['B$', 'A'], ['B-', 'A'], ['B:', 'A'], ['B/', 'A']], [['B.', 'A'], ['B+', 'A'], ['B0', 'B'], ['B1', 'B'], ['B2', 'B'], ['B3', 'B'], ['B4', 'B'], ['B5', 'B'], ['B6', 'B'], ['B7', 'B'], ['B8', 'B'], ['B9', 'B'], ['B$', 'B']], [['B-', 'B'], ['B:', 'B'], ['B/', 'B'], ['B.', 'B'], ['B+', 'B'], ['B0', 'C'], ['B1', 'C'], ['B2', 'C'], ['B3', 'C'], ['B4', 'C'], ['B5', 'C'], ['B6', 'C'], ['B7', 'C'], ['B8', 'C']], [['B9', 'C'], ['B$', 'C'], ['B-', 'C'], ['B:', 'C'], ['B/', 'C'], ['B.', 'C'], ['B+', 'C'], ['B0', 'D'], ['B1', 'D'], ['B2', 'D'], ['B3', 'D'], ['B4', 'D'], ['B5', 'D'], ['B6', 'D'], ['B7', 'D']], [['B8', 'D'], ['B9', 'D'], ['B$', 'D'], ['B-', 'D'], ['B:', 'D'], ['B/', 'D'], ['B.', 'D'], ['B+', 'D'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A']], [['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B']], [['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C']], [['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D']], [['C', 'D'], ['C', 'D'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'B'], ['D', 'B']]];
   }
+
+  // refresh() {
+  //   updateKitBarcode();
+  //   generateProductBarcodes();
+  // }
+
+  updateKitBarcode(source) {
+    // var tmp = "";
+    // if (this.newSta001.input.kitLot) tmp += this.newSta001.input.kitLot;
+    // if (this.newSta001.input.kitCode) tmp += this.newSta001.input.kitCode;
+    // if (this.newSta001.input.kitExpiry) tmp += this.newSta001.input.kitExpiry;
+    // if (this.newSta001.input.productsCount) tmp += this.newSta001.input.productsCount;
+    // for (var index in this.newSta001.input.productCodes) {
+    //   tmp += this.newSta001.input.productCodes[index.toString()];
+    // }
+    // for (var index in this.newSta001.input.parameters) {
+    //   tmp += this.newSta001.input.parameters[index.toString()].replace(/[.]+/g, '');
+    // }
+    // tmp += this.generateKitBarcodeCS(tmp);
+
+    // if (source == 'kitCode') {
+    //     if (this.newSta001.input.kitCode) {
+    //       console.log("updateKitBarcode: kitCode");
+    //     }
+    // } else if (source == 'kitLot') {
+    //     if (this.newSta001.input.kitLot) {
+    //       console.log("updateKitBarcode: kitLot");
+    //     }
+    // } else if (source == 'kitExpiry') {
+    //     if (this.newSta001.input.kitExpiry) {
+    //       console.log("updateKitBarcode: kitExpiry");
+    //     }
+    // // } else if (source == 'countProductCodes') {
+    // //     if (this.newSta001.input.productsCount) {
+    // //       while(this.productBarcodes.length < this.newSta001.input.productsCount) {
+    // //         this.productBarcodes.push("");
+    // //       }
+    // //       while(this.productBarcodes.length > this.newSta001.input.productsCount) {
+    // //         this.productBarcodes.pop();
+    // //       }
+    // //       console.log("updateKitBarcode: countProductCodes");
+    // //     }
+    // } else if (source.startsWith('productCode')) {
+    //   var index = source.charAt(source.length-1);
+    //   if (this.newSta001.input.productCodes[index.toString()]) {
+    //     this.productBarcodes[index] = this.newSta001.input.productCodes[index.toString()];
+    //     console.log("updateKitBarcode: productCode "+index);
+    //   }
+    // // } else if (source == 'countParameters') {
+    // //     if (this.newSta001.input.countParameters) {
+    // //       while(this.parameters.length < this.newSta001.input.countParameters) {
+    // //         this.parameters.push("");
+    // //       }
+    // //       while(this.parameters.length > this.newSta001.input.countParameters) {
+    // //         this.parameters.pop();
+    // //       }
+    // //       console.log("updateKitBarcode: countParameters");
+    // //     }
+    // // } else if (source.startsWith('parameter')) {
+    // //   var index = source.charAt(source.length-1);
+    // //   if (this.newSta001.input.parameters[index.toString()]) {
+    // //     this.parameters[index] = this.newSta001.input.parameters[index.toString()];
+    // //     // tmp += "p"+index+this.parameters[index];
+    // //     console.log("updateKitBarcode: parameter "+index);
+    // //   }
+    // } else {      console.log("updateKitBarcode: oups!");
+    // }
+
+    this.generateParameters();
+    this.generateProductBarcodes();
+    this.generateKitBarcode();
+
+    // this.newSta001.input.kitBarcode = tmp;
+    // if (this.isKitBarcodePreviewEnabled) {
+    //   this.generateKitBarcodePreview();
+    // };
+    // if (this.isProductBarcodesPreviewEnabled) {
+    //   this.generateProductBarcodesPreviews();
+    // };
+  }
+
+
+
+
 
   generateParameters() {
     for (var i in this.newSta001.input.parameters) {
@@ -55,16 +140,16 @@ class Sta001Component {
     for (var i in this.newSta001.input.productCodes) {
       var productCode = this.newSta001.input.productCodes[i.toString()];
       var kitLot = this.newSta001.input.kitLot;
-      var s = "";
-      s+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][0];
-      s+= this.hex2cod(Number(productCode).toString(16).toUpperCase()); // to hex hexString = yourNumber.toString(16); reverse with yourNumber = parseInt(hexString, 16);
-      s+= kitLot.substr(4);
-      s+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][1];
-      this.productBarcodes[i] = s;
+      var product = "";
+      product+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][0];
+      product+= this.hex2cod(Number(productCode).toString(16).toUpperCase()); // to hex hexString = yourNumber.toString(16); reverse with yourNumber = parseInt(hexString, 16);
+      product+= kitLot.substr(4);
+      product+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][1];
+      this.productBarcodes[i] = product;
       console.log("generateProductBarcodes() @["+i+
         "] with productCode = ["+productCode+
         "] and kitLot = ["+kitLot+
-        "] --> productBarcode = ["+s+
+        "] --> productBarcode = ["+product+
         "] stored in productBarcodes table");
     }
     if (this.isProductBarcodesPreviewEnabled) {
@@ -156,98 +241,35 @@ class Sta001Component {
         "] paramter = ["+parameter+
         "]");
     }
-    // var CS = this.generateKitBarcodeCS(s);
-    // kit += CS;
+    var CS = this.generateKitBarcodeCS(kit);
+    kit += CS;
+    this.kitBarcode = kit;
     console.log("generateKitBarcode() --> kit = ["+kit+
       "] stored as kitBarcode value");
+    // kit barcode lines...
+    this.generateKitBarcodeLines();
     if (this.isKitBarcodePreviewEnabled) {
       this.generateKitBarcodePreview();
     }
   }
-
-
-
-
-  // refresh() {
-  //   updateKitBarcode();
-  //   generateProductBarcodes();
-  // }
-
-  updateKitBarcode(source) {
-    var tmp = "";
-    if (this.newSta001.input.kitLot) tmp += this.newSta001.input.kitLot;
-    if (this.newSta001.input.kitCode) tmp += this.newSta001.input.kitCode;
-    if (this.newSta001.input.kitExpiry) tmp += this.newSta001.input.kitExpiry;
-    if (this.newSta001.input.productsCount) tmp += this.newSta001.input.productsCount;
-    for (var index in this.newSta001.input.productCodes) {
-      tmp += this.newSta001.input.productCodes[index.toString()];
+  generateKitBarcodeCS(kit) {
+    var I = new String(kit);
+    var chk = I.charCodeAt(0).toString(16).toUpperCase(); //hex
+    for (var i = 1; i < I.length; i++) {
+      chk = (parseInt(chk, 16) ^ I.charCodeAt(i)).toString(16).toUpperCase(); // xor only work on javascript numeric values
     }
-    for (var index in this.newSta001.input.parameters) {
-      tmp += this.newSta001.input.parameters[index.toString()].replace(/[.]+/g, '');
-    }
-    tmp += this.getCS(tmp);
-
-    if (source == 'kitCode') {
-        if (this.newSta001.input.kitCode) {
-          console.log("updateKitBarcode: kitCode");
-        }
-    } else if (source == 'kitLot') {
-        if (this.newSta001.input.kitLot) {
-          console.log("updateKitBarcode: kitLot");
-        }
-    } else if (source == 'kitExpiry') {
-        if (this.newSta001.input.kitExpiry) {
-          console.log("updateKitBarcode: kitExpiry");
-        }
-    // } else if (source == 'countProductCodes') {
-    //     if (this.newSta001.input.productsCount) {
-    //       while(this.productBarcodes.length < this.newSta001.input.productsCount) {
-    //         this.productBarcodes.push("");
-    //       }
-    //       while(this.productBarcodes.length > this.newSta001.input.productsCount) {
-    //         this.productBarcodes.pop();
-    //       }
-    //       console.log("updateKitBarcode: countProductCodes");
-    //     }
-    } else if (source.startsWith('productCode')) {
-      var index = source.charAt(source.length-1);
-      if (this.newSta001.input.productCodes[index.toString()]) {
-        this.productBarcodes[index] = this.newSta001.input.productCodes[index.toString()];
-        console.log("updateKitBarcode: productCode "+index);
-      }
-    // } else if (source == 'countParameters') {
-    //     if (this.newSta001.input.countParameters) {
-    //       while(this.parameters.length < this.newSta001.input.countParameters) {
-    //         this.parameters.push("");
-    //       }
-    //       while(this.parameters.length > this.newSta001.input.countParameters) {
-    //         this.parameters.pop();
-    //       }
-    //       console.log("updateKitBarcode: countParameters");
-    //     }
-    // } else if (source.startsWith('parameter')) {
-    //   var index = source.charAt(source.length-1);
-    //   if (this.newSta001.input.parameters[index.toString()]) {
-    //     this.parameters[index] = this.newSta001.input.parameters[index.toString()];
-    //     // tmp += "p"+index+this.parameters[index];
-    //     console.log("updateKitBarcode: parameter "+index);
-    //   }
-    } else {      console.log("updateKitBarcode: oups!");
-    }
-
-    this.generateParameters();
-    this.generateProductBarcodes();
-    this.generateKitBarcode();
-
-    // this.newSta001.input.kitBarcode = tmp;
-    // if (this.isKitBarcodePreviewEnabled) {
-    //   this.generateKitBarcodePreview();
-    // };
-    // if (this.isProductBarcodesPreviewEnabled) {
-    //   this.generateProductBarcodesPreviews();
-    // };
+    chk = (parseInt(chk, 16) | parseInt('40', 16)).toString(16).toUpperCase();
+    var pF = ((parseInt(chk, 16) & parseInt('F0', 16)) / 16).toString(16).toUpperCase();
+    pF = this.hex2cod(pF);
+    var pf = ((parseInt(chk, 16) & parseInt('0F', 16))).toString(16).toUpperCase();
+    pf = this.hex2cod(pf);
+    var CS = pF+pf;
+    return CS;
   }
-
+  // kit barcode lines...
+  generateKitBarcodeLines() {
+    console.log("generateKitBarcodeLines() "+generateKitBarcodeLines());
+  }
   generateKitBarcodePreview() {
     if ( document.body.getElementsByClassName('kitBarcodePreview')[0] ) {
       var O = document.body.getElementsByClassName('kitBarcodePreview')[0];
@@ -279,7 +301,6 @@ class Sta001Component {
   saveSta001() {
     console.log("saveSta001()");
   }
-
   clearSta001() {
     this.isKitBarcodePreviewEnabled = false;
     this.kitBarcode = "";
@@ -288,22 +309,6 @@ class Sta001Component {
     this.newSta001 = null;
     console.log("clearSta001()");
   }
-
-  getCS(s) {
-    var I = new String(s);
-    var chk = I.charCodeAt(0).toString(16).toUpperCase(); //hex
-    for (var i = 1; i < I.length; i++) {
-      chk = (parseInt(chk, 16) ^ I.charCodeAt(i)).toString(16).toUpperCase(); // xor only work on javascript numeric values
-    }
-    chk = (parseInt(chk, 16) | parseInt('40', 16)).toString(16).toUpperCase();
-    var pF = ((parseInt(chk, 16) & parseInt('F0', 16)) / 16).toString(16).toUpperCase();
-    // pF = this.hex2cod(pF);
-    var pf = ((parseInt(chk, 16) & parseInt('0F', 16))).toString(16).toUpperCase();
-    // pf = this.hex2cod(pf);
-    var CS = pF+pf;
-    return CS;
-  }
-
   hex2cod(si) {
     var so = "";
     for (var i = 0; i < si.length; i++) {
@@ -362,119 +367,6 @@ class Sta001Component {
       }
     }
     return so;
-  }
-
-
-  // hex2cod(s) {
-  //   switch (c) {
-  //     case '0':
-  //       return '0';
-  //       break;
-  //     case '1':
-  //       return '1';
-  //       break;
-  //     case '2':
-  //       return '2';
-  //       break;
-  //     case '3':
-  //       return '3';
-  //       break;
-  //     case '4':
-  //       return '4';
-  //       break;
-  //     case '5':
-  //       return '5';
-  //       break;
-  //     case '6':
-  //       return '6';
-  //       break;
-  //     case '7':
-  //       return '7';
-  //       break;
-  //     case '8':
-  //       return '8';
-  //       break;
-  //     case '9':
-  //       return '9';
-  //       break;
-  //     case 'A':
-  //       return '$';
-  //       break;
-  //     case 'B':
-  //       return '-';
-  //       break;
-  //     case 'C':
-  //       return ':';
-  //       break;
-  //     case 'D':
-  //       return '/';
-  //       break;
-  //     case 'E':
-  //       return '.';
-  //       break;
-  //     case 'F':
-  //       return '+';
-  //       break;
-  //     default:
-  //       console.log("error");
-  //       break;
-  //   }
-  // }
-
-  cod2hex(c) {
-    switch (c) {
-      case '0':
-        return '0';
-        break;
-      case '1':
-        return '1';
-        break;
-      case '2':
-        return '2';
-        break;
-      case '3':
-        return '3';
-        break;
-      case '4':
-        return '4';
-        break;
-      case '5':
-        return '5';
-        break;
-      case '6':
-        return '6';
-        break;
-      case '7':
-        return '7';
-        break;
-      case '8':
-        return '8';
-        break;
-      case '9':
-        return '9';
-        break;
-      case '$':
-        return 'A';
-        break;
-      case '-':
-        return 'B';
-        break;
-      case ':':
-        return 'C';
-        break;
-      case '/':
-        return 'D';
-        break;
-      case '.':
-        return 'E';
-        break;
-      case '+':
-        return 'F';
-        break;
-      default:
-        console.log("error");
-        break;
-    }
   }
 
 }

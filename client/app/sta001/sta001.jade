@@ -11,22 +11,28 @@
           style="background-color: pink")
 
           div.col-lg-12
-            ul.list-unstyled.col-lg-4
+            ul.list-unstyled.col-lg-3
               li
-                label parameters (debug only)
+                label parameters (debug)
               li
                 pre {{$ctrl.parameters | json}}
-            ul.list-unstyled.col-lg-4
+            ul.list-unstyled.col-lg-3
               li
-                label productBarcodes (debug only)
+                label productBarcodes (debug)
               li
                 pre {{$ctrl.productBarcodes | json}}
 
-            ul.list-unstyled.col-lg-4
+            ul.list-unstyled.col-lg-3
               li
-                label kitBarcode (debug only)
+                label kitBarcode (debug)
               li
                 pre {{$ctrl.kitBarcode | json}}
+
+            ul.list-unstyled.col-lg-3
+              li
+                label kitBarcodeLines (debug)
+              li
+                pre {{$ctrl.kitBarcodeLines | json}}
 
           div.col-lg-12
             div(ng-class="{'col-lg-9': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isKitBarcodePreviewEnabled}")
@@ -40,13 +46,15 @@
               ul.list-unstyled
                 li
                   label kit barcode
-                li.form-group
-                  input.form-control(
-                    type="text"
-                    id="sta001InputKitBarcode"
-                    placeholder="KitBarcode"
-                    ng-model="$ctrl.newSta001.input.kitBarcode"
-                    ng-change="$ctrl.updateKitBarcode('kitBarcode')")
+                li
+                  pre {{$ctrl.kitBarcode | json}}
+                //- li.form-group
+                //-   input.form-control(
+                //-     type="text"
+                //-     id="sta001InputKitBarcode"
+                //-     placeholder="KitBarcode"
+                //-     ng-model="$ctrl.newSta001.input.kitBarcode"
+                //-     ng-change="$ctrl.updateKitBarcode('kitBarcode')")
 
               div.form-group.col-lg-4
                 label kit code
@@ -86,7 +94,6 @@
                     ng-click="$ctrl.isKitBarcodePreviewEnabled = false") HIDE barcodes
 
               ul.list-unstyled.kitBarcodePreview.col-lg-12(
-                ng-show="$ctrl.isKitBarcodePreviewEnabled"
                 style="background-color: GoldenRod")
 
               //- ul.list-unstyled(
