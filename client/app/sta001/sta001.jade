@@ -2,6 +2,18 @@
 
 .container
   .row
+    .col-lg-12(style = "background-color:DarkGoldenRod")
+      h1.page-header DEBUG
+      .container
+        div.col-lg-12
+          ul.list-unstyled
+            li
+              label sta001s
+            li
+              pre {{$ctrl.sta001s | json}}
+
+.container
+  .row
     .col-lg-12
       .col-lg-2
         button.btn.btn-lg.btn-block(
@@ -235,7 +247,7 @@
             div.col-lg-12
               button.btn.btn-primary(
                 type = "submit"
-                ng-click = "$ctrl.saveSta001()") Save
+                ng-click = "$ctrl.saveSta001('create')") Create
               button.btn.btn-warning(
                 type = "reset"
                 ng-click = "$ctrl.clearSta001()") Clear
