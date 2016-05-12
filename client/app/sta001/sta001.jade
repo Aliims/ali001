@@ -2,9 +2,19 @@
 
 .container
   .row
-    .col-lg-12(style = "background-color:DarkGoldenRod")
+    .col-lg-12(
+      style = "background-color:DarkGoldenRod")
       h1.page-header DEBUG
       .container
+        //- https://jsfiddle.net/sirhc/z9cGm/
+        div.col-lg-12
+          | obj in 
+          pre {{ $ctrl.objsInArr | json }}
+          code {{ $ctrl.objsInArr | json }}
+          ul
+            li(ng-repeat="obj in $ctrl.objsInArr")
+              | $index = {{$index}}, $ctrl.objsInArr[$index].str = 
+              input(ng-model="$ctrl.objsInArr[$index].str")
         div.col-lg-12
           ul.list-unstyled
             li
@@ -19,20 +29,19 @@
         button.btn.btn-lg.btn-block(
           type = "button"
           aria-label = "Generate"
-          ng-init = "GenerateView = true;"
-          ng-class = "{'btn-primary': GenerateView, 'btn-default': !GenerateView}"
-          ng-click = "GenerateView = !GenerateView")
+          ng-class = "{'btn-primary': $ctrl.GenerateView, 'btn-default': !$ctrl.GenerateView}"
+          ng-click = "$ctrl.GenerateView = !$ctrl.GenerateView")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!GenerateView")  GENERATE
+            ng-show = "!$ctrl.GenerateView")  GENERATE
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "GenerateView")  GENERATE
+            ng-show = "$ctrl.GenerateView")  GENERATE
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
           aria-label = "Manage"
-          ng-init = "ManageView = false;"
+          ng-init = "ManageView = true;"
           ng-class = "{'btn-primary': ManageView, 'btn-default': !ManageView}"
           ng-click = "ManageView = !ManageView")
           span.glyphicon.glyphicon-zoom-in(
@@ -70,34 +79,74 @@
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "Documents"
-          ng-init = "DocumentsView = false;"
-          ng-class = "{'btn-primary': DocumentsView, 'btn-default': !DocumentsView}"
-          ng-click = "DocumentsView = !DocumentsView")
+          aria-label = "Deploy"
+          ng-init = "DeployView = false;"
+          ng-class = "{'btn-primary': DeployView, 'btn-default': !DeployView}"
+          ng-click = "DeployView = !DeployView")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!DocumentsView")  DOCS
+            ng-show = "!DeployView")  DEPLOY
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "DocumentsView")  DOCS
+            ng-show = "DeployView")  DEPLOY
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "Models"
-          ng-init = "ModelsView = false;"
-          ng-class = "{'btn-primary': ModelsView, 'btn-default': !ModelsView}"
-          ng-click = "ModelsView = !ModelsView")
+          aria-label = "Configure"
+          ng-init = "ConfigureView = false;"
+          ng-class = "{'btn-primary': ConfigureView, 'btn-default': !ConfigureView}"
+          ng-click = "ConfigureView = !ConfigureView")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!ModelsView")  MODELS
+            ng-show = "!ConfigureView")  CONFIGURE
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "ModelsView")  MODELS
+            ng-show = "ConfigureView")  CONFIGURE
+
 
 .container
   .row
     .col-lg-12(
-      ng-show = "GenerateView")
+      ng-show = "ManageView")
+      h1.page-header MANAGE
+      .container.borded
+        div.col-lg-12
+          div.col-lg-12
+            ul.list-unstyled
+              li(ng-repeat = "sta001 in $ctrl.sta001s") 
+                button.btn.btn-default(
+                  ng-click = "$ctrl.deleteSta001(sta001)")
+                  span.glyphicon.glyphicon-trash(
+                    aria-hidden = "true")  delete
+                button.btn.btn-default(
+                  ng-show = "!sta001.online"
+                  ng-click = "$ctrl.invertSta001Online(sta001)")
+                  span.glyphicon.glyphicon-cloud-upload(
+                    aria-hidden = "true")  set online
+                button.btn.btn-primary(
+                  ng-show = "sta001.online"
+                  ng-click = "$ctrl.invertSta001Online(sta001)")
+                  span.glyphicon.glyphicon-cloud-download(
+                    aria-hidden = "true")  set offline
+                button.btn.btn-default(
+                  ng-click = "$ctrl.duplicateSta001(sta001)")
+                  //- i.fa.fa-car(
+                  //-   aria-hidden="true") duplicate
+                  span.glyphicon.glyphicon-duplicate(
+                    aria-hidden = "true")  duplicate
+                button.btn.btn-default(
+                  ng-click = "$ctrl.editSta001(sta001)")
+                  span.glyphicon.glyphicon-pencil(
+                    aria-hidden = "true")  edit
+
+
+                | @[{{$index}}] [{{sta001.kitBarcode}}]
+
+
+.container
+  .row
+    .col-lg-12(
+      ng-show = "$ctrl.GenerateView")
       h1.page-header GENERATE
       .container.borded
         div.col-lg-12

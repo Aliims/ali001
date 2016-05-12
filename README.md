@@ -30,3 +30,10 @@ Run `grunt build` for building and `grunt serve` for preview.
 ## Testing
 
 Running `npm test` will run the unit tests with karma.
+
+
+
+hacks:
+Use glyphicon fullpack 
+http://glyphicons.com/ download should replace:
+https://github.com/twbs/bootstrap/tree/master/dist/fonts

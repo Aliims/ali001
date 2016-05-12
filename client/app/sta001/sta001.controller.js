@@ -3,25 +3,46 @@
 
 class Sta001Component {
   constructor($http, $scope, socket) {
-    this.$http = $http;
-    this.socket = socket;
-    this.sta001s = [];
+    // DEBUG
+      // https://jsfiddle.net/sirhc/z9cGm/
+      this.itemsInObj = {
+          a: "strA",
+          b: "strB",
+          c: "strC"
+      };
+      this.itemsInArray = ["strA", "strB", "strC"];
+      this.objsInObj = {
+          a: {
+              str: "strA"
+          },
+          b: {
+              str: "strB"
+          },
+          c: {
+              str: "strC"
+          }
+      };
+      this.objsInArr = [ { str: "strA"}, { str: "strB"}, { str: "strC"} ];
+      this.$http = $http;
+      this.socket = socket;
+      this.sta001s = [];
+      $scope.$on('$destroy', function() {
+        socket.unsyncUpdates('sta001');
+      });
 
-    $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('sta001');
-    });
+
+    // MANAGE
+
 
     // GENERATE
+      this.generateView = true;
       this.parameters = [];
-
       this.isProductBarcodesPreviewEnabled = false;
       this.productBarcodes = [];
       this.productBarcodeEncoding = [['A', 'A'], ['A', 'B'], ['A', 'C'], ['A', 'D'], ['B', 'A'], ['B', 'B'], ['B', 'C'], ['B', 'D'], ['C', 'A'], ['C', 'B']];
-
       this.isKitBarcodePreviewEnabled = false;
       this.kitBarcode = "";
       this.kitBarcodeLines = [];
-
       this.kitBarcodeEncodingCut = 15;
       this.kitBarcodeEncoding = [[['A0', 'A']], [['A1', 'A'], ['A2', 'A']], [['A3', 'A'], ['A4', 'A'], ['A5', 'A']], [['A6', 'A'], ['A7', 'A'], ['A8', 'A'], ['A9', 'A']], [['A$', 'A'], ['A-', 'A'], ['A:', 'A'], ['A/', 'A'], ['A.', 'A']], [['A+', 'A'], ['A0', 'B'], ['A1', 'B'], ['A2', 'B'], ['A3', 'B'], ['A4', 'B']], [['A5', 'B'], ['A6', 'B'], ['A7', 'B'], ['A8', 'B'], ['A9', 'B'], ['A$', 'B'], ['A-', 'B']], [['A:', 'B'], ['A/', 'B'], ['A.', 'B'], ['A+', 'B'], ['A0', 'C'], ['A1', 'C'], ['A2', 'C'], ['A3', 'C']], [['A4', 'C'], ['A5', 'C'], ['A6', 'C'], ['A7', 'C'], ['A8', 'C'], ['A9', 'C'], ['A$', 'C'], ['A-', 'C'], ['A:', 'C']], [['A/', 'C'], ['A.', 'C'], ['A+', 'C'], ['A0', 'D'], ['A1', 'D'], ['A2', 'D'], ['A3', 'D'], ['A4', 'D'], ['A5', 'D'], ['A6', 'D']], [['A7', 'D'], ['A8', 'D'], ['A9', 'D'], ['A$', 'D'], ['A-', 'D'], ['A:', 'D'], ['A/', 'D'], ['A.', 'D'], ['A+', 'D'], ['B0', 'A'], ['B1', 'A']], [['B2', 'A'], ['B3', 'A'], ['B4', 'A'], ['B5', 'A'], ['B6', 'A'], ['B7', 'A'], ['B8', 'A'], ['B9', 'A'], ['B$', 'A'], ['B-', 'A'], ['B:', 'A'], ['B/', 'A']], [['B.', 'A'], ['B+', 'A'], ['B0', 'B'], ['B1', 'B'], ['B2', 'B'], ['B3', 'B'], ['B4', 'B'], ['B5', 'B'], ['B6', 'B'], ['B7', 'B'], ['B8', 'B'], ['B9', 'B'], ['B$', 'B']], [['B-', 'B'], ['B:', 'B'], ['B/', 'B'], ['B.', 'B'], ['B+', 'B'], ['B0', 'C'], ['B1', 'C'], ['B2', 'C'], ['B3', 'C'], ['B4', 'C'], ['B5', 'C'], ['B6', 'C'], ['B7', 'C'], ['B8', 'C']], [['B9', 'C'], ['B$', 'C'], ['B-', 'C'], ['B:', 'C'], ['B/', 'C'], ['B.', 'C'], ['B+', 'C'], ['B0', 'D'], ['B1', 'D'], ['B2', 'D'], ['B3', 'D'], ['B4', 'D'], ['B5', 'D'], ['B6', 'D'], ['B7', 'D']], [['B8', 'D'], ['B9', 'D'], ['B$', 'D'], ['B-', 'D'], ['B:', 'D'], ['B/', 'D'], ['B.', 'D'], ['B+', 'D'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A']], [['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B']], [['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C']], [['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D']], [['C', 'D'], ['C', 'D'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'B'], ['D', 'B']]];
   }
@@ -233,6 +254,57 @@ class Sta001Component {
         }
       }
     }
+    saveSta001(type) {
+      if (type == 'create') {
+        if (this.newSta001) {
+          var hack = {};
+          hack = this.clone(this.newSta001);
+          hack.kitBarcode = this.kitBarcode;
+          // hack.parameters = this.parameters;
+          // hack.productCodes = this.productCodes;
+          this.$http.post('/api/sta001s', hack);
+          // this.clearSta001();
+        }
+        console.log('(create) => POST');
+      }
+      console.log("saveSta001() with kitBarcode = ["+this.kitBarcode+
+        "]");
+    }
+    clearSta001() {
+      this.parameters = [];
+      this.isProductBarcodesPreviewEnabled = false;
+      this.productBarcodes = [];
+      this.isKitBarcodePreviewEnabled = false;
+      this.kitBarcode = "";
+      this.kitBarcodeLines = [];
+      this.newSta001 = null;
+      console.log("clearSta001()");
+    }
+
+  // MANAGE
+    editSta001(sta001) {
+      console.log(sta001);
+      this.newSta001 = sta001;
+      this.GenerateView = true;
+      console.log("editSta001(sta001)");
+    }
+    duplicateSta001(sta001) {
+      var clone = this.clone(sta001);
+      this.$http.post('/api/sta001s', clone);
+      console.log("duplicateSta001(sta001)");
+    }
+    invertSta001Online(sta001) {
+      var inv = !sta001.online;
+      this.$http.patch('/api/sta001s/' + sta001._id, { online: inv});
+      console.log("invertSta001Online(sta001)");
+    }
+    deleteSta001(sta001) {
+      this.$http.delete('/api/sta001s/' + sta001._id);
+      console.log("DEL");
+    }
+
+
+  // HELPERS
 
     hex2cod(si) {
       var so = "";
@@ -294,29 +366,6 @@ class Sta001Component {
       return so;
     }
 
-    saveSta001(type) {
-      if (type == 'create') {
-        if (this.newSta001) {
-          this.newSta001.kitBarcode = this.kitBarcode,
-          this.$http.post('/api/sta001s', this.newSta001);
-          this.clearSta001();
-        }
-        console.log('(create) => POST');
-      }
-      console.log("saveSta001() with kitBarcode = ["+this.kitBarcode+
-        "]");
-    }
-    clearSta001() {
-      this.parameters = [];
-      this.isProductBarcodesPreviewEnabled = false;
-      this.productBarcodes = [];
-      this.isKitBarcodePreviewEnabled = false;
-      this.kitBarcode = "";
-      this.kitBarcodeLines = [];
-      console.log("clearSta001()");
-    }
-
-  // HELPERS
     $onInit() {
       this.$http.get('/api/sta001s').then(response => {
         this.sta001s = response.data;
@@ -324,10 +373,17 @@ class Sta001Component {
       });
     }
 
+    clone(obj) {
+      if (null == obj || "object" != typeof obj) return obj;
+      var copy = obj.constructor();
+      for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) {
+          if (attr.charAt(0) != '_' && attr.charAt(0) != '$') {copy[attr] = obj[attr];}
+        }
+      }
+      return copy;
+    }
 
-  // deleteSta001(sta001) {
-  //   this.$http.delete('/api/sta001s/' + sta001._id);
-  // }
 
       // (create) => POST
       // (read) => GET
