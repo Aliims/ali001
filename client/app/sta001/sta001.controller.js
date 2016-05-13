@@ -42,6 +42,8 @@ class Sta001Component {
       this.isModeDebug = true;
       this.isModeUpdate = false;
 
+      this.updateId = "";
+
 
     // GENERATE
       this.parameters = [];
@@ -264,18 +266,26 @@ class Sta001Component {
     }
 
     createSta001() {
-      if (this.formSta001) {
-        var hack = {};
-        hack = this.clone(this.formSta001);
-        hack.kitBarcode = this.kitBarcode;
-        this.$http.post('/api/sta001s', hack);
-      } else {
-        console.log("error");
-      }
+      var hack = {};
+      hack = this.clone(this.formSta001);
+      hack.kitBarcode = this.kitBarcode;
+      this.$http.post('/api/sta001s', hack);
       this.generateVisible = false;
       this.clearSta001();
       this.manageVisible = true;
       console.log("createSta001(sta001 = null)");
+    }
+    updateSta001() {
+      var hack = {};
+      hack = this.clone(this.formSta001);
+      hack.kitBarcode = this.kitBarcode;
+      this.$http.put('/api/sta001s/' + this.updateId, hack);
+      this.updateId = "";
+      this.generateVisible = false;
+      this.clearSta001();
+      this.manageVisible = true;
+      console.log("updateSta001() with kitBarcode = ["+this.kitBarcode+
+        "]");
     }
     clearSta001() {
       this.parameters = [];
@@ -299,38 +309,21 @@ class Sta001Component {
       this.$http.patch('/api/sta001s/' + sta001._id, { online: inv});
       console.log("invertSta001Online(sta001)");
     }
-    duplicateSta001(sta001) {
-      if (sta001) {
-        var clone = this.clone(sta001);
-        this.createSta001(clone);
-        this.$http.post('/api/sta001s', clone);
-      } else {
-        console.log("error");
-      }
-      this.editSta001(clone);
-      console.log("duplicateSta001(sta001)");
+    copySta001(sta001) {
+      var clone = this.clone(sta001);
+      this.formSta001 = clone;
+      this.generateVisible = true;
+      console.log("copySta001(sta001)");
     }
     editSta001(sta001) {
+      console.log(sta001._id);
+      this.updateId = sta001._id;
       this.formSta001 = sta001;
+      // delete this.formSta001.kitBarcode;
       this.isModeUpdate = true;
       this.generateVisible = true;
       console.log("editSta001(sta001)");
     }
-
-
-    updateSta001() {
-      if (this.formSta001) {
-        this.$http.put('/api/sta001s', this.formSta001);
-      }
-      this.generateVisible = false;
-      this.clearSta001();
-      this.manageVisible = true;
-      console.log("updateSta001() with kitBarcode = ["+this.kitBarcode+
-        "]");
-    }
-
-
-
 
   // HELPERS
 

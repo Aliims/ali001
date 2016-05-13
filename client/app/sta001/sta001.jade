@@ -124,19 +124,14 @@
                   span.glyphicon.glyphicon-cloud-download(
                     aria-hidden = "true")  set offline
                 button.btn.btn-default(
-                  ng-click = "$ctrl.duplicateSta001(sta001)")
-                  //- i.fa.fa-car(
-                  //-   aria-hidden="true") duplicate
+                  ng-click = "$ctrl.copySta001(sta001)")
                   span.glyphicon.glyphicon-duplicate(
-                    aria-hidden = "true")  duplicate
+                    aria-hidden = "true")  copy
                 button.btn.btn-default(
                   ng-click = "$ctrl.editSta001(sta001)")
                   span.glyphicon.glyphicon-pencil(
                     aria-hidden = "true")  edit
-
-
-                | @[{{$index}}] [{{sta001.kitBarcode}}]
-
+                | @[{{$index}}]  [{{sta001._id}}] [{{sta001.kitBarcode}}] [{{sta001.input.kitCode}}]
 
 .container
   .row
