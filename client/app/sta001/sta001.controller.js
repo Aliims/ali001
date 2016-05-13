@@ -31,11 +31,19 @@ class Sta001Component {
       });
 
 
-    // MANAGE
+
+      this.generateVisible = false;
+      this.manageVisible = false;
+      this.importVisible = false;
+      this.exportVisible = false;
+      this.deployVisible = false;
+      this.configureVisible = false;
+
+      this.isModeDebug = true;
+      this.isModeUpdate = false;
 
 
     // GENERATE
-      this.generateView = true;
       this.parameters = [];
       this.isProductBarcodesPreviewEnabled = false;
       this.productBarcodes = [];
@@ -55,8 +63,8 @@ class Sta001Component {
       this.generateKitBarcode();
     }
     generateParameters() {
-      for (var i in this.newSta001.input.parameters) {
-        var parameter = this.newSta001.input.parameters[i.toString()];
+      for (var i in this.formSta001.input.parameters) {
+        var parameter = this.formSta001.input.parameters[i.toString()];
         var s = "";
         s+= parameter.replace(/[.]+/g, '');
         this.parameters[i] = s;
@@ -68,7 +76,7 @@ class Sta001Component {
     }
     parametersCountChange() {
       var fromLength = this.parameters.length;
-      var toLength = this.newSta001.input.parametersCount;
+      var toLength = this.formSta001.input.parametersCount;
       if (fromLength < toLength) {
         while(this.parameters.length < toLength) {
           this.parameters.push("");
@@ -89,9 +97,9 @@ class Sta001Component {
     }
 
     generateProductBarcodes() {
-      for (var i in this.newSta001.input.productCodes) {
-        var productCode = this.newSta001.input.productCodes[i.toString()];
-        var kitLot = this.newSta001.input.kitLot;
+      for (var i in this.formSta001.input.productCodes) {
+        var productCode = this.formSta001.input.productCodes[i.toString()];
+        var kitLot = this.formSta001.input.kitLot;
         var product = "";
         product+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][0];
         product+= this.hex2cod(Number(productCode).toString(16).toUpperCase()); // to hex hexString = yourNumber.toString(16); reverse with yourNumber = parseInt(hexString, 16);
@@ -131,7 +139,7 @@ class Sta001Component {
     }
     productsCountChange() {
       var fromLength = this.productBarcodes.length;
-      var toLength = this.newSta001.input.productsCount;
+      var toLength = this.formSta001.input.productsCount;
       if (fromLength < toLength) {
         while(this.productBarcodes.length < toLength) {
           this.productBarcodes.push("");
@@ -153,33 +161,33 @@ class Sta001Component {
 
     generateKitBarcode() {
       var kit = "";
-      if (this.newSta001.input.kitLot) {
-        var kitLot = this.newSta001.input.kitLot;
+      if (this.formSta001.input.kitLot) {
+        var kitLot = this.formSta001.input.kitLot;
         kit += kitLot;
         console.log("generateKitBarcode() with kitLot = ["+kitLot+
           "]");
       }
-      if (this.newSta001.input.kitCode) {
-        var kitCode = this.newSta001.input.kitCode;
+      if (this.formSta001.input.kitCode) {
+        var kitCode = this.formSta001.input.kitCode;
         kit += kitCode;
         console.log("generateKitBarcode() with kitCode = ["+kitCode+
           "]");
       }
-      if (this.newSta001.input.kitExpiry) {
-        var kitExpiry = this.newSta001.input.kitExpiry;
+      if (this.formSta001.input.kitExpiry) {
+        var kitExpiry = this.formSta001.input.kitExpiry;
         kit += kitExpiry;
         console.log("generateKitBarcode() with kitExpiry = ["+kitExpiry+
           "]");
       }
-      if (this.newSta001.input.productsCount) {
-        var productsCount = this.newSta001.input.productsCount;
+      if (this.formSta001.input.productsCount) {
+        var productsCount = this.formSta001.input.productsCount;
         kit += productsCount;
         console.log("generateKitBarcode() with productsCount = ["+productsCount+
           "]");
       }
-      if (this.newSta001.input.productCodes) {
-        for (var i in this.newSta001.input.productCodes) {
-          var productCode = this.newSta001.input.productCodes[i.toString()];
+      if (this.formSta001.input.productCodes) {
+        for (var i in this.formSta001.input.productCodes) {
+          var productCode = this.formSta001.input.productCodes[i.toString()];
           kit += productCode;
           console.log("generateKitBarcode() @["+i+
             "] productCode = ["+productCode+
@@ -254,21 +262,20 @@ class Sta001Component {
         }
       }
     }
-    saveSta001(type) {
-      if (type == 'create') {
-        if (this.newSta001) {
-          var hack = {};
-          hack = this.clone(this.newSta001);
-          hack.kitBarcode = this.kitBarcode;
-          // hack.parameters = this.parameters;
-          // hack.productCodes = this.productCodes;
-          this.$http.post('/api/sta001s', hack);
-          // this.clearSta001();
-        }
-        console.log('(create) => POST');
+
+    createSta001() {
+      if (this.formSta001) {
+        var hack = {};
+        hack = this.clone(this.formSta001);
+        hack.kitBarcode = this.kitBarcode;
+        this.$http.post('/api/sta001s', hack);
+      } else {
+        console.log("error");
       }
-      console.log("saveSta001() with kitBarcode = ["+this.kitBarcode+
-        "]");
+      this.generateVisible = false;
+      this.clearSta001();
+      this.manageVisible = true;
+      console.log("createSta001(sta001 = null)");
     }
     clearSta001() {
       this.parameters = [];
@@ -277,31 +284,52 @@ class Sta001Component {
       this.isKitBarcodePreviewEnabled = false;
       this.kitBarcode = "";
       this.kitBarcodeLines = [];
-      this.newSta001 = null;
+      this.formSta001 = null;
+      this.isModeUpdate = false;
       console.log("clearSta001()");
     }
 
   // MANAGE
-    editSta001(sta001) {
-      console.log(sta001);
-      this.newSta001 = sta001;
-      this.GenerateView = true;
-      console.log("editSta001(sta001)");
-    }
-    duplicateSta001(sta001) {
-      var clone = this.clone(sta001);
-      this.$http.post('/api/sta001s', clone);
-      console.log("duplicateSta001(sta001)");
+    deleteSta001(sta001) {
+      this.$http.delete('/api/sta001s/' + sta001._id);
+      console.log("deleteSta001(sta001)");
     }
     invertSta001Online(sta001) {
       var inv = !sta001.online;
       this.$http.patch('/api/sta001s/' + sta001._id, { online: inv});
       console.log("invertSta001Online(sta001)");
     }
-    deleteSta001(sta001) {
-      this.$http.delete('/api/sta001s/' + sta001._id);
-      console.log("DEL");
+    duplicateSta001(sta001) {
+      if (sta001) {
+        var clone = this.clone(sta001);
+        this.createSta001(clone);
+        this.$http.post('/api/sta001s', clone);
+      } else {
+        console.log("error");
+      }
+      this.editSta001(clone);
+      console.log("duplicateSta001(sta001)");
     }
+    editSta001(sta001) {
+      this.formSta001 = sta001;
+      this.isModeUpdate = true;
+      this.generateVisible = true;
+      console.log("editSta001(sta001)");
+    }
+
+
+    updateSta001() {
+      if (this.formSta001) {
+        this.$http.put('/api/sta001s', this.formSta001);
+      }
+      this.generateVisible = false;
+      this.clearSta001();
+      this.manageVisible = true;
+      console.log("updateSta001() with kitBarcode = ["+this.kitBarcode+
+        "]");
+    }
+
+
 
 
   // HELPERS

@@ -3,7 +3,8 @@
 .container
   .row
     .col-lg-12(
-      style = "background-color:DarkGoldenRod")
+      style = "background-color:DarkGoldenRod"
+      ng-show = "isModeDebug")
       h1.page-header DEBUG
       .container
         //- https://jsfiddle.net/sirhc/z9cGm/
@@ -28,86 +29,80 @@
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "Generate"
-          ng-class = "{'btn-primary': $ctrl.GenerateView, 'btn-default': !$ctrl.GenerateView}"
-          ng-click = "$ctrl.GenerateView = !$ctrl.GenerateView")
+          aria-label = "generateVisible"
+          ng-class = "{'btn-primary': $ctrl.generateVisible, 'btn-default': !$ctrl.generateVisible}"
+          ng-click = "$ctrl.generateVisible = !$ctrl.generateVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!$ctrl.GenerateView")  GENERATE
+            ng-show = "!$ctrl.generateVisible") GENERATE
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "$ctrl.GenerateView")  GENERATE
+            ng-show = "$ctrl.generateVisible") GENERATE
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "Manage"
-          ng-init = "ManageView = true;"
-          ng-class = "{'btn-primary': ManageView, 'btn-default': !ManageView}"
-          ng-click = "ManageView = !ManageView")
+          aria-label = "manageVisible"
+          ng-class = "{'btn-primary': $ctrl.manageVisible, 'btn-default': !$ctrl.manageVisible}"
+          ng-click = "$ctrl.manageVisible = !$ctrl.manageVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!ManageView")  MANAGE
+            ng-show = "!$ctrl.manageVisible") MANAGE
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "ManageView")  MANAGE
+            ng-show = "$ctrl.manageVisible") MANAGE
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "Import"
-          ng-init = "ImportView = false;"
-          ng-class = "{'btn-primary': ImportView, 'btn-default': !ImportView}"
-          ng-click = "ImportView = !ImportView")
+          aria-label = "importVisible"
+          ng-class = "{'btn-primary': $ctrl.importVisible, 'btn-default': !$ctrl.importVisible}"
+          ng-click = "$ctrl.importVisible = !$ctrl.importVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!ImportView")  IMPORT
+            ng-show = "!$ctrl.importVisible") IMPORT
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "ImportView")  IMPORT
+            ng-show = "$ctrl.importVisible") IMPORT
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "Export"
-          ng-init = "ExportView = false;"
-          ng-class = "{'btn-primary': ExportView, 'btn-default': !ExportView}"
-          ng-click = "ExportView = !ExportView")
+          aria-label = "exportVisible"
+          ng-class = "{'btn-primary': $ctrl.exportVisible, 'btn-default': !$ctrl.exportVisible}"
+          ng-click = "$ctrl.exportVisible = !$ctrl.exportVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!ExportView")  EXPORT
+            ng-show = "!$ctrl.exportVisible") EXPORT
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "ExportView")  EXPORT
+            ng-show = "$ctrl.exportVisible") EXPORT
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "Deploy"
-          ng-init = "DeployView = false;"
-          ng-class = "{'btn-primary': DeployView, 'btn-default': !DeployView}"
-          ng-click = "DeployView = !DeployView")
+          aria-label = "deployVisible"
+          ng-class = "{'btn-primary': $ctrl.deployVisible, 'btn-default': !$ctrl.deployVisible}"
+          ng-click = "$ctrl.deployVisible = !$ctrl.deployVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!DeployView")  DEPLOY
+            ng-show = "!$ctrl.deployVisible") DEPLOY
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "DeployView")  DEPLOY
+            ng-show = "$ctrl.deployVisible") DEPLOY
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "Configure"
-          ng-init = "ConfigureView = false;"
-          ng-class = "{'btn-primary': ConfigureView, 'btn-default': !ConfigureView}"
-          ng-click = "ConfigureView = !ConfigureView")
+          aria-label = "configureVisible"
+          ng-class = "{'btn-primary': $ctrl.configureVisible, 'btn-default': !$ctrl.configureVisible}"
+          ng-click = "$ctrl.configureVisible = !$ctrl.configureVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!ConfigureView")  CONFIGURE
+            ng-show = "!$ctrl.configureVisible") CONFIGURE
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "ConfigureView")  CONFIGURE
-
+            ng-show = "$ctrl.configureVisible") CONFIGURE
 
 .container
   .row
     .col-lg-12(
-      ng-show = "ManageView")
+      ng-show = "$ctrl.manageVisible")
       h1.page-header MANAGE
       .container.borded
         div.col-lg-12
@@ -146,7 +141,7 @@
 .container
   .row
     .col-lg-12(
-      ng-show = "$ctrl.GenerateView")
+      ng-show = "$ctrl.generateVisible")
       h1.page-header GENERATE
       .container.borded
         div.col-lg-12
@@ -176,7 +171,7 @@
               li
                 label kit structure
               li
-                pre {{$ctrl.newSta001 | json}}
+                pre {{$ctrl.formSta001 | json}}
           div.col-lg-12(
             ng-form = "sta001-form")
             div.col-lg-12
@@ -194,7 +189,7 @@
                       type = "text"
                       id = "sta001InputKitCode"
                       placeholder = "KitCode"
-                      ng-model = "$ctrl.newSta001.input.kitCode"
+                      ng-model = "$ctrl.formSta001.input.kitCode"
                       ng-change = "$ctrl.generate()")
                   div.form-group.col-lg-4
                     label kit lot
@@ -202,7 +197,7 @@
                       type = "text"
                       id = "sta001InputLot"
                       placeholder = "kitLot",
-                      ng-model = "$ctrl.newSta001.input.kitLot"
+                      ng-model = "$ctrl.formSta001.input.kitLot"
                       ng-change = "$ctrl.generate()")
                   div.form-group.col-lg-4
                     label kit expiry
@@ -210,7 +205,7 @@
                       type = "text",
                       id = "sta001InputExpiry",
                       placeholder = "kitExpiry",
-                      ng-model = "$ctrl.newSta001.input.kitExpiry",
+                      ng-model = "$ctrl.formSta001.input.kitExpiry",
                       ng-change = "$ctrl.generate()")
               div(ng-class = "{'col-lg-3': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-1': !$ctrl.isKitBarcodePreviewEnabled}")
                 ul.list-unstyled
@@ -236,7 +231,7 @@
                   input.form-control(
                     type = "number"
                     id = "sta001InputParametersCount"
-                    ng-model = "$ctrl.newSta001.input.parametersCount"
+                    ng-model = "$ctrl.formSta001.input.parametersCount"
                     ng-change = "$ctrl.parametersCountChange()"
                     min = "0")
                   ul.list-unstyled
@@ -246,9 +241,9 @@
                         type = "text",
                         id = "sta001InputParameter{{$index}}"
                         placeholder = "Parameter{{$index}}"
-                        ng-model = "$ctrl.newSta001.input.parameters[$index]"
+                        ng-model = "$ctrl.formSta001.input.parameters[$index]"
                         ng-change = "$ctrl.generate()")
-                      //- ng-model="$ctrl.newSta001.input.parameters[$index]"
+                      //- ng-model="$ctrl.formSta001.input.parameters[$index]"
                       //- ng-model="$ctrl.parameters[$index]"
                       //- ng-change="$ctrl.generate()")
                 div.form-group.col-lg-8
@@ -256,7 +251,7 @@
                   input.form-control(
                     type = "number"
                     id = "sta001InputProductsCount"
-                    ng-model = "$ctrl.newSta001.input.productsCount"
+                    ng-model = "$ctrl.formSta001.input.productsCount"
                     ng-change = "$ctrl.productsCountChange()"
                     min = "1"
                     max = "9")
@@ -268,12 +263,12 @@
                           type = "text",
                           id = "sta001InputProductCode{{$index}}"
                           placeholder = "ProductCode{{$index}}"
-                          ng-model = "$ctrl.newSta001.input.productCodes[$index]"
+                          ng-model = "$ctrl.formSta001.input.productCodes[$index]"
                           ng-change = "$ctrl.generate()")
                       div.form-group.col-lg-6
                         label product barcode ({{$index}})
                         pre {{$ctrl.productBarcodes[$index] | json}}
-                      //- ng-model="$ctrl.newSta001.input.productBarcodes[$index]"
+                      //- ng-model="$ctrl.formSta001.input.productBarcodes[$index]"
                       //- ng-model="$ctrl.productBarcodes[$index]"
                       //- ng-change="$ctrl.generate()")
               div(ng-class="{'col-lg-3': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductBarcodesPreviewEnabled}")
@@ -296,7 +291,17 @@
             div.col-lg-12
               button.btn.btn-primary(
                 type = "submit"
-                ng-click = "$ctrl.saveSta001('create')") Create
+                ng-show = "!$ctrl.isModeUpdate"
+                ng-click = "$ctrl.createSta001()") create
               button.btn.btn-warning(
                 type = "reset"
-                ng-click = "$ctrl.clearSta001()") Clear
+                ng-show = "!$ctrl.isModeUpdate"
+                ng-click = "$ctrl.clearSta001()") clear
+              button.btn.btn-primary(
+                type = "submit"
+                ng-show = "$ctrl.isModeUpdate"
+                ng-click = "$ctrl.updateSta001()") update
+              button.btn.btn-warning(
+                type = "reset"
+                ng-show = "$ctrl.isModeUpdate"
+                ng-click = "$ctrl.clearSta001(); $ctrl.generateVisible = false") cancel
