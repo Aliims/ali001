@@ -65,8 +65,8 @@ class Sta001Component {
       this.generateKitBarcode();
     }
     generateParameters() {
-      for (var i in this.formSta001.input.parameters) {
-        var parameter = this.formSta001.input.parameters[i.toString()];
+      for (var i in this.formSta001.i.parameters) {
+        var parameter = this.formSta001.i.parameters[i.toString()];
         var s = "";
         s+= parameter.replace(/[.]+/g, '');
         this.parameters[i] = s;
@@ -78,7 +78,7 @@ class Sta001Component {
     }
     parametersCountChange() {
       var fromLength = this.parameters.length;
-      var toLength = this.formSta001.input.parametersCount;
+      var toLength = this.formSta001.i.parametersCount;
       if (fromLength < toLength) {
         while(this.parameters.length < toLength) {
           this.parameters.push("");
@@ -99,9 +99,9 @@ class Sta001Component {
     }
 
     generateProductBarcodes() {
-      for (var i in this.formSta001.input.productCodes) {
-        var productCode = this.formSta001.input.productCodes[i.toString()];
-        var kitLot = this.formSta001.input.kitLot;
+      for (var i in this.formSta001.i.productCodes) {
+        var productCode = this.formSta001.i.productCodes[i.toString()];
+        var kitLot = this.formSta001.i.kitLot;
         var product = "";
         product+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][0];
         product+= this.hex2cod(Number(productCode).toString(16).toUpperCase()); // to hex hexString = yourNumber.toString(16); reverse with yourNumber = parseInt(hexString, 16);
@@ -141,7 +141,7 @@ class Sta001Component {
     }
     productsCountChange() {
       var fromLength = this.productBarcodes.length;
-      var toLength = this.formSta001.input.productsCount;
+      var toLength = this.formSta001.i.productsCount;
       if (fromLength < toLength) {
         while(this.productBarcodes.length < toLength) {
           this.productBarcodes.push("");
@@ -163,33 +163,33 @@ class Sta001Component {
 
     generateKitBarcode() {
       var kit = "";
-      if (this.formSta001.input.kitLot) {
-        var kitLot = this.formSta001.input.kitLot;
+      if (this.formSta001.i.kitLot) {
+        var kitLot = this.formSta001.i.kitLot;
         kit += kitLot;
         console.log("generateKitBarcode() with kitLot = ["+kitLot+
           "]");
       }
-      if (this.formSta001.input.kitCode) {
-        var kitCode = this.formSta001.input.kitCode;
+      if (this.formSta001.i.kitCode) {
+        var kitCode = this.formSta001.i.kitCode;
         kit += kitCode;
         console.log("generateKitBarcode() with kitCode = ["+kitCode+
           "]");
       }
-      if (this.formSta001.input.kitExpiry) {
-        var kitExpiry = this.formSta001.input.kitExpiry;
+      if (this.formSta001.i.kitExpiry) {
+        var kitExpiry = this.formSta001.i.kitExpiry;
         kit += kitExpiry;
         console.log("generateKitBarcode() with kitExpiry = ["+kitExpiry+
           "]");
       }
-      if (this.formSta001.input.productsCount) {
-        var productsCount = this.formSta001.input.productsCount;
+      if (this.formSta001.i.productsCount) {
+        var productsCount = this.formSta001.i.productsCount;
         kit += productsCount;
         console.log("generateKitBarcode() with productsCount = ["+productsCount+
           "]");
       }
-      if (this.formSta001.input.productCodes) {
-        for (var i in this.formSta001.input.productCodes) {
-          var productCode = this.formSta001.input.productCodes[i.toString()];
+      if (this.formSta001.i.productCodes) {
+        for (var i in this.formSta001.i.productCodes) {
+          var productCode = this.formSta001.i.productCodes[i.toString()];
           kit += productCode;
           console.log("generateKitBarcode() @["+i+
             "] productCode = ["+productCode+
@@ -206,6 +206,8 @@ class Sta001Component {
       var CS = this.generateKitBarcodeCS(kit);
       kit += CS;
       this.kitBarcode = kit;
+      this.formSta001.o = {};
+      this.formSta001.o.kitBarcode = kit;
       console.log("generateKitBarcode() --> kit = ["+kit+
         "] stored as kitBarcode value");
       this.generateKitBarcodeLines();
@@ -266,20 +268,18 @@ class Sta001Component {
     }
 
     createSta001() {
-      var hack = {};
-      hack = this.clone(this.formSta001);
-      hack.kitBarcode = this.kitBarcode;
-      this.$http.post('/api/sta001s', hack);
+      console.log("\n");
+      console.log(this.formSta001);
+      console.log("\n");
+
+      this.$http.post('/api/sta001s', this.formSta001);
       this.generateVisible = false;
       this.clearSta001();
       this.manageVisible = true;
       console.log("createSta001(sta001 = null)");
     }
     updateSta001() {
-      var hack = {};
-      hack = this.clone(this.formSta001);
-      hack.kitBarcode = this.kitBarcode;
-      this.$http.put('/api/sta001s/' + this.updateId, hack);
+      this.$http.put('/api/sta001s/' + this.updateId, this.formSta001);
       this.updateId = "";
       this.generateVisible = false;
       this.clearSta001();

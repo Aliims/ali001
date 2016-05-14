@@ -131,7 +131,7 @@
                   ng-click = "$ctrl.editSta001(sta001)")
                   span.glyphicon.glyphicon-pencil(
                     aria-hidden = "true")  edit
-                | @[{{$index}}]  [{{sta001._id}}] [{{sta001.kitBarcode}}] [{{sta001.input.kitCode}}]
+                | @[{{$index}}]  [{{sta001._id}}] [{{sta001.o.kitBarcode}}] [{{sta001.i.kitCode}}]
 
 .container
   .row
@@ -184,7 +184,7 @@
                       type = "text"
                       id = "sta001InputKitCode"
                       placeholder = "KitCode"
-                      ng-model = "$ctrl.formSta001.input.kitCode"
+                      ng-model = "$ctrl.formSta001.i.kitCode"
                       ng-change = "$ctrl.generate()")
                   div.form-group.col-lg-4
                     label kit lot
@@ -192,7 +192,7 @@
                       type = "text"
                       id = "sta001InputLot"
                       placeholder = "kitLot",
-                      ng-model = "$ctrl.formSta001.input.kitLot"
+                      ng-model = "$ctrl.formSta001.i.kitLot"
                       ng-change = "$ctrl.generate()")
                   div.form-group.col-lg-4
                     label kit expiry
@@ -200,7 +200,7 @@
                       type = "text",
                       id = "sta001InputExpiry",
                       placeholder = "kitExpiry",
-                      ng-model = "$ctrl.formSta001.input.kitExpiry",
+                      ng-model = "$ctrl.formSta001.i.kitExpiry",
                       ng-change = "$ctrl.generate()")
               div(ng-class = "{'col-lg-3': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-1': !$ctrl.isKitBarcodePreviewEnabled}")
                 ul.list-unstyled
@@ -226,7 +226,7 @@
                   input.form-control(
                     type = "number"
                     id = "sta001InputParametersCount"
-                    ng-model = "$ctrl.formSta001.input.parametersCount"
+                    ng-model = "$ctrl.formSta001.i.parametersCount"
                     ng-change = "$ctrl.parametersCountChange()"
                     min = "0")
                   ul.list-unstyled
@@ -236,9 +236,9 @@
                         type = "text",
                         id = "sta001InputParameter{{$index}}"
                         placeholder = "Parameter{{$index}}"
-                        ng-model = "$ctrl.formSta001.input.parameters[$index]"
+                        ng-model = "$ctrl.formSta001.i.parameters[$index]"
                         ng-change = "$ctrl.generate()")
-                      //- ng-model="$ctrl.formSta001.input.parameters[$index]"
+                      //- ng-model="$ctrl.formSta001.i.parameters[$index]"
                       //- ng-model="$ctrl.parameters[$index]"
                       //- ng-change="$ctrl.generate()")
                 div.form-group.col-lg-8
@@ -246,7 +246,7 @@
                   input.form-control(
                     type = "number"
                     id = "sta001InputProductsCount"
-                    ng-model = "$ctrl.formSta001.input.productsCount"
+                    ng-model = "$ctrl.formSta001.i.productsCount"
                     ng-change = "$ctrl.productsCountChange()"
                     min = "1"
                     max = "9")
@@ -258,12 +258,12 @@
                           type = "text",
                           id = "sta001InputProductCode{{$index}}"
                           placeholder = "ProductCode{{$index}}"
-                          ng-model = "$ctrl.formSta001.input.productCodes[$index]"
+                          ng-model = "$ctrl.formSta001.i.productCodes[$index]"
                           ng-change = "$ctrl.generate()")
                       div.form-group.col-lg-6
                         label product barcode ({{$index}})
                         pre {{$ctrl.productBarcodes[$index] | json}}
-                      //- ng-model="$ctrl.formSta001.input.productBarcodes[$index]"
+                      //- ng-model="$ctrl.formSta001.i.productBarcodes[$index]"
                       //- ng-model="$ctrl.productBarcodes[$index]"
                       //- ng-change="$ctrl.generate()")
               div(ng-class="{'col-lg-3': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductBarcodesPreviewEnabled}")

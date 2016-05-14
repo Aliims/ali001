@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 
 var Sta001Schema = new mongoose.Schema({
-  input: {
+  i: {
     kitCode: String,
     kitLot: String,
     kitExpiry: String,
@@ -16,10 +16,12 @@ var Sta001Schema = new mongoose.Schema({
     // productCodes: [{type: mongoose.Schema.Types.Mixed }]
     // productCodes: Array
   },
-  kitBarcode: String,
-  updated: { type: Date, default: Date.now },
-  online: { type: Boolean, default: false },
-  active: { type: Boolean, default: true }
+  o: {
+    kitBarcode: String,
+    updated: { type: Date, default: Date.now },
+    online: { type: Boolean, default: false },
+    active: { type: Boolean, default: true }
+  }
 });
 
 // , { autoIndex: false }
