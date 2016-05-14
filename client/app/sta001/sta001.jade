@@ -8,6 +8,40 @@
       h1.page-header DEBUG
       .container
         div.col-lg-12
+          div.alert.alert-info
+            p Sort Type: {{ sortType }}
+            p Sort Reverse: {{ sortReverse }}
+            p Search Query: {{ searchFish }}
+
+          table.table.table-bordered.table-striped
+            thead
+              tr
+                td
+                  a(href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse")
+                    | Sushi Roll 
+                    span.fa.fa-caret-down(ng-show="sortType == 'name' && !sortReverse")
+                    span.fa.fa-caret-up(ng-show="sortType == 'name' && sortReverse")
+                td
+                  form
+                    div.form-group
+                      div.input-group
+                        div.input-group-addon
+                          i.fa.fa-search
+                        input(type="text" class="form-control" placeholder="Search da Fish" ng-model="searchFish")
+                  a(href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse")
+                    | Fish Type 
+                    span.fa.fa-caret-down(ng-show="sortType == 'fish' && !sortReverse")
+                    span.fa.fa-caret-up(ng-show="sortType == 'fish' && sortReverse")
+                td
+                  a(href="#" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse")
+                    | Taste Level 
+                    span.fa.fa-caret-down(ng-show="sortType == 'tastiness' && !sortReverse")
+                    span.fa.fa-caret-up(ng-show="sortType == 'tastiness' && sortReverse")
+            tbody
+              tr(ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish")
+                td {{ roll.name }}
+                td {{ roll.fish }}
+                td {{ roll.tastiness }}
 
 .container
   .row
@@ -93,31 +127,60 @@
       .container.borded
         div.col-lg-12
           div.col-lg-12
-            ul.list-unstyled
-              li(ng-repeat = "sta001 in $ctrl.sta001s") 
-                button.btn.btn-default(
-                  ng-click = "$ctrl.deleteSta001(sta001)")
-                  span.glyphicon.glyphicon-trash(
-                    aria-hidden = "true")  delete
-                button.btn.btn-default(
-                  ng-show = "!sta001.online"
-                  ng-click = "$ctrl.invertSta001Online(sta001)")
-                  span.glyphicon.glyphicon-cloud-upload(
-                    aria-hidden = "true")  set online
-                button.btn.btn-primary(
-                  ng-show = "sta001.online"
-                  ng-click = "$ctrl.invertSta001Online(sta001)")
-                  span.glyphicon.glyphicon-cloud-download(
-                    aria-hidden = "true")  set offline
-                button.btn.btn-default(
-                  ng-click = "$ctrl.copySta001(sta001)")
-                  span.glyphicon.glyphicon-duplicate(
-                    aria-hidden = "true")  copy
-                button.btn.btn-default(
-                  ng-click = "$ctrl.editSta001(sta001)")
-                  span.glyphicon.glyphicon-pencil(
-                    aria-hidden = "true")  edit
-                | @[{{$index}}]  [{{sta001._id}}] [{{sta001.o.kitBarcode}}] [{{sta001.i.kitCode}}]
+            //- table.table.table-bordered.table-striped
+            table.table.table-bordered.table-striped
+              thead
+                tr
+                  th(
+                    style = "background-color:DarkGoldenRod"
+                    ng-show = "$ctrl.isModeDebug") _id
+                  th
+                    form
+                      div.form-group
+                        div.input-group
+                          div.input-group-addon
+                            i.fa.fa-search
+                          input(type="text" class="form-control" placeholder="kitCode" ng-model="searchKitCode")
+                    a(href="#" ng-click="sortType = 'kitCode'; sortReverse = !sortReverse")
+                      | kit code
+                      span.fa.fa-caret-down(ng-show="sortType == 'kitCode' && !sortReverse")
+                      span.fa.fa-caret-up(ng-show="sortType == 'kitCode' && sortReverse")
+                  th kit lot
+                  th kit expiry
+                  th kit barcode
+                  th actions
+              tbody
+                tr(ng-repeat = "sta001 in $ctrl.sta001s")
+                  td(
+                    style = "background-color:DarkGoldenRod"
+                    ng-show = "$ctrl.isModeDebug") {{sta001._id}}
+                  td {{sta001.i.kitCode}}
+                  td {{sta001.i.kitLot}}
+                  td {{sta001.i.kitExpiry}}
+                  td {{sta001.o.kitBarcode}}
+                  td
+                    button.btn.btn-default(
+                      ng-click = "$ctrl.deleteSta001(sta001)")
+                      span.glyphicon.glyphicon-trash(
+                        aria-hidden = "true")  delete
+                    button.btn.btn-default(
+                      ng-show = "!sta001.online"
+                      ng-click = "$ctrl.invertSta001Online(sta001)")
+                      span.glyphicon.glyphicon-cloud-upload(
+                        aria-hidden = "true")  set online
+                    button.btn.btn-primary(
+                      ng-show = "sta001.online"
+                      ng-click = "$ctrl.invertSta001Online(sta001)")
+                      span.glyphicon.glyphicon-cloud-download(
+                        aria-hidden = "true")  set offline
+                    button.btn.btn-default(
+                      ng-click = "$ctrl.copySta001(sta001)")
+                      span.glyphicon.glyphicon-duplicate(
+                        aria-hidden = "true")  copy
+                    button.btn.btn-default(
+                      ng-click = "$ctrl.editSta001(sta001)")
+                      span.glyphicon.glyphicon-pencil(
+                        aria-hidden = "true")  edit
 
 .container
   .row
@@ -158,7 +221,7 @@
               li
                 pre {{$ctrl.formSta001 | json}}
           div.col-lg-12(
-            ng-form = "sta001-form")
+            ng-form = "formSta001")
             div.col-lg-12
               div(ng-class = "{'col-lg-9': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isKitBarcodePreviewEnabled}")
                 div.col-lg-12
@@ -272,15 +335,14 @@
                 type = "submit"
                 ng-show = "!$ctrl.isModeUpdate"
                 ng-click = "$ctrl.createSta001()") create
-              button.btn.btn-warning(
-                type = "reset"
-                ng-show = "!$ctrl.isModeUpdate"
-                ng-click = "$ctrl.clearSta001()") clear
+              //- button.btn.btn-warning(
+              //-   type = "reset"
+              //-   ng-show = "!$ctrl.isModeUpdate"
+              //-   ng-click = "$ctrl.clearSta001()") clear
               button.btn.btn-primary(
                 type = "submit"
                 ng-show = "$ctrl.isModeUpdate"
                 ng-click = "$ctrl.updateSta001()") update
               button.btn.btn-warning(
                 type = "reset"
-                ng-show = "$ctrl.isModeUpdate"
                 ng-click = "$ctrl.clearSta001(); $ctrl.generateVisible = false") cancel

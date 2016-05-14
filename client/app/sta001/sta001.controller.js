@@ -4,12 +4,26 @@
 class Sta001Component {
   constructor($http, $scope, socket) {
 
+    // DEBUG
+      $scope.sortType     = 'name'; // set the default sort type
+      $scope.sortReverse  = false;  // set the default sort order
+      $scope.searchFish   = '';     // set the default search/filter term
+      // create the list of sushi rolls 
+      $scope.sushi = [
+        { name: 'Cali Roll', fish: 'Crab', tastiness: 2 },
+        { name: 'Philly', fish: 'Tuna', tastiness: 4 },
+        { name: 'Tiger', fish: 'Eel', tastiness: 7 },
+        { name: 'Rainbow', fish: 'Variety', tastiness: 6 }
+      ];
+
+      // $SCOPE vs THIS
+
       // (create) => POST
       // (read) => GET
       // (update) => PUT
       // (delete) => DELETE
 
-    // MANAGE
+    // APP
       this.$http = $http;
       this.socket = socket;
       this.sta001s = [];
@@ -28,6 +42,10 @@ class Sta001Component {
 
       this.isModeUpdate = false;
       this.updateId = "";
+
+
+    // MANAGE
+
 
     // GENERATE
       this.formSta001 = {
@@ -138,6 +156,7 @@ class Sta001Component {
     }
 
     generateKitBarcode() {
+      console.log("generateKitBarcode()");
       var kit = "";
       if (this.formSta001.i.kitLot) {
         var kitLot = this.formSta001.i.kitLot;
@@ -172,9 +191,9 @@ class Sta001Component {
       if (this.isKitBarcodePreviewEnabled) {
         this.generateKitBarcodePreview();
       }
-      console.log("generateKitBarcode()");
     }
     generateKitBarcodeCS(kit) {
+      console.log("generateKitBarcodeCS(kit)");
       var I = new String(kit);
       var chk = I.charCodeAt(0).toString(16).toUpperCase(); //hex
       for (var i = 1; i < I.length; i++) {
@@ -186,23 +205,24 @@ class Sta001Component {
       var pf = ((parseInt(chk, 16) & parseInt('0F', 16))).toString(16).toUpperCase();
       pf = this.hex2cod(pf);
       var CS = pF+pf;
-      console.log("generateKitBarcodeCS(kit)");
       return CS;
     }
     generateKitBarcodeLines() {
-        this.formSta001.o.kitBarcodeLines=[];
-        var barcode = this.formSta001.o.kitBarcode;
-        var search = new RegExp(".{1,"+this.kitBarcodeEncodingCut+"}","g")
-        var chunks = barcode.match(search);
-        for (var i = 0; i < chunks.length; i++) {
-          var line = this.kitBarcodeEncoding[chunks.length-1][i][0]+
-            chunks[i]+
-            this.kitBarcodeEncoding[chunks.length-1][i][1];
-          this.formSta001.o.kitBarcodeLines.push(line);
-        console.log("generateKitBarcodeLines()");
-        }
+      console.log("generateKitBarcodeLines()");
+      this.formSta001.o.kitBarcodeLines=[];
+      var barcode = this.formSta001.o.kitBarcode;
+      var search = new RegExp(".{1,"+this.kitBarcodeEncodingCut+"}","g")
+      var chunks = barcode.match(search);
+      for (var i = 0; i < chunks.length; i++) {
+        var line = this.kitBarcodeEncoding[chunks.length-1][i][0]+
+          chunks[i]+
+          this.kitBarcodeEncoding[chunks.length-1][i][1];
+        this.formSta001.o.kitBarcodeLines.push(line);
+      
+      }
     }
     generateKitBarcodePreview() {
+      console.log("generateKitBarcodePreview()");
       if ( document.body.getElementsByClassName('kitBarcodePreview')[0] ) {
         var O = document.body.getElementsByClassName('kitBarcodePreview')[0];
         while (O.firstChild) {
@@ -217,31 +237,28 @@ class Sta001Component {
           JsBarcode(c, this.formSta001.o.kitBarcodeLines[i], {
             height:30
           });
-          console.log("generateKitBarcodePreview()");
         }
       }
     }
 
     createSta001() {
-      console.log("\n");
+      console.log("createSta001()");
       console.log(this.formSta001);
-      console.log("\n");
-
       this.$http.post('/api/sta001s', this.formSta001);
       this.generateVisible = false;
       this.clearSta001();
       this.manageVisible = true;
-      console.log("createSta001()");
     }
     updateSta001() {
+      console.log("updateSta001()");
       this.$http.put('/api/sta001s/' + this.updateId, this.formSta001);
       this.updateId = "";
       this.generateVisible = false;
       this.clearSta001();
       this.manageVisible = true;
-      console.log("updateSta001()");
     }
     clearSta001() {
+      console.log("clearSta001()");
       this.formSta001 = {
         i: {
           parameters: [],
@@ -257,37 +274,35 @@ class Sta001Component {
       this.isProductBarcodesPreviewEnabled = false;
       this.isKitBarcodePreviewEnabled = false;
       this.isModeUpdate = false;
-      console.log("clearSta001()");
     }
 
   // MANAGE
     deleteSta001(sta001) {
-      this.$http.delete('/api/sta001s/' + sta001._id);
       console.log("deleteSta001(sta001)");
+      this.$http.delete('/api/sta001s/' + sta001._id);
     }
     invertSta001Online(sta001) {
+      console.log("invertSta001Online(sta001)");
       var inv = !sta001.online;
       this.$http.patch('/api/sta001s/' + sta001._id, { online: inv});
-      console.log("invertSta001Online(sta001)");
     }
     copySta001(sta001) {
-      var clone = this.clone(sta001);
-      this.formSta001 = clone;
-      this.generateVisible = true;
       console.log("copySta001(sta001)");
+      this.formSta001.i = sta001.i;
+      this.generate();
+      this.generateVisible = true;
     }
     editSta001(sta001) {
+      console.log("editSta001(sta001)");
       console.log(sta001._id);
       this.updateId = sta001._id;
       this.formSta001 = sta001;
       // delete this.formSta001.kitBarcode;
       this.isModeUpdate = true;
       this.generateVisible = true;
-      console.log("editSta001(sta001)");
     }
 
   // HELPERS
-
     hex2cod(si) {
       var so = "";
       for (var i = 0; i < si.length; i++) {
@@ -347,14 +362,12 @@ class Sta001Component {
       }
       return so;
     }
-
     $onInit() {
       this.$http.get('/api/sta001s').then(response => {
         this.sta001s = response.data;
         this.socket.syncUpdates('sta001', this.sta001s);
       });
     }
-
     clone(obj) {
       if (null == obj || "object" != typeof obj) return obj;
       var copy = obj.constructor();
@@ -365,7 +378,6 @@ class Sta001Component {
       }
       return copy;
     }
-
 }
 
 angular.module('ali001App')

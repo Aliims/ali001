@@ -10,7 +10,7 @@ angular.module('ali001App', [
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap',
-  'validation.match',
+  'validation.match'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider
