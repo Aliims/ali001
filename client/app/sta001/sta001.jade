@@ -4,24 +4,10 @@
   .row
     .col-lg-12(
       style = "background-color:DarkGoldenRod"
-      ng-show = "isModeDebug")
+      ng-show = "$ctrl.isModeDebug")
       h1.page-header DEBUG
       .container
-        //- https://jsfiddle.net/sirhc/z9cGm/
         div.col-lg-12
-          | obj in 
-          pre {{ $ctrl.objsInArr | json }}
-          code {{ $ctrl.objsInArr | json }}
-          ul
-            li(ng-repeat="obj in $ctrl.objsInArr")
-              | $index = {{$index}}, $ctrl.objsInArr[$index].str = 
-              input(ng-model="$ctrl.objsInArr[$index].str")
-        div.col-lg-12
-          ul.list-unstyled
-            li
-              label sta001s
-            li
-              pre {{$ctrl.sta001s | json}}
 
 .container
   .row
@@ -140,28 +126,32 @@
       h1.page-header GENERATE
       .container.borded
         div.col-lg-12
-          div.col-lg-12
+          div.col-lg-12(
+            style = "background-color:DarkGoldenRod"
+            ng-show = "$ctrl.isModeDebug")
             ul.list-unstyled.col-lg-3
               li
                 label parameters
               li
-                pre {{$ctrl.parameters | json}}
+                pre {{$ctrl.formSta001.o.parameters | json}}
             ul.list-unstyled.col-lg-3
               li
                 label productBarcodes
               li
-                pre {{$ctrl.productBarcodes | json}}
+                pre {{$ctrl.formSta001.o.productBarcodes | json}}
             ul.list-unstyled.col-lg-3
               li
                 label kitBarcode
               li
-                pre {{$ctrl.kitBarcode | json}}
+                pre {{$ctrl.formSta001.o.kitBarcode | json}}
             ul.list-unstyled.col-lg-3
               li
                 label kitBarcodeLines
               li
-                pre {{$ctrl.kitBarcodeLines | json}}
-          div.col-lg-12()
+                pre {{$ctrl.formSta001.o.kitBarcodeLines | json}}
+          div.col-lg-12(
+            style = "background-color:DarkGoldenRod"
+            ng-show = "$ctrl.isModeDebug")
             ul.list-unstyled
               li
                 label kit structure
@@ -176,7 +166,7 @@
                     li
                       label kit barcode
                     li
-                      pre {{$ctrl.kitBarcode | json}}
+                      pre {{$ctrl.formSta001.o.kitBarcode | json}}
                 div.col-lg-12
                   div.form-group.col-lg-4
                     label kit code
@@ -230,7 +220,7 @@
                     ng-change = "$ctrl.parametersCountChange()"
                     min = "0")
                   ul.list-unstyled
-                    li(ng-repeat = "parameter in $ctrl.getParameters() track by $index")
+                    li(ng-repeat="parameter in $ctrl.formSta001.o.parameters track by $index")
                       label parameter ({{$index}})
                       input.form-control(
                         type = "text",
@@ -238,9 +228,6 @@
                         placeholder = "Parameter{{$index}}"
                         ng-model = "$ctrl.formSta001.i.parameters[$index]"
                         ng-change = "$ctrl.generate()")
-                      //- ng-model="$ctrl.formSta001.i.parameters[$index]"
-                      //- ng-model="$ctrl.parameters[$index]"
-                      //- ng-change="$ctrl.generate()")
                 div.form-group.col-lg-8
                   label products count
                   input.form-control(
@@ -251,7 +238,7 @@
                     min = "1"
                     max = "9")
                   ul.list-unstyled
-                    li(ng-repeat = "productCode in $ctrl.getProductCodes() track by $index")
+                    li(ng-repeat = "productCode in $ctrl.formSta001.o.productBarcodes track by $index")
                       div.form-group.col-lg-6
                         label product code ({{$index}})
                         input.form-control(
@@ -262,10 +249,7 @@
                           ng-change = "$ctrl.generate()")
                       div.form-group.col-lg-6
                         label product barcode ({{$index}})
-                        pre {{$ctrl.productBarcodes[$index] | json}}
-                      //- ng-model="$ctrl.formSta001.i.productBarcodes[$index]"
-                      //- ng-model="$ctrl.productBarcodes[$index]"
-                      //- ng-change="$ctrl.generate()")
+                        pre {{$ctrl.formSta001.o.productBarcodes[$index] | json}}
               div(ng-class="{'col-lg-3': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductBarcodesPreviewEnabled}")
                 ul.list-unstyled
                   li

@@ -3,34 +3,19 @@
 
 class Sta001Component {
   constructor($http, $scope, socket) {
-    // DEBUG
-      // https://jsfiddle.net/sirhc/z9cGm/
-      this.itemsInObj = {
-          a: "strA",
-          b: "strB",
-          c: "strC"
-      };
-      this.itemsInArray = ["strA", "strB", "strC"];
-      this.objsInObj = {
-          a: {
-              str: "strA"
-          },
-          b: {
-              str: "strB"
-          },
-          c: {
-              str: "strC"
-          }
-      };
-      this.objsInArr = [ { str: "strA"}, { str: "strB"}, { str: "strC"} ];
+
+      // (create) => POST
+      // (read) => GET
+      // (update) => PUT
+      // (delete) => DELETE
+
+    // MANAGE
       this.$http = $http;
       this.socket = socket;
       this.sta001s = [];
       $scope.$on('$destroy', function() {
         socket.unsyncUpdates('sta001');
       });
-
-
 
       this.generateVisible = false;
       this.manageVisible = false;
@@ -40,125 +25,116 @@ class Sta001Component {
       this.configureVisible = false;
 
       this.isModeDebug = true;
-      this.isModeUpdate = false;
 
+      this.isModeUpdate = false;
       this.updateId = "";
 
-
     // GENERATE
-      this.parameters = [];
-      this.isProductBarcodesPreviewEnabled = false;
-      this.productBarcodes = [];
+      this.formSta001 = {
+        i: {
+          parameters: [],
+          productCodes: []
+        },
+        o: {
+          parameters: [],
+          productBarcodes: [],
+          kitBarcode: "",
+          kitBarcodeLines: []
+        }
+      };
       this.productBarcodeEncoding = [['A', 'A'], ['A', 'B'], ['A', 'C'], ['A', 'D'], ['B', 'A'], ['B', 'B'], ['B', 'C'], ['B', 'D'], ['C', 'A'], ['C', 'B']];
-      this.isKitBarcodePreviewEnabled = false;
-      this.kitBarcode = "";
-      this.kitBarcodeLines = [];
-      this.kitBarcodeEncodingCut = 15;
       this.kitBarcodeEncoding = [[['A0', 'A']], [['A1', 'A'], ['A2', 'A']], [['A3', 'A'], ['A4', 'A'], ['A5', 'A']], [['A6', 'A'], ['A7', 'A'], ['A8', 'A'], ['A9', 'A']], [['A$', 'A'], ['A-', 'A'], ['A:', 'A'], ['A/', 'A'], ['A.', 'A']], [['A+', 'A'], ['A0', 'B'], ['A1', 'B'], ['A2', 'B'], ['A3', 'B'], ['A4', 'B']], [['A5', 'B'], ['A6', 'B'], ['A7', 'B'], ['A8', 'B'], ['A9', 'B'], ['A$', 'B'], ['A-', 'B']], [['A:', 'B'], ['A/', 'B'], ['A.', 'B'], ['A+', 'B'], ['A0', 'C'], ['A1', 'C'], ['A2', 'C'], ['A3', 'C']], [['A4', 'C'], ['A5', 'C'], ['A6', 'C'], ['A7', 'C'], ['A8', 'C'], ['A9', 'C'], ['A$', 'C'], ['A-', 'C'], ['A:', 'C']], [['A/', 'C'], ['A.', 'C'], ['A+', 'C'], ['A0', 'D'], ['A1', 'D'], ['A2', 'D'], ['A3', 'D'], ['A4', 'D'], ['A5', 'D'], ['A6', 'D']], [['A7', 'D'], ['A8', 'D'], ['A9', 'D'], ['A$', 'D'], ['A-', 'D'], ['A:', 'D'], ['A/', 'D'], ['A.', 'D'], ['A+', 'D'], ['B0', 'A'], ['B1', 'A']], [['B2', 'A'], ['B3', 'A'], ['B4', 'A'], ['B5', 'A'], ['B6', 'A'], ['B7', 'A'], ['B8', 'A'], ['B9', 'A'], ['B$', 'A'], ['B-', 'A'], ['B:', 'A'], ['B/', 'A']], [['B.', 'A'], ['B+', 'A'], ['B0', 'B'], ['B1', 'B'], ['B2', 'B'], ['B3', 'B'], ['B4', 'B'], ['B5', 'B'], ['B6', 'B'], ['B7', 'B'], ['B8', 'B'], ['B9', 'B'], ['B$', 'B']], [['B-', 'B'], ['B:', 'B'], ['B/', 'B'], ['B.', 'B'], ['B+', 'B'], ['B0', 'C'], ['B1', 'C'], ['B2', 'C'], ['B3', 'C'], ['B4', 'C'], ['B5', 'C'], ['B6', 'C'], ['B7', 'C'], ['B8', 'C']], [['B9', 'C'], ['B$', 'C'], ['B-', 'C'], ['B:', 'C'], ['B/', 'C'], ['B.', 'C'], ['B+', 'C'], ['B0', 'D'], ['B1', 'D'], ['B2', 'D'], ['B3', 'D'], ['B4', 'D'], ['B5', 'D'], ['B6', 'D'], ['B7', 'D']], [['B8', 'D'], ['B9', 'D'], ['B$', 'D'], ['B-', 'D'], ['B:', 'D'], ['B/', 'D'], ['B.', 'D'], ['B+', 'D'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A']], [['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B']], [['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C']], [['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D']], [['C', 'D'], ['C', 'D'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'B'], ['D', 'B']]];
+      this.kitBarcodeEncodingCut = 15;
+      this.isProductBarcodesPreviewEnabled = false;
+      this.isKitBarcodePreviewEnabled = false;
   }
 
 
   // GENERATE
     generate() {
+      console.log("generate()");
       this.generateParameters();
       this.generateProductBarcodes();
       this.generateKitBarcode();
     }
     generateParameters() {
-      for (var i in this.formSta001.i.parameters) {
-        var parameter = this.formSta001.i.parameters[i.toString()];
-        var s = "";
-        s+= parameter.replace(/[.]+/g, '');
-        this.parameters[i] = s;
-        console.log("generateParameters() @["+i+
-          "] with parameter = ["+parameter+
-          "] --> parameter = ["+s+
-          "] stored in parameters table");
+      console.log("generateParameters()");
+      if (this.formSta001.i.parameters) {
+        for (var i in this.formSta001.i.parameters) {
+          var parameter = this.formSta001.i.parameters[i.toString()];
+          var s = "";
+          s+= parameter.replace(/[.]+/g, '');
+          this.formSta001.o.parameters[i] = s;
+        }
       }
     }
     parametersCountChange() {
-      var fromLength = this.parameters.length;
+      console.log("parametersCountChange()");
+      var fromLength = this.formSta001.o.parameters.length;
       var toLength = this.formSta001.i.parametersCount;
       if (fromLength < toLength) {
-        while(this.parameters.length < toLength) {
-          this.parameters.push("");
+        while(this.formSta001.o.parameters.length < toLength) {
+          this.formSta001.o.parameters.push("");
         }
       } else if (fromLength > toLength) {
-        while(this.parameters.length > toLength) {
-          this.parameters.pop();
+        while(this.formSta001.o.parameters.length > toLength) {
+          this.formSta001.o.parameters.pop();
         }
-      } else {
-        console.log("\n### error in parameterChange() ###\n");
       }
-      console.log("parametersCountChange() from fromLength = ["+fromLength+
-        "] to toLength = ["+toLength+
-        "]");
-    }
-    getParameters() {
-      return this.parameters;
     }
 
     generateProductBarcodes() {
-      for (var i in this.formSta001.i.productCodes) {
-        var productCode = this.formSta001.i.productCodes[i.toString()];
+      console.log("generateProductBarcodes()");
+      if (this.formSta001.i.kitLot) {
         var kitLot = this.formSta001.i.kitLot;
-        var product = "";
-        product+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][0];
-        product+= this.hex2cod(Number(productCode).toString(16).toUpperCase()); // to hex hexString = yourNumber.toString(16); reverse with yourNumber = parseInt(hexString, 16);
-        product+= kitLot.substr(4);
-        product+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][1];
-        this.productBarcodes[i] = product;
-        console.log("generateProductBarcodes() @["+i+
-          "] with productCode = ["+productCode+
-          "] and kitLot = ["+kitLot+
-          "] --> productBarcode = ["+product+
-          "] stored in productBarcodes table");
+        for (var i in this.formSta001.i.productCodes) {
+          if (this.formSta001.i.productCodes[i.toString()]) {
+          var productCode = this.formSta001.i.productCodes[i.toString()];
+          var product = "";
+          product+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][0];
+          product+= this.hex2cod(Number(productCode).toString(16).toUpperCase()); // to hex hexString = yourNumber.toString(16); reverse with yourNumber = parseInt(hexString, 16);
+          product+= kitLot.substr(4);
+          product+= this.productBarcodeEncoding[Number(kitLot.substr(3,1))][1];
+          this.formSta001.o.productBarcodes[i] = product;
+          }
+        }
       }
       if (this.isProductBarcodesPreviewEnabled) {
         this.generateProductBarcodesPreview();
       }
     }
     generateProductBarcodesPreview() {
+      console.log("generateProductBarcodesPreview()");
       if (document.body.getElementsByClassName('list-unstyled productBarcodesPreview col-lg-12')[0]) {
         var img = document.body.getElementsByClassName('list-unstyled productBarcodesPreview col-lg-12')[0];
         while (img.firstChild) {
           img.removeChild(img.firstChild);
         }
-        for (var i = 0; i < this.productBarcodes.length; i++) {
+        for (var i = 0; i < this.formSta001.o.productBarcodes.length; i++) {
           var l = document.createElement("li");
           img.appendChild(l);
           var c = document.createElement("canvas");
           c.className += "col-lg-12";
           l.appendChild(c);
-          JsBarcode(c, this.productBarcodes[i], {
+          JsBarcode(c, this.formSta001.o.productBarcodes[i], {
             height:30
           });
-          console.log("generateProductBarcodesPreview() @["+i+
-            "] with productBarcode = ["+this.productBarcodes[i]+
-            "] --> canvas in productBarcodesPreview");
         }
       };
     }
     productsCountChange() {
-      var fromLength = this.productBarcodes.length;
+      console.log("productsCountChange()");
+      var fromLength = this.formSta001.o.productBarcodes.length;
       var toLength = this.formSta001.i.productsCount;
       if (fromLength < toLength) {
-        while(this.productBarcodes.length < toLength) {
-          this.productBarcodes.push("");
+        while(this.formSta001.o.productBarcodes.length < toLength) {
+          this.formSta001.o.productBarcodes.push("");
         }
       } else if (fromLength > toLength) {
-        while(this.productBarcodes.length > toLength) {
-          this.productBarcodes.pop();
+        while(this.formSta001.o.productBarcodes.length > toLength) {
+          this.formSta001.o.productBarcodes.pop();
         }
-      } else {
-        console.log("\n### error in productsCountChange() ###\n");
       }
-      console.log("productsCountChange() from fromLength = ["+fromLength+
-        "] to toLength = ["+toLength+
-        "]");
-    }
-    getProductCodes() {
-      return this.productBarcodes;
     }
 
     generateKitBarcode() {
@@ -166,54 +142,37 @@ class Sta001Component {
       if (this.formSta001.i.kitLot) {
         var kitLot = this.formSta001.i.kitLot;
         kit += kitLot;
-        console.log("generateKitBarcode() with kitLot = ["+kitLot+
-          "]");
       }
       if (this.formSta001.i.kitCode) {
         var kitCode = this.formSta001.i.kitCode;
         kit += kitCode;
-        console.log("generateKitBarcode() with kitCode = ["+kitCode+
-          "]");
       }
       if (this.formSta001.i.kitExpiry) {
         var kitExpiry = this.formSta001.i.kitExpiry;
         kit += kitExpiry;
-        console.log("generateKitBarcode() with kitExpiry = ["+kitExpiry+
-          "]");
       }
       if (this.formSta001.i.productsCount) {
         var productsCount = this.formSta001.i.productsCount;
         kit += productsCount;
-        console.log("generateKitBarcode() with productsCount = ["+productsCount+
-          "]");
       }
       if (this.formSta001.i.productCodes) {
         for (var i in this.formSta001.i.productCodes) {
           var productCode = this.formSta001.i.productCodes[i.toString()];
           kit += productCode;
-          console.log("generateKitBarcode() @["+i+
-            "] productCode = ["+productCode+
-            "]");
         }
       }
-      for (var i = 0; i < this.parameters.length; i++) {
-        var parameter = this.parameters[i];
+      for (var i = 0; i < this.formSta001.o.parameters.length; i++) {
+        var parameter = this.formSta001.o.parameters[i];
         kit += parameter;
-        console.log("generateKitBarcode() @["+i+
-          "] paramter = ["+parameter+
-          "]");
       }
       var CS = this.generateKitBarcodeCS(kit);
       kit += CS;
-      this.kitBarcode = kit;
-      this.formSta001.o = {};
       this.formSta001.o.kitBarcode = kit;
-      console.log("generateKitBarcode() --> kit = ["+kit+
-        "] stored as kitBarcode value");
       this.generateKitBarcodeLines();
       if (this.isKitBarcodePreviewEnabled) {
         this.generateKitBarcodePreview();
       }
+      console.log("generateKitBarcode()");
     }
     generateKitBarcodeCS(kit) {
       var I = new String(kit);
@@ -227,22 +186,20 @@ class Sta001Component {
       var pf = ((parseInt(chk, 16) & parseInt('0F', 16))).toString(16).toUpperCase();
       pf = this.hex2cod(pf);
       var CS = pF+pf;
+      console.log("generateKitBarcodeCS(kit)");
       return CS;
     }
     generateKitBarcodeLines() {
-        this.kitBarcodeLines=[];
-        var barcode = this.kitBarcode;
+        this.formSta001.o.kitBarcodeLines=[];
+        var barcode = this.formSta001.o.kitBarcode;
         var search = new RegExp(".{1,"+this.kitBarcodeEncodingCut+"}","g")
         var chunks = barcode.match(search);
         for (var i = 0; i < chunks.length; i++) {
           var line = this.kitBarcodeEncoding[chunks.length-1][i][0]+
             chunks[i]+
             this.kitBarcodeEncoding[chunks.length-1][i][1];
-          this.kitBarcodeLines.push(line);
-        console.log("generateKitBarcodeLines() @["+i+
-          "] chunk = ["+chunks[i]+
-          "] --> line = ["+line+
-          "]");
+          this.formSta001.o.kitBarcodeLines.push(line);
+        console.log("generateKitBarcodeLines()");
         }
     }
     generateKitBarcodePreview() {
@@ -251,18 +208,16 @@ class Sta001Component {
         while (O.firstChild) {
           O.removeChild(O.firstChild);
         }
-        for (var i = 0; i < this.kitBarcodeLines.length; i++) {
+        for (var i = 0; i < this.formSta001.o.kitBarcodeLines.length; i++) {
           var l = document.createElement("li");
           O.appendChild(l);
           var c = document.createElement("canvas");
           c.className += "col-lg-12";
           l.appendChild(c);
-          JsBarcode(c, this.kitBarcodeLines[i], {
+          JsBarcode(c, this.formSta001.o.kitBarcodeLines[i], {
             height:30
           });
-          console.log("generateKitBarcodePreview() @["+i+
-            "] with kitBarcodeLines = ["+this.kitBarcodeLines[i]+
-            "] --> canvas in kitBarcodePreview");
+          console.log("generateKitBarcodePreview()");
         }
       }
     }
@@ -276,7 +231,7 @@ class Sta001Component {
       this.generateVisible = false;
       this.clearSta001();
       this.manageVisible = true;
-      console.log("createSta001(sta001 = null)");
+      console.log("createSta001()");
     }
     updateSta001() {
       this.$http.put('/api/sta001s/' + this.updateId, this.formSta001);
@@ -284,17 +239,23 @@ class Sta001Component {
       this.generateVisible = false;
       this.clearSta001();
       this.manageVisible = true;
-      console.log("updateSta001() with kitBarcode = ["+this.kitBarcode+
-        "]");
+      console.log("updateSta001()");
     }
     clearSta001() {
-      this.parameters = [];
+      this.formSta001 = {
+        i: {
+          parameters: [],
+          productCodes: []
+        },
+        o: {
+          parameters: [],
+          productBarcodes: [],
+          kitBarcode: "",
+          kitBarcodeLines: []
+        }
+      };
       this.isProductBarcodesPreviewEnabled = false;
-      this.productBarcodes = [];
       this.isKitBarcodePreviewEnabled = false;
-      this.kitBarcode = "";
-      this.kitBarcodeLines = [];
-      this.formSta001 = null;
       this.isModeUpdate = false;
       console.log("clearSta001()");
     }
@@ -404,12 +365,6 @@ class Sta001Component {
       }
       return copy;
     }
-
-
-      // (create) => POST
-      // (read) => GET
-      // (update) => PUT
-      // (delete) => DELETE
 
 }
 
