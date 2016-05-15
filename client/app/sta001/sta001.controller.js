@@ -4,18 +4,6 @@
 class Sta001Component {
   constructor($http, $scope, socket) {
 
-    // DEBUG
-      $scope.sortType     = 'name'; // set the default sort type
-      $scope.sortReverse  = false;  // set the default sort order
-      $scope.searchFish   = '';     // set the default search/filter term
-      // create the list of sushi rolls 
-      $scope.sushi = [
-        { name: 'Cali Roll', fish: 'Crab', tastiness: 2 },
-        { name: 'Philly', fish: 'Tuna', tastiness: 4 },
-        { name: 'Tiger', fish: 'Eel', tastiness: 7 },
-        { name: 'Rainbow', fish: 'Variety', tastiness: 6 }
-      ];
-
       // $SCOPE vs THIS
 
       // (create) => POST
@@ -38,14 +26,18 @@ class Sta001Component {
       this.deployVisible = false;
       this.configureVisible = false;
 
-      this.isModeDebug = true;
+      this.isModeDebug = false;
 
       this.isModeUpdate = false;
       this.updateId = "";
 
 
     // MANAGE
-
+      $scope.sortType     = '_id'; // set the default sort type
+      $scope.sortReverse  = false;  // set the default sort order
+      $scope.filters = {
+        searchKit: ''
+      }
 
     // GENERATE
       this.formSta001 = {

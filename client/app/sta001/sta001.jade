@@ -8,40 +8,6 @@
       h1.page-header DEBUG
       .container
         div.col-lg-12
-          div.alert.alert-info
-            p Sort Type: {{ sortType }}
-            p Sort Reverse: {{ sortReverse }}
-            p Search Query: {{ searchFish }}
-
-          table.table.table-bordered.table-striped
-            thead
-              tr
-                td
-                  a(href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse")
-                    | Sushi Roll 
-                    span.fa.fa-caret-down(ng-show="sortType == 'name' && !sortReverse")
-                    span.fa.fa-caret-up(ng-show="sortType == 'name' && sortReverse")
-                td
-                  form
-                    div.form-group
-                      div.input-group
-                        div.input-group-addon
-                          i.fa.fa-search
-                        input(type="text" class="form-control" placeholder="Search da Fish" ng-model="searchFish")
-                  a(href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse")
-                    | Fish Type 
-                    span.fa.fa-caret-down(ng-show="sortType == 'fish' && !sortReverse")
-                    span.fa.fa-caret-up(ng-show="sortType == 'fish' && sortReverse")
-                td
-                  a(href="#" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse")
-                    | Taste Level 
-                    span.fa.fa-caret-down(ng-show="sortType == 'tastiness' && !sortReverse")
-                    span.fa.fa-caret-up(ng-show="sortType == 'tastiness' && sortReverse")
-            tbody
-              tr(ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish")
-                td {{ roll.name }}
-                td {{ roll.fish }}
-                td {{ roll.tastiness }}
 
 .container
   .row
@@ -127,30 +93,45 @@
       .container.borded
         div.col-lg-12
           div.col-lg-12
-            //- table.table.table-bordered.table-striped
+            form
+              div.form-group
+                div.input-group
+                  div.input-group-addon
+                    i.fa.fa-search
+                  input(type="text" class="form-control" placeholder="searchKit" ng-model="filters.searchKit")
             table.table.table-bordered.table-striped
               thead
                 tr
                   th(
                     style = "background-color:DarkGoldenRod"
-                    ng-show = "$ctrl.isModeDebug") _id
+                    ng-show = "$ctrl.isModeDebug")
+                    a(href="#" ng-click="sortType = '_id'; sortReverse = !sortReverse")
+                      | _id
+                      span.fa.fa-caret-down(ng-show="sortType == '_id' && !sortReverse")
+                      span.fa.fa-caret-up(ng-show="sortType == '_id' && sortReverse")
                   th
-                    form
-                      div.form-group
-                        div.input-group
-                          div.input-group-addon
-                            i.fa.fa-search
-                          input(type="text" class="form-control" placeholder="kitCode" ng-model="searchKitCode")
-                    a(href="#" ng-click="sortType = 'kitCode'; sortReverse = !sortReverse")
+                    a(href="#" ng-click="sortType = 'i.kitCode'; sortReverse = !sortReverse")
                       | kit code
-                      span.fa.fa-caret-down(ng-show="sortType == 'kitCode' && !sortReverse")
-                      span.fa.fa-caret-up(ng-show="sortType == 'kitCode' && sortReverse")
-                  th kit lot
-                  th kit expiry
-                  th kit barcode
+                      span.fa.fa-caret-down(ng-show="sortType == 'i.kitCode' && !sortReverse")
+                      span.fa.fa-caret-up(ng-show="sortType == 'i.kitCode' && sortReverse")
+                  th
+                    a(href="#" ng-click="sortType = 'i.kitLot'; sortReverse = !sortReverse")
+                      | kit lot
+                      span.fa.fa-caret-down(ng-show="sortType == 'i.kitLot' && !sortReverse")
+                      span.fa.fa-caret-up(ng-show="sortType == 'i.kitLot' && sortReverse")
+                  th
+                    a(href="#" ng-click="sortType = 'i.kitExpiry'; sortReverse = !sortReverse")
+                      | kit expiry
+                      span.fa.fa-caret-down(ng-show="sortType == 'i.kitExpiry' && !sortReverse")
+                      span.fa.fa-caret-up(ng-show="sortType == 'i.kitExpiry' && sortReverse")
+                  th
+                    a(href="#" ng-click="sortType = 'o.kitBarcode'; sortReverse = !sortReverse")
+                      | kit barcode
+                      span.fa.fa-caret-down(ng-show="sortType == 'o.kitBarcode' && !sortReverse")
+                      span.fa.fa-caret-up(ng-show="sortType == 'o.kitBarcode' && sortReverse")
                   th actions
               tbody
-                tr(ng-repeat = "sta001 in $ctrl.sta001s")
+                tr(ng-repeat = "sta001 in $ctrl.sta001s | orderBy:sortType:sortReverse | filter:filters.searchKit")
                   td(
                     style = "background-color:DarkGoldenRod"
                     ng-show = "$ctrl.isModeDebug") {{sta001._id}}
