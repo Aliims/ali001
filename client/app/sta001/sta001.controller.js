@@ -21,7 +21,7 @@ class Sta001Component {
 
       this.generateVisible = false;
       this.manageVisible = false;
-      this.importVisible = false;
+      this.importVisible = true;
       this.exportVisible = false;
       this.deployVisible = false;
       this.configureVisible = false;
@@ -34,6 +34,7 @@ class Sta001Component {
 
     // IMPORT
       $scope.myFile = '';
+      $scope.myData = '';
     $scope.uploadFile = function(){
         var file = $scope.myFile;
         console.log('file is ' );
@@ -412,7 +413,10 @@ angular.module('ali001App')
         transformRequest: angular.identity,
         headers: {'Content-Type': undefined}
       })
-      .success(function(){
+      .success(function(data){
+        console.log("service:");
+        console.log(data);
+        return data;
       })
       .error(function(){
       });
