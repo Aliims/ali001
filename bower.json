@@ -18,7 +18,8 @@
     "angular-validation-match": "~1.5.2",
     "trianglify": "^0.4.0",
     "angular-ui": "^0.4.0",
-    "JsBarcode": "jsbarcode#^3.0.2"
+    "JsBarcode": "jsbarcode#^3.0.2",
+    "angular-upload": "^1.0.12"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.0"

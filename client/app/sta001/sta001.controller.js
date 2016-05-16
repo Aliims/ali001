@@ -2,7 +2,7 @@
 (function(){
 
 class Sta001Component {
-  constructor($http, $scope, socket, fileUpload) {
+  constructor($http, $scope, socket) {
 
       // $SCOPE vs THIS
 
@@ -33,15 +33,7 @@ class Sta001Component {
 
 
     // IMPORT
-      $scope.myFile = '';
-      $scope.myData = '';
-      $scope.uploadFile = function(){
-        var file = $scope.myFile;
-        console.log('file is ' );
-        console.dir(file);
-        var uploadUrl = "/api/sta001s/upload/";
-        fileUpload.uploadFileToUrl(file, uploadUrl);
-      };
+      this.response = '...';
 
     // MANAGE
       $scope.sortType     = '_id'; // set the default sort type
@@ -306,7 +298,11 @@ class Sta001Component {
     }
 
   // IMPORT
-
+    onSuccess(response) {
+      console.log("onSuccess(response)");
+      this.response = response.data.kitBarcode;
+      console.log(response);
+    }
 
   // HELPERS
     hex2cod(si) {
@@ -390,34 +386,6 @@ angular.module('ali001App')
   .component('sta001', {
     templateUrl: 'app/sta001/sta001.html',
     controller: Sta001Component
-  })
-  .directive('fileModel', ['$parse', function ($parse) {
-    return {
-      restrict: 'A',
-      link: function(scope, element, attrs) {
-        var model = $parse(attrs.fileModel);
-        var modelSetter = model.assign;
-        element.bind('change', function(){
-          scope.$apply(function(){
-            modelSetter(scope, element[0].files[0]);
-          });
-        });
-      }
-    };
-  }])
-  .service('fileUpload', ['$http', function ($http) {
-    this.uploadFileToUrl = function(file, uploadUrl){
-      var fd = new FormData();
-      fd.append('file', file);
-      $http.post(uploadUrl, fd, {
-        transformRequest: angular.identity,
-        headers: {'Content-Type': undefined}
-      })
-      .success(function(){
-      })
-      .error(function(){
-      });
-    }
-  }]);
+  });
 
 })();

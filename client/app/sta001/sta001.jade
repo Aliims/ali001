@@ -92,9 +92,13 @@
       h1.page-header IMPORT
       .container.borded
         div.col-lg-12
-          input(type="file" file-model="myFile")
-          button(type="submit" ng-click="uploadFile()") upload
-          span $ctrl.data: {{$ctrl.myData}}
+          div.btn.btn-primary.btn-upload(
+            upload-button
+            url="/api/sta001s/upload/"
+            multiple="allowMultiple"
+            on-success="$ctrl.onSuccess(response)") Fileupload
+          div
+            | response: {{$ctrl.response}}
 
 .container
   .row
