@@ -98,7 +98,8 @@
             multiple="allowMultiple"
             on-success="$ctrl.onSuccess(response)") Fileupload
           div
-            | response: {{$ctrl.response}}
+            | response:
+            pre {{$ctrl.response | json}}
 
 .container
   .row

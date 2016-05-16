@@ -12,6 +12,7 @@
 import _ from 'lodash';
 import Sta001 from './sta001.model';
 import fs from 'fs';
+var pdfUtil = require('pdf-to-text');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -104,24 +105,40 @@ export function destroy(req, res) {
 
 // Uploads a new Sta001
 export function upload(req, res) {
-  fs.readFile(req.file.path, 'utf8', function (err, data) {
-    if(err) { return handleError(res, err); }
-    var kitBarcodeLines = JSON.parse(data).kitBarcodeLines;
-    var kitBarcode = "";
-    for (var i = 0; i < kitBarcodeLines.length; i++) {
-      kitBarcode += kitBarcodeLines[i].substr(2, kitBarcodeLines[i].length -3);
-    }
-    console.log(kitBarcode);
-    var o = {};
-    o.kitBarcode = kitBarcode;
-    fs.writeFile(
-      'upload_o.json', 
-      JSON.stringify(o),
-      function (err) {if (err) return console.log(err);}
-    );
-    return res.status(200).json(o);
-    // return Sta001.create(req.body)
-    //   .then(respondWithResult(res, 201))
-    //   .catch(handleError(res));
+  var o = {};
+  pdfUtil.info(req.file.path, function(err, info) {
+    if (err) throw(err);
+    o.info = info;
+    console.log(info);
+    pdfUtil.pdfToText(req.file.path, function(err, data) {
+      if (err) throw(err);
+      o.data = data.trim();
+      console.log(data.trim());
+      return res.status(200).json(o);
+    });
   });
+
+  // fs.readFile(req.file.path, 'utf8', function (err, data) {
+  //   if(err) { return handleError(res, err); }
+  //   var kitBarcodeLines = JSON.parse(data).kitBarcodeLines;
+  //   var kitBarcode = "";
+  //   for (var i = 0; i < kitBarcodeLines.length; i++) {
+  //     kitBarcode += kitBarcodeLines[i].substr(2, kitBarcodeLines[i].length -3);
+  //   }
+  //   console.log(kitBarcode);
+  //   var o = {};
+  //   o.kitBarcode = kitBarcode;
+  //   fs.writeFile(
+  //     'upload_o.json', 
+  //     JSON.stringify(o),
+  //     function (err) {if (err) return console.log(err);}
+  //   );
+  //   return res.status(200).json(o);
+  //   // return Sta001.create(req.body)
+  //   //   .then(respondWithResult(res, 201))
+  //   //   .catch(handleError(res));
+  // });
+
+  // return res.status(200).json(o);
+
 }

@@ -300,7 +300,8 @@ class Sta001Component {
   // IMPORT
     onSuccess(response) {
       console.log("onSuccess(response)");
-      this.response = response.data.kitBarcode;
+      // this.response = response.data.kitBarcode;
+      this.response = response.data;
       console.log(response);
     }
 
