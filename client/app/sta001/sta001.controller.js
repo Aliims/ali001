@@ -35,13 +35,13 @@ class Sta001Component {
     // IMPORT
       $scope.myFile = '';
       $scope.myData = '';
-    $scope.uploadFile = function(){
+      $scope.uploadFile = function(){
         var file = $scope.myFile;
         console.log('file is ' );
         console.dir(file);
         var uploadUrl = "/api/sta001s/upload/";
         fileUpload.uploadFileToUrl(file, uploadUrl);
-    };
+      };
 
     // MANAGE
       $scope.sortType     = '_id'; // set the default sort type
@@ -413,10 +413,7 @@ angular.module('ali001App')
         transformRequest: angular.identity,
         headers: {'Content-Type': undefined}
       })
-      .success(function(data){
-        console.log("service:");
-        console.log(data);
-        return data;
+      .success(function(){
       })
       .error(function(){
       });
