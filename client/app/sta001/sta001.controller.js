@@ -4,13 +4,6 @@
 class Sta001Component {
   constructor($http, $scope, socket) {
 
-      // $SCOPE vs THIS
-
-      // (create) => POST
-      // (read) => GET
-      // (update) => PUT
-      // (delete) => DELETE
-
     // APP
       this.$http = $http;
       this.socket = socket;
@@ -18,15 +11,15 @@ class Sta001Component {
       $scope.$on('$destroy', function() {
         socket.unsyncUpdates('sta001');
       });
+      this.productBarcodeEncoding = [['A', 'A'], ['A', 'B'], ['A', 'C'], ['A', 'D'], ['B', 'A'], ['B', 'B'], ['B', 'C'], ['B', 'D'], ['C', 'A'], ['C', 'B']];
+      this.kitBarcodeEncoding = [[['A0', 'A']], [['A1', 'A'], ['A2', 'A']], [['A3', 'A'], ['A4', 'A'], ['A5', 'A']], [['A6', 'A'], ['A7', 'A'], ['A8', 'A'], ['A9', 'A']], [['A$', 'A'], ['A-', 'A'], ['A:', 'A'], ['A/', 'A'], ['A.', 'A']], [['A+', 'A'], ['A0', 'B'], ['A1', 'B'], ['A2', 'B'], ['A3', 'B'], ['A4', 'B']], [['A5', 'B'], ['A6', 'B'], ['A7', 'B'], ['A8', 'B'], ['A9', 'B'], ['A$', 'B'], ['A-', 'B']], [['A:', 'B'], ['A/', 'B'], ['A.', 'B'], ['A+', 'B'], ['A0', 'C'], ['A1', 'C'], ['A2', 'C'], ['A3', 'C']], [['A4', 'C'], ['A5', 'C'], ['A6', 'C'], ['A7', 'C'], ['A8', 'C'], ['A9', 'C'], ['A$', 'C'], ['A-', 'C'], ['A:', 'C']], [['A/', 'C'], ['A.', 'C'], ['A+', 'C'], ['A0', 'D'], ['A1', 'D'], ['A2', 'D'], ['A3', 'D'], ['A4', 'D'], ['A5', 'D'], ['A6', 'D']], [['A7', 'D'], ['A8', 'D'], ['A9', 'D'], ['A$', 'D'], ['A-', 'D'], ['A:', 'D'], ['A/', 'D'], ['A.', 'D'], ['A+', 'D'], ['B0', 'A'], ['B1', 'A']], [['B2', 'A'], ['B3', 'A'], ['B4', 'A'], ['B5', 'A'], ['B6', 'A'], ['B7', 'A'], ['B8', 'A'], ['B9', 'A'], ['B$', 'A'], ['B-', 'A'], ['B:', 'A'], ['B/', 'A']], [['B.', 'A'], ['B+', 'A'], ['B0', 'B'], ['B1', 'B'], ['B2', 'B'], ['B3', 'B'], ['B4', 'B'], ['B5', 'B'], ['B6', 'B'], ['B7', 'B'], ['B8', 'B'], ['B9', 'B'], ['B$', 'B']], [['B-', 'B'], ['B:', 'B'], ['B/', 'B'], ['B.', 'B'], ['B+', 'B'], ['B0', 'C'], ['B1', 'C'], ['B2', 'C'], ['B3', 'C'], ['B4', 'C'], ['B5', 'C'], ['B6', 'C'], ['B7', 'C'], ['B8', 'C']], [['B9', 'C'], ['B$', 'C'], ['B-', 'C'], ['B:', 'C'], ['B/', 'C'], ['B.', 'C'], ['B+', 'C'], ['B0', 'D'], ['B1', 'D'], ['B2', 'D'], ['B3', 'D'], ['B4', 'D'], ['B5', 'D'], ['B6', 'D'], ['B7', 'D']], [['B8', 'D'], ['B9', 'D'], ['B$', 'D'], ['B-', 'D'], ['B:', 'D'], ['B/', 'D'], ['B.', 'D'], ['B+', 'D'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A']], [['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B']], [['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C']], [['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D']], [['C', 'D'], ['C', 'D'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'B'], ['D', 'B']]];
+      this.kitBarcodeEncodingCut = 15;
 
       this.generateVisible = false;
       this.manageVisible = false;
-      this.importVisible = true;
+      this.importVisible = false;
       this.exportVisible = false;
-      this.deployVisible = false;
-      this.configureVisible = false;
-
-      this.isModeDebug = true;
+      this.detailVisible = false;
 
       this.isModeUpdate = false;
       this.updateId = "";
@@ -34,7 +27,6 @@ class Sta001Component {
 
     // IMPORT
       this.decodes = [];
-      this.loaderVisible = false;
 
     // MANAGE
       $scope.sortType     = '_id'; // set the default sort type
@@ -56,23 +48,17 @@ class Sta001Component {
           kitBarcodeLines: []
         }
       };
-      this.productBarcodeEncoding = [['A', 'A'], ['A', 'B'], ['A', 'C'], ['A', 'D'], ['B', 'A'], ['B', 'B'], ['B', 'C'], ['B', 'D'], ['C', 'A'], ['C', 'B']];
-      this.kitBarcodeEncoding = [[['A0', 'A']], [['A1', 'A'], ['A2', 'A']], [['A3', 'A'], ['A4', 'A'], ['A5', 'A']], [['A6', 'A'], ['A7', 'A'], ['A8', 'A'], ['A9', 'A']], [['A$', 'A'], ['A-', 'A'], ['A:', 'A'], ['A/', 'A'], ['A.', 'A']], [['A+', 'A'], ['A0', 'B'], ['A1', 'B'], ['A2', 'B'], ['A3', 'B'], ['A4', 'B']], [['A5', 'B'], ['A6', 'B'], ['A7', 'B'], ['A8', 'B'], ['A9', 'B'], ['A$', 'B'], ['A-', 'B']], [['A:', 'B'], ['A/', 'B'], ['A.', 'B'], ['A+', 'B'], ['A0', 'C'], ['A1', 'C'], ['A2', 'C'], ['A3', 'C']], [['A4', 'C'], ['A5', 'C'], ['A6', 'C'], ['A7', 'C'], ['A8', 'C'], ['A9', 'C'], ['A$', 'C'], ['A-', 'C'], ['A:', 'C']], [['A/', 'C'], ['A.', 'C'], ['A+', 'C'], ['A0', 'D'], ['A1', 'D'], ['A2', 'D'], ['A3', 'D'], ['A4', 'D'], ['A5', 'D'], ['A6', 'D']], [['A7', 'D'], ['A8', 'D'], ['A9', 'D'], ['A$', 'D'], ['A-', 'D'], ['A:', 'D'], ['A/', 'D'], ['A.', 'D'], ['A+', 'D'], ['B0', 'A'], ['B1', 'A']], [['B2', 'A'], ['B3', 'A'], ['B4', 'A'], ['B5', 'A'], ['B6', 'A'], ['B7', 'A'], ['B8', 'A'], ['B9', 'A'], ['B$', 'A'], ['B-', 'A'], ['B:', 'A'], ['B/', 'A']], [['B.', 'A'], ['B+', 'A'], ['B0', 'B'], ['B1', 'B'], ['B2', 'B'], ['B3', 'B'], ['B4', 'B'], ['B5', 'B'], ['B6', 'B'], ['B7', 'B'], ['B8', 'B'], ['B9', 'B'], ['B$', 'B']], [['B-', 'B'], ['B:', 'B'], ['B/', 'B'], ['B.', 'B'], ['B+', 'B'], ['B0', 'C'], ['B1', 'C'], ['B2', 'C'], ['B3', 'C'], ['B4', 'C'], ['B5', 'C'], ['B6', 'C'], ['B7', 'C'], ['B8', 'C']], [['B9', 'C'], ['B$', 'C'], ['B-', 'C'], ['B:', 'C'], ['B/', 'C'], ['B.', 'C'], ['B+', 'C'], ['B0', 'D'], ['B1', 'D'], ['B2', 'D'], ['B3', 'D'], ['B4', 'D'], ['B5', 'D'], ['B6', 'D'], ['B7', 'D']], [['B8', 'D'], ['B9', 'D'], ['B$', 'D'], ['B-', 'D'], ['B:', 'D'], ['B/', 'D'], ['B.', 'D'], ['B+', 'D'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A']], [['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'A'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B']], [['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'B'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C']], [['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'C'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D'], ['C', 'D']], [['C', 'D'], ['C', 'D'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'A'], ['D', 'B'], ['D', 'B']]];
-      this.kitBarcodeEncodingCut = 15;
-      this.isProductBarcodesPreviewEnabled = false;
-      this.isKitBarcodePreviewEnabled = false;
+
   }
 
 
   // GENERATE
     generate() {
-      console.log("generate()");
       this.generateParameters();
       this.generateProductBarcodes();
       this.generateKitBarcode();
     }
     generateParameters() {
-      console.log("generateParameters()");
       if (this.formSta001.i.parameters) {
         for (var i in this.formSta001.i.parameters) {
           var parameter = this.formSta001.i.parameters[i.toString()];
@@ -83,7 +69,6 @@ class Sta001Component {
       }
     }
     parametersCountChange() {
-      console.log("parametersCountChange()");
       var fromLength = this.formSta001.o.parameters.length;
       var toLength = this.formSta001.i.parametersCount;
       if (fromLength < toLength) {
@@ -98,7 +83,6 @@ class Sta001Component {
     }
 
     generateProductBarcodes() {
-      console.log("generateProductBarcodes()");
       if (this.formSta001.i.kitLot) {
         var kitLot = this.formSta001.i.kitLot;
         for (var i in this.formSta001.i.productCodes) {
@@ -118,7 +102,6 @@ class Sta001Component {
       }
     }
     generateProductBarcodesPreview() {
-      console.log("generateProductBarcodesPreview()");
       if (document.body.getElementsByClassName('list-unstyled productBarcodesPreview col-lg-12')[0]) {
         var img = document.body.getElementsByClassName('list-unstyled productBarcodesPreview col-lg-12')[0];
         while (img.firstChild) {
@@ -137,7 +120,6 @@ class Sta001Component {
       };
     }
     productsCountChange() {
-      console.log("productsCountChange()");
       var fromLength = this.formSta001.o.productBarcodes.length;
       var toLength = this.formSta001.i.productsCount;
       if (fromLength < toLength) {
@@ -152,7 +134,6 @@ class Sta001Component {
     }
 
     generateKitBarcode() {
-      console.log("generateKitBarcode()");
       var kit = "";
       if (this.formSta001.i.kitLot) {
         var kitLot = this.formSta001.i.kitLot;
@@ -189,7 +170,6 @@ class Sta001Component {
       }
     }
     generateKitBarcodeCS(kit) {
-      console.log("generateKitBarcodeCS(kit)");
       var I = new String(kit);
       var chk = I.charCodeAt(0).toString(16).toUpperCase(); //hex
       for (var i = 1; i < I.length; i++) {
@@ -204,7 +184,6 @@ class Sta001Component {
       return CS;
     }
     generateKitBarcodeLines() {
-      console.log("generateKitBarcodeLines()");
       this.formSta001.o.kitBarcodeLines=[];
       var barcode = this.formSta001.o.kitBarcode;
       var search = new RegExp(".{1,"+this.kitBarcodeEncodingCut+"}","g")
@@ -218,7 +197,6 @@ class Sta001Component {
       }
     }
     generateKitBarcodePreview() {
-      console.log("generateKitBarcodePreview()");
       if ( document.body.getElementsByClassName('kitBarcodePreview')[0] ) {
         var O = document.body.getElementsByClassName('kitBarcodePreview')[0];
         while (O.firstChild) {
@@ -238,7 +216,6 @@ class Sta001Component {
     }
 
     createSta001() {
-      console.log("createSta001()");
       console.log(this.formSta001);
       this.$http.post('/api/sta001s', this.formSta001);
       this.generateVisible = false;
@@ -246,7 +223,6 @@ class Sta001Component {
       this.manageVisible = true;
     }
     updateSta001() {
-      console.log("updateSta001()");
       this.$http.put('/api/sta001s/' + this.updateId, this.formSta001);
       this.updateId = "";
       this.generateVisible = false;
@@ -254,7 +230,6 @@ class Sta001Component {
       this.manageVisible = true;
     }
     clearSta001() {
-      console.log("clearSta001()");
       this.formSta001 = {
         i: {
           parameters: [],
@@ -274,33 +249,36 @@ class Sta001Component {
 
   // MANAGE
     deleteSta001(sta001) {
-      console.log("deleteSta001(sta001)");
       this.$http.delete('/api/sta001s/' + sta001._id);
     }
     invertSta001Online(sta001) {
-      console.log("invertSta001Online(sta001)");
       var inv = !sta001.online;
       this.$http.patch('/api/sta001s/' + sta001._id, { online: inv});
     }
     copySta001(sta001) {
-      console.log("copySta001(sta001)");
       this.formSta001.i = sta001.i;
       this.generate();
       this.generateVisible = true;
     }
     editSta001(sta001) {
-      console.log("editSta001(sta001)");
-      console.log(sta001._id);
       this.updateId = sta001._id;
       this.formSta001 = sta001;
       // delete this.formSta001.kitBarcode;
       this.isModeUpdate = true;
       this.generateVisible = true;
     }
+    exportSta001(sta001) {
+      this.formSta001 = sta001;
+      this.exportVisible = true;
+      this.manageVisible = false;
+      this.generate();
+      // delete this.formSta001.kitBarcode;
+      // this.isModeUpdate = true;
+      // this.generateVisible = true;
+    }
 
   // IMPORT
     onSuccess(response) {
-      console.log("onSuccess(response)");
       for (var i = 0; i < response.data.length; i++) {
         this.decodes.push(response.data[i]);
       }
@@ -308,7 +286,6 @@ class Sta001Component {
     }
 
     importLoad(index) {
-      console.log(this.decodes[index]);
       this.formSta001.i = this.decodes[index].i;
       this.generate();
       this.generateVisible = true;

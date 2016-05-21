@@ -2,16 +2,6 @@
 
 .container
   .row
-    .col-lg-12(
-      style = "background-color:DarkGoldenRod"
-      ng-show = "$ctrl.isModeDebug")
-      h1.page-header DEBUG
-      .container
-        div.col-lg-12
-          pre {{$ctrl.decodes | json}}
-
-.container
-  .row
     .col-lg-12
       .col-lg-2
         button.btn.btn-lg.btn-block(
@@ -21,10 +11,10 @@
           ng-click = "$ctrl.generateVisible = !$ctrl.generateVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!$ctrl.generateVisible") GENERATE
+            ng-show = "!$ctrl.generateVisible") Generate
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "$ctrl.generateVisible") GENERATE
+            ng-show = "$ctrl.generateVisible") Generate
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
@@ -33,10 +23,10 @@
           ng-click = "$ctrl.manageVisible = !$ctrl.manageVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!$ctrl.manageVisible") MANAGE
+            ng-show = "!$ctrl.manageVisible") Manage
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "$ctrl.manageVisible") MANAGE
+            ng-show = "$ctrl.manageVisible") Manage
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
@@ -45,10 +35,10 @@
           ng-click = "$ctrl.importVisible = !$ctrl.importVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!$ctrl.importVisible") IMPORT
+            ng-show = "!$ctrl.importVisible") Import
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "$ctrl.importVisible") IMPORT
+            ng-show = "$ctrl.importVisible") Import
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
@@ -57,305 +47,239 @@
           ng-click = "$ctrl.exportVisible = !$ctrl.exportVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!$ctrl.exportVisible") EXPORT
+            ng-show = "!$ctrl.exportVisible") Export
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "$ctrl.exportVisible") EXPORT
+            ng-show = "$ctrl.exportVisible") Export
       .col-lg-2
         button.btn.btn-lg.btn-block(
           type = "button"
-          aria-label = "deployVisible"
-          ng-class = "{'btn-primary': $ctrl.deployVisible, 'btn-default': !$ctrl.deployVisible}"
-          ng-click = "$ctrl.deployVisible = !$ctrl.deployVisible")
+          aria-label = "detailVisible"
+          ng-class = "{'btn-primary': $ctrl.detailVisible, 'btn-default': !$ctrl.detailVisible}"
+          ng-click = "$ctrl.detailVisible = !$ctrl.detailVisible")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "!$ctrl.deployVisible") DEPLOY
+            ng-show = "!$ctrl.detailVisible") Detail
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
-            ng-show = "$ctrl.deployVisible") DEPLOY
-      .col-lg-2
-        button.btn.btn-lg.btn-block(
-          type = "button"
-          aria-label = "configureVisible"
-          ng-class = "{'btn-primary': $ctrl.configureVisible, 'btn-default': !$ctrl.configureVisible}"
-          ng-click = "$ctrl.configureVisible = !$ctrl.configureVisible")
-          span.glyphicon.glyphicon-zoom-in(
-            aria-hidden = "true"
-            ng-show = "!$ctrl.configureVisible") CONFIGURE
-          span.glyphicon.glyphicon-zoom-in(
-            aria-hidden = "true"
-            ng-show = "$ctrl.configureVisible") CONFIGURE
-
-.container
-  .row
-    .col-lg-12(
-      ng-show = "$ctrl.importVisible")
-      h1.page-header IMPORT
-      .container.borded
-        div.col-lg-12
-          div(style = "background-color:red")
-            h2 1 - upload
-            div.btn.btn-primary.btn-upload(
-              upload-button
-              url="/api/sta001s/upload/"
-              multiple="allowMultiple"
-              on-success="$ctrl.onSuccess(response)") Fileupload
-          div(
-            ng-show = "$ctrl.loaderVisible"
-            style = "background-color:green")
-            h2 2 - load
-            div
-              div.col-lg-12(
-                ng-repeat = "decode in $ctrl.decodes")
-                div.col-lg-6
-                  pre {{decode | json}}
-                div.col-lg-6
-                  btton.btn.btn-primary(
-                    ng-click = "$ctrl.importLoad($index)")
-                    | load
-                  //- button.btn.btn-warning(
-                  //-   type = "reset"
-                  //-   ng-click = "") cancel
-
-.container
-  .row
-    .col-lg-12(
-      ng-show = "$ctrl.manageVisible")
-      h1.page-header MANAGE
-      .container.borded
-        div.col-lg-12
+            ng-show = "$ctrl.detailVisible") Detail
+    .col-lg-12.borded(ng-show = "$ctrl.generateVisible")
+      h1.page-header Generate
+      div(ng-form = "formSta001")
+        div
           div.col-lg-12
-            form
-              div.form-group
-                div.input-group
-                  div.input-group-addon
-                    i.fa.fa-search
-                  input(type="text" class="form-control" placeholder="searchKit" ng-model="filters.searchKit")
-            table.table.table-bordered.table-striped
-              thead
-                tr
-                  th(
-                    style = "background-color:DarkGoldenRod"
-                    ng-show = "$ctrl.isModeDebug")
-                    a(href="#" ng-click="sortType = '_id'; sortReverse = !sortReverse")
-                      | _id
-                      span.fa.fa-caret-down(ng-show="sortType == '_id' && !sortReverse")
-                      span.fa.fa-caret-up(ng-show="sortType == '_id' && sortReverse")
-                  th
-                    a(href="#" ng-click="sortType = 'i.kitCode'; sortReverse = !sortReverse")
-                      | kit code
-                      span.fa.fa-caret-down(ng-show="sortType == 'i.kitCode' && !sortReverse")
-                      span.fa.fa-caret-up(ng-show="sortType == 'i.kitCode' && sortReverse")
-                  th
-                    a(href="#" ng-click="sortType = 'i.kitLot'; sortReverse = !sortReverse")
-                      | kit lot
-                      span.fa.fa-caret-down(ng-show="sortType == 'i.kitLot' && !sortReverse")
-                      span.fa.fa-caret-up(ng-show="sortType == 'i.kitLot' && sortReverse")
-                  th
-                    a(href="#" ng-click="sortType = 'i.kitExpiry'; sortReverse = !sortReverse")
-                      | kit expiry
-                      span.fa.fa-caret-down(ng-show="sortType == 'i.kitExpiry' && !sortReverse")
-                      span.fa.fa-caret-up(ng-show="sortType == 'i.kitExpiry' && sortReverse")
-                  th
-                    a(href="#" ng-click="sortType = 'o.kitBarcode'; sortReverse = !sortReverse")
-                      | kit barcode
-                      span.fa.fa-caret-down(ng-show="sortType == 'o.kitBarcode' && !sortReverse")
-                      span.fa.fa-caret-up(ng-show="sortType == 'o.kitBarcode' && sortReverse")
-                  th actions
-              tbody
-                tr(ng-repeat = "sta001 in $ctrl.sta001s | orderBy:sortType:sortReverse | filter:filters.searchKit")
-                  td(
-                    style = "background-color:DarkGoldenRod"
-                    ng-show = "$ctrl.isModeDebug") {{sta001._id}}
-                  td {{sta001.i.kitCode}}
-                  td {{sta001.i.kitLot}}
-                  td {{sta001.i.kitExpiry}}
-                  td {{sta001.o.kitBarcode}}
-                  td
-                    button.btn.btn-default(
-                      ng-click = "$ctrl.deleteSta001(sta001)")
-                      span.glyphicon.glyphicon-trash(
-                        aria-hidden = "true")  delete
-                    button.btn.btn-default(
-                      ng-show = "!sta001.online"
-                      ng-click = "$ctrl.invertSta001Online(sta001)")
-                      span.glyphicon.glyphicon-cloud-upload(
-                        aria-hidden = "true")  set online
-                    button.btn.btn-primary(
-                      ng-show = "sta001.online"
-                      ng-click = "$ctrl.invertSta001Online(sta001)")
-                      span.glyphicon.glyphicon-cloud-download(
-                        aria-hidden = "true")  set offline
-                    button.btn.btn-default(
-                      ng-click = "$ctrl.copySta001(sta001)")
-                      span.glyphicon.glyphicon-duplicate(
-                        aria-hidden = "true")  copy
-                    button.btn.btn-default(
-                      ng-click = "$ctrl.editSta001(sta001)")
-                      span.glyphicon.glyphicon-pencil(
-                        aria-hidden = "true")  edit
-
-.container
-  .row
-    .col-lg-12(
-      ng-show = "$ctrl.generateVisible")
-      h1.page-header GENERATE
-      .container.borded
-        div.col-lg-12
-          div.col-lg-12(
-            style = "background-color:DarkGoldenRod"
-            ng-show = "$ctrl.isModeDebug")
-            ul.list-unstyled.col-lg-3
-              li
-                label parameters
-              li
-                pre {{$ctrl.formSta001.o.parameters | json}}
-            ul.list-unstyled.col-lg-3
-              li
-                label productBarcodes
-              li
-                pre {{$ctrl.formSta001.o.productBarcodes | json}}
-            ul.list-unstyled.col-lg-3
-              li
-                label kitBarcode
-              li
-                pre {{$ctrl.formSta001.o.kitBarcode | json}}
-            ul.list-unstyled.col-lg-3
-              li
-                label kitBarcodeLines
-              li
-                pre {{$ctrl.formSta001.o.kitBarcodeLines | json}}
-          div.col-lg-12(
-            style = "background-color:DarkGoldenRod"
-            ng-show = "$ctrl.isModeDebug")
             ul.list-unstyled
               li
-                label kit structure
+                label kit barcode
               li
-                pre {{$ctrl.formSta001 | json}}
-          div.col-lg-12(
-            ng-form = "formSta001")
-            div.col-lg-12
-              div(ng-class = "{'col-lg-9': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-11': !$ctrl.isKitBarcodePreviewEnabled}")
-                div.col-lg-12
-                  ul.list-unstyled
-                    li
-                      label kit barcode
-                    li
-                      pre {{$ctrl.formSta001.o.kitBarcode | json}}
-                div.col-lg-12
-                  div.form-group.col-lg-4
-                    label kit code
-                    input.form-control(
-                      type = "text"
-                      id = "sta001InputKitCode"
-                      placeholder = "KitCode"
-                      ng-model = "$ctrl.formSta001.i.kitCode"
-                      ng-change = "$ctrl.generate()")
-                  div.form-group.col-lg-4
-                    label kit lot
-                    input.form-control(
-                      type = "text"
-                      id = "sta001InputLot"
-                      placeholder = "kitLot",
-                      ng-model = "$ctrl.formSta001.i.kitLot"
-                      ng-change = "$ctrl.generate()")
-                  div.form-group.col-lg-4
-                    label kit expiry
-                    input.form-control(
-                      type = "text",
-                      id = "sta001InputExpiry",
-                      placeholder = "kitExpiry",
-                      ng-model = "$ctrl.formSta001.i.kitExpiry",
-                      ng-change = "$ctrl.generate()")
-              div(ng-class = "{'col-lg-3': $ctrl.isKitBarcodePreviewEnabled, 'col-lg-1': !$ctrl.isKitBarcodePreviewEnabled}")
-                ul.list-unstyled
-                  li
-                    button.btn.btn-default(
-                      ng-show = "!$ctrl.isKitBarcodePreviewEnabled",
-                      ng-click = "$ctrl.isKitBarcodePreviewEnabled = true; $ctrl.generate();")
-                      | SHOW 
-                      span.glyphicon.glyphicon-barcode(
-                        aria-hidden = "true") 
-                    button.btn.btn-primary(
-                      ng-show = "$ctrl.isKitBarcodePreviewEnabled",
-                      ng-click = "$ctrl.isKitBarcodePreviewEnabled = false")
-                      | HIDE 
-                      span.glyphicon.glyphicon-barcode(
-                        aria-hidden = "true")
-                ul.list-unstyled.kitBarcodePreview.col-lg-12(
-                  style = "background-color: black")
-            div.col-lg-12
-              div(ng-class = "{'col-lg-9': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-11': !$ctrl.isProductBarcodesPreviewEnabled}")
-                div.form-group.col-lg-4
-                  label parameters count
-                  input.form-control(
-                    type = "number"
-                    id = "sta001InputParametersCount"
-                    ng-model = "$ctrl.formSta001.i.parametersCount"
-                    ng-change = "$ctrl.parametersCountChange()"
-                    min = "0")
-                  ul.list-unstyled
-                    li(ng-repeat="parameter in $ctrl.formSta001.o.parameters track by $index")
-                      label parameter ({{$index}})
-                      input.form-control(
-                        type = "text",
-                        id = "sta001InputParameter{{$index}}"
-                        placeholder = "Parameter{{$index}}"
-                        ng-model = "$ctrl.formSta001.i.parameters[$index]"
-                        ng-change = "$ctrl.generate()")
-                div.form-group.col-lg-8
-                  label products count
-                  input.form-control(
-                    type = "number"
-                    id = "sta001InputProductsCount"
-                    ng-model = "$ctrl.formSta001.i.productsCount"
-                    ng-change = "$ctrl.productsCountChange()"
-                    min = "1"
-                    max = "9")
-                  ul.list-unstyled
-                    li(ng-repeat = "productCode in $ctrl.formSta001.o.productBarcodes track by $index")
-                      div.form-group.col-lg-6
-                        label product code ({{$index}})
-                        input.form-control(
-                          type = "text",
-                          id = "sta001InputProductCode{{$index}}"
-                          placeholder = "ProductCode{{$index}}"
-                          ng-model = "$ctrl.formSta001.i.productCodes[$index]"
-                          ng-change = "$ctrl.generate()")
-                      div.form-group.col-lg-6
-                        label product barcode ({{$index}})
-                        pre {{$ctrl.formSta001.o.productBarcodes[$index] | json}}
-              div(ng-class="{'col-lg-3': $ctrl.isProductBarcodesPreviewEnabled, 'col-lg-1': !$ctrl.isProductBarcodesPreviewEnabled}")
-                ul.list-unstyled
-                  li
-                    button.btn.btn-default(
-                      ng-show = "!$ctrl.isProductBarcodesPreviewEnabled",
-                      ng-click = "$ctrl.isProductBarcodesPreviewEnabled = true; $ctrl.generate();")
-                      | SHOW 
-                      span.glyphicon.glyphicon-barcode(
-                        aria-hidden = "true")
-                    button.btn.btn-primary(
-                      ng-show = "$ctrl.isProductBarcodesPreviewEnabled",
-                      ng-click = "$ctrl.isProductBarcodesPreviewEnabled = false")
-                      | HIDE 
-                      span.glyphicon.glyphicon-barcode(
-                        aria-hidden = "true")
-                ul.list-unstyled.productBarcodesPreview.col-lg-12(
-                  style = "background-color: black")
-            div.col-lg-12
-              button.btn.btn-primary(
-                type = "submit"
-                ng-show = "!$ctrl.isModeUpdate"
-                ng-click = "$ctrl.createSta001()") create
-              //- button.btn.btn-warning(
-              //-   type = "reset"
-              //-   ng-show = "!$ctrl.isModeUpdate"
-              //-   ng-click = "$ctrl.clearSta001()") clear
-              button.btn.btn-primary(
-                type = "submit"
-                ng-show = "$ctrl.isModeUpdate"
-                ng-click = "$ctrl.updateSta001()") update
-              button.btn.btn-warning(
-                type = "reset"
-                ng-click = "$ctrl.clearSta001(); $ctrl.generateVisible = false") cancel
+                pre {{$ctrl.formSta001.o.kitBarcode | json}}
+          div
+            div.form-group.col-lg-4
+              label kit code
+              input.form-control(
+                type = "text"
+                id = "sta001InputKitCode"
+                placeholder = "KitCode"
+                ng-model = "$ctrl.formSta001.i.kitCode"
+                ng-change = "$ctrl.generate()")
+            div.form-group.col-lg-4
+              label kit lot
+              input.form-control(
+                type = "text"
+                id = "sta001InputLot"
+                placeholder = "kitLot",
+                ng-model = "$ctrl.formSta001.i.kitLot"
+                ng-change = "$ctrl.generate()")
+            div.form-group.col-lg-4
+              label kit expiry
+              input.form-control(
+                type = "text",
+                id = "sta001InputExpiry",
+                placeholder = "kitExpiry",
+                ng-model = "$ctrl.formSta001.i.kitExpiry",
+                ng-change = "$ctrl.generate()")
+        div
+          div.form-group.col-lg-6
+            label parameters count
+            input.form-control(
+              type = "number"
+              id = "sta001InputParametersCount"
+              ng-model = "$ctrl.formSta001.i.parametersCount"
+              ng-change = "$ctrl.parametersCountChange()"
+              min = "0")
+            ul.list-unstyled
+              li(ng-repeat="parameter in $ctrl.formSta001.o.parameters track by $index")
+                label parameter ({{$index}})
+                input.form-control(
+                  type = "text",
+                  id = "sta001InputParameter{{$index}}"
+                  placeholder = "Parameter{{$index}}"
+                  ng-model = "$ctrl.formSta001.i.parameters[$index]"
+                  ng-change = "$ctrl.generate()")
+          div.form-group.col-lg-6
+            label products count
+            input.form-control(
+              type = "number"
+              id = "sta001InputProductsCount"
+              ng-model = "$ctrl.formSta001.i.productsCount"
+              ng-change = "$ctrl.productsCountChange()"
+              min = "1"
+              max = "9")
+            ul.list-unstyled
+              li(ng-repeat = "productCode in $ctrl.formSta001.o.productBarcodes track by $index")
+                label product code ({{$index}})
+                input.form-control(
+                  type = "text",
+                  id = "sta001InputProductCode{{$index}}"
+                  placeholder = "ProductCode{{$index}}"
+                  ng-model = "$ctrl.formSta001.i.productCodes[$index]"
+                  ng-change = "$ctrl.generate()")
+        div.col-lg-12
+          button.btn.btn-primary(
+            type = "submit"
+            ng-show = "!$ctrl.isModeUpdate"
+            ng-click = "$ctrl.createSta001()") create
+          button.btn.btn-primary(
+            type = "submit"
+            ng-show = "$ctrl.isModeUpdate"
+            ng-click = "$ctrl.updateSta001()") update
+          button.btn.btn-warning(
+            type = "reset"
+            ng-click = "$ctrl.clearSta001(); $ctrl.generateVisible = false") cancel
+    .col-lg-12.borded(ng-show = "$ctrl.manageVisible")
+      h1.page-header Manage
+      div
+        div.col-lg-12
+          form
+            div.form-group
+              div.input-group
+                div.input-group-addon
+                  i.fa.fa-search
+                input(type="text" class="form-control" placeholder="searchKit" ng-model="filters.searchKit")
+          table.table.table-bordered.table-striped
+            thead
+              tr
+                th(ng-show = "$ctrl.detailVisible")
+                  a(href="#" ng-click="sortType = '_id'; sortReverse = !sortReverse")
+                    | _id
+                    span.fa.fa-caret-down(ng-show="sortType == '_id' && !sortReverse")
+                    span.fa.fa-caret-up(ng-show="sortType == '_id' && sortReverse")
+                th
+                  a(href="#" ng-click="sortType = 'i.kitCode'; sortReverse = !sortReverse")
+                    | kit code
+                    span.fa.fa-caret-down(ng-show="sortType == 'i.kitCode' && !sortReverse")
+                    span.fa.fa-caret-up(ng-show="sortType == 'i.kitCode' && sortReverse")
+                th
+                  a(href="#" ng-click="sortType = 'i.kitLot'; sortReverse = !sortReverse")
+                    | kit lot
+                    span.fa.fa-caret-down(ng-show="sortType == 'i.kitLot' && !sortReverse")
+                    span.fa.fa-caret-up(ng-show="sortType == 'i.kitLot' && sortReverse")
+                th
+                  a(href="#" ng-click="sortType = 'i.kitExpiry'; sortReverse = !sortReverse")
+                    | kit expiry
+                    span.fa.fa-caret-down(ng-show="sortType == 'i.kitExpiry' && !sortReverse")
+                    span.fa.fa-caret-up(ng-show="sortType == 'i.kitExpiry' && sortReverse")
+                th
+                  a(href="#" ng-click="sortType = 'o.kitBarcode'; sortReverse = !sortReverse")
+                    | kit barcode
+                    span.fa.fa-caret-down(ng-show="sortType == 'o.kitBarcode' && !sortReverse")
+                    span.fa.fa-caret-up(ng-show="sortType == 'o.kitBarcode' && sortReverse")
+                th actions
+            tbody
+              tr(ng-repeat = "sta001 in $ctrl.sta001s | orderBy:sortType:sortReverse | filter:filters.searchKit")
+                td(ng-show = "$ctrl.detailVisible") {{sta001._id}}
+                td {{sta001.i.kitCode}}
+                td {{sta001.i.kitLot}}
+                td {{sta001.i.kitExpiry}}
+                td {{sta001.o.kitBarcode}}
+                td
+                  button.btn.btn-default(
+                    ng-click = "$ctrl.deleteSta001(sta001)")
+                    span.glyphicon.glyphicon-trash(
+                      aria-hidden = "true")  delete
+                  button.btn.btn-default(
+                    ng-show = "!sta001.online"
+                    ng-click = "$ctrl.invertSta001Online(sta001)")
+                    span.glyphicon.glyphicon-cloud-upload(
+                      aria-hidden = "true")  set online
+                  button.btn.btn-primary(
+                    ng-show = "sta001.online"
+                    ng-click = "$ctrl.invertSta001Online(sta001)")
+                    span.glyphicon.glyphicon-cloud-download(
+                      aria-hidden = "true")  set offline
+                  button.btn.btn-default(
+                    ng-click = "$ctrl.copySta001(sta001)")
+                    span.glyphicon.glyphicon-duplicate(
+                      aria-hidden = "true")  copy
+                  button.btn.btn-default(
+                    ng-click = "$ctrl.editSta001(sta001)")
+                    span.glyphicon.glyphicon-pencil(
+                      aria-hidden = "true")  edit
+                  button.btn.btn-default(
+                    ng-click = "$ctrl.exportSta001(sta001)")
+                    span.glyphicon.glyphicon-zoom-in(
+                      aria-hidden = "true")  export
+    .col-lg-12.borded(ng-show = "$ctrl.importVisible")
+      h1.page-header Import
+      div
+        div.col-lg-4
+          h2 1/ Upload
+          div.btn.btn-primary.btn-upload(upload-button
+            url="/api/sta001s/upload/"
+            multiple="allowMultiple"
+            on-success="$ctrl.onSuccess(response)") Fileupload
+        div.col-lg-8(ng-show = "$ctrl.decodes.length > 0")
+          h2 2/ Validate
+          div(ng-repeat = "decode in $ctrl.decodes")
+              div.col-lg-9
+                pre {{decode | json}}
+              div.col-lg-3
+                btton.btn.btn-primary(ng-click = "$ctrl.importLoad($index)")
+                  | load
+                button.btn.btn-warning(type = "reset"
+                  ng-click = "$ctrl.decodes.splice($index, 1)")
+                  | clear
+    .col-lg-12.borded(ng-show = "$ctrl.exportVisible")
+      h1.page-header Export
+      div
+        div.col-lg-8
+          h2 Kit barcodes
+          ul.list-unstyled.kitBarcodePreview.col-lg-12(
+            style = "background-color: black")
+        div.col-lg-4
+          h2 Products barcodes
+          ul.list-unstyled.productBarcodesPreview.col-lg-12(
+            style = "background-color: black")
+    .col-lg-12.borded(ng-show = "$ctrl.detailVisible")
+      h1.page-header Detail
+      div
+        ul.col-lg-3.list-unstyled
+          li
+            label parameters
+          li
+            pre {{$ctrl.formSta001.o.parameters | json}}
+        ul.col-lg-3.list-unstyled
+          li
+            label productBarcodes
+          li
+            pre {{$ctrl.formSta001.o.productBarcodes | json}}
+        ul.col-lg-3.list-unstyled
+          li
+            label kitBarcode
+          li
+            pre {{$ctrl.formSta001.o.kitBarcode | json}}
+        ul.col-lg-3.list-unstyled
+          li
+            label kitBarcodeLines
+          li
+            pre {{$ctrl.formSta001.o.kitBarcodeLines | json}}
+        ul.col-lg-12.list-unstyled
+          li
+            label formSta001
+          li
+            pre {{$ctrl.formSta001 | json}}
+        ul.col-lg-12.list-unstyled
+          li
+            label decodes
+          li
+            pre {{$ctrl.decodes | json}}
