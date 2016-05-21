@@ -37,3 +37,12 @@ hacks:
 Use glyphicon fullpack 
 http://glyphicons.com/ download should replace:
 https://github.com/twbs/bootstrap/tree/master/dist/fonts
+
+
+A Light Internet Ivd Manufacturer Service Running on http://aliims.io
+
+With functional main on http://aliims.io
+
+With functional demo on http://aliims.io/sta001 [x] Forms [ ] Upload [ ] Download [ ] TableSort [ ] Tests [ ] Services
+
+Deploy: grunt cd dist git add --all git push origin master ssh 4879074@git.dc0.gpaas.net 'deploy default.git'
