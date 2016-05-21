@@ -8,6 +8,7 @@
       h1.page-header DEBUG
       .container
         div.col-lg-12
+          pre {{$ctrl.decodes | json}}
 
 .container
   .row
@@ -92,14 +93,29 @@
       h1.page-header IMPORT
       .container.borded
         div.col-lg-12
-          div.btn.btn-primary.btn-upload(
-            upload-button
-            url="/api/sta001s/upload/"
-            multiple="allowMultiple"
-            on-success="$ctrl.onSuccess(response)") Fileupload
-          div
-            | response:
-            pre {{$ctrl.response | json}}
+          div(style = "background-color:red")
+            h2 1 - upload
+            div.btn.btn-primary.btn-upload(
+              upload-button
+              url="/api/sta001s/upload/"
+              multiple="allowMultiple"
+              on-success="$ctrl.onSuccess(response)") Fileupload
+          div(
+            ng-show = "$ctrl.loaderVisible"
+            style = "background-color:green")
+            h2 2 - load
+            div
+              div.col-lg-12(
+                ng-repeat = "decode in $ctrl.decodes")
+                div.col-lg-6
+                  pre {{decode | json}}
+                div.col-lg-6
+                  btton.btn.btn-primary(
+                    ng-click = "$ctrl.importLoad($index)")
+                    | load
+                  //- button.btn.btn-warning(
+                  //-   type = "reset"
+                  //-   ng-click = "") cancel
 
 .container
   .row

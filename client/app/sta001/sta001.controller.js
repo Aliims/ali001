@@ -26,14 +26,15 @@ class Sta001Component {
       this.deployVisible = false;
       this.configureVisible = false;
 
-      this.isModeDebug = false;
+      this.isModeDebug = true;
 
       this.isModeUpdate = false;
       this.updateId = "";
 
 
     // IMPORT
-      this.response = '...';
+      this.decodes = [];
+      this.loaderVisible = false;
 
     // MANAGE
       $scope.sortType     = '_id'; // set the default sort type
@@ -300,9 +301,23 @@ class Sta001Component {
   // IMPORT
     onSuccess(response) {
       console.log("onSuccess(response)");
-      // this.response = response.data.kitBarcode;
-      this.response = response.data;
-      console.log(response);
+      for (var i = 0; i < response.data.length; i++) {
+        this.decodes.push(response.data[i]);
+      }
+      this.loaderVisible = true;
+    }
+
+    importLoad(index) {
+      console.log(this.decodes[index]);
+      this.formSta001.i = this.decodes[index].i;
+      this.generate();
+      this.generateVisible = true;
+      this.importVisible = false;
+      this.decodes.splice(index, 1);
+    }
+
+    importClear() {
+
     }
 
   // HELPERS
