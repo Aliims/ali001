@@ -32,7 +32,7 @@ class MainController {
 
     if (document.body.getElementsByClassName('triangle-bg')[0]) {
       var element = document.body.getElementsByClassName('triangle-bg')[0];
-      var pattern_height = element.clientHeight*1.4;
+      var pattern_height = element.clientHeight*1.5;
       var pattern_width = element.clientWidth;
       // var pattern_x_color = 'Blues';
       // var pattern_x_color = 'Greys';
