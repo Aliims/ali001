@@ -32,11 +32,12 @@ class MainController {
 
     if (document.body.getElementsByClassName('triangle-bg')[0]) {
       var element = document.body.getElementsByClassName('triangle-bg')[0];
-      var pattern_height = element.clientHeight;
+      var pattern_height = element.clientHeight*1.2;
       var pattern_width = element.clientWidth;
-      var pattern_x_color = 'Blues';
+      // var pattern_x_color = 'Blues';
       // var pattern_x_color = 'Greys';
-      // var pattern_x_color = 'Purples';
+      // var pattern_x_color = 'Reds';
+      var pattern_x_color = 'Purples';
       // var pattern_x_color = 'PuRd';
       var pattern_cell_size = Math.floor(Math.random() * 20) + 30;
       var pattern = Trianglify({

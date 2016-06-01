@@ -39,10 +39,32 @@ http://glyphicons.com/ download should replace:
 https://github.com/twbs/bootstrap/tree/master/dist/fonts
 
 
-A Light Internet Ivd Manufacturer Service Running on http://aliims.io
+A
+Light
+Identification
+Ivd
+Manufacturer
+Service
 
-With functional main on http://aliims.io
+is deployed and runs on http://aliims.io
 
-With functional demo on http://aliims.io/sta001 [x] Forms [ ] Upload [ ] Download [ ] TableSort [ ] Tests [ ] Services
+Dev repo: https://github.com/Aliims/ali001.git
+Prod repo: ssh+git://6478633@git.dc0.gpaas.net/default.git
 
-Deploy: grunt cd dist git add --all git push origin master ssh 4879074@git.dc0.gpaas.net 'deploy default.git'
+Deployment with
+grunt build
+cp dist/* ../default
+cd ../default
+(git init
+(git remote add origin ssh+git://6478633@git.dc0.gpaas.net/default.git
+*put packages.json engine content in .nvmrc
+git add --all
+git commit -m "..."
+git push origin master
+ssh 6478633@git.dc0.gpaas.net 'deploy default.git'
+ssh 6478633@console.dc0.gpaas.net
+
+https://wiki.gandi.net/fr/tutorials/simple/nodejs/parse-server
+http://wiki.gandi.net/fr/simple/instance/nodejs
+https://wiki.gandi.net/fr/simple/git
+https://www.gandi.net/admin/hosting/paas/management
