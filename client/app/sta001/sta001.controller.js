@@ -97,11 +97,12 @@ class Sta001Component {
           }
         }
       }
-      if (this.isProductBarcodesPreviewEnabled) {
+      // if (this.isProductBarcodesPreviewEnabled) {
         this.generateProductBarcodesPreview();
-      }
+      // }
     }
     generateProductBarcodesPreview() {
+      console.log("generateProductBarcodesPreview()");
       if (document.body.getElementsByClassName('list-unstyled productBarcodesPreview col-lg-12')[0]) {
         var img = document.body.getElementsByClassName('list-unstyled productBarcodesPreview col-lg-12')[0];
         while (img.firstChild) {
@@ -165,9 +166,9 @@ class Sta001Component {
       kit += CS;
       this.formSta001.o.kitBarcode = kit;
       this.generateKitBarcodeLines();
-      if (this.isKitBarcodePreviewEnabled) {
+      // if (this.isKitBarcodePreviewEnabled) {
         this.generateKitBarcodePreview();
-      }
+      // }
     }
     generateKitBarcodeCS(kit) {
       var I = new String(kit);
@@ -197,6 +198,7 @@ class Sta001Component {
       }
     }
     generateKitBarcodePreview() {
+      console.log("generateKitBarcodePreview()");
       if ( document.body.getElementsByClassName('kitBarcodePreview')[0] ) {
         var O = document.body.getElementsByClassName('kitBarcodePreview')[0];
         while (O.firstChild) {
@@ -242,8 +244,8 @@ class Sta001Component {
           kitBarcodeLines: []
         }
       };
-      this.isProductBarcodesPreviewEnabled = false;
-      this.isKitBarcodePreviewEnabled = false;
+      // this.isProductBarcodesPreviewEnabled = false;
+      // this.isKitBarcodePreviewEnabled = false;
       this.isModeUpdate = false;
     }
 

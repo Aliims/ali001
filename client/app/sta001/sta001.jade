@@ -44,7 +44,7 @@
           type = "button"
           aria-label = "exportVisible"
           ng-class = "{'btn-primary': $ctrl.exportVisible, 'btn-default': !$ctrl.exportVisible}"
-          ng-click = "$ctrl.exportVisible = !$ctrl.exportVisible")
+          ng-click = "$ctrl.exportVisible = !$ctrl.exportVisible; $ctrl.generate();")
           span.glyphicon.glyphicon-zoom-in(
             aria-hidden = "true"
             ng-show = "!$ctrl.exportVisible") Export
@@ -100,23 +100,6 @@
                 ng-change = "$ctrl.generate()")
         div
           div.form-group.col-lg-6
-            label parameters count
-            input.form-control(
-              type = "number"
-              id = "sta001InputParametersCount"
-              ng-model = "$ctrl.formSta001.i.parametersCount"
-              ng-change = "$ctrl.parametersCountChange()"
-              min = "0")
-            ul.list-unstyled
-              li(ng-repeat="parameter in $ctrl.formSta001.o.parameters track by $index")
-                label parameter ({{$index}})
-                input.form-control(
-                  type = "text",
-                  id = "sta001InputParameter{{$index}}"
-                  placeholder = "Parameter{{$index}}"
-                  ng-model = "$ctrl.formSta001.i.parameters[$index]"
-                  ng-change = "$ctrl.generate()")
-          div.form-group.col-lg-6
             label products count
             input.form-control(
               type = "number"
@@ -133,6 +116,23 @@
                   id = "sta001InputProductCode{{$index}}"
                   placeholder = "ProductCode{{$index}}"
                   ng-model = "$ctrl.formSta001.i.productCodes[$index]"
+                  ng-change = "$ctrl.generate()")
+          div.form-group.col-lg-6
+            label parameters count
+            input.form-control(
+              type = "number"
+              id = "sta001InputParametersCount"
+              ng-model = "$ctrl.formSta001.i.parametersCount"
+              ng-change = "$ctrl.parametersCountChange()"
+              min = "0")
+            ul.list-unstyled
+              li(ng-repeat="parameter in $ctrl.formSta001.o.parameters track by $index")
+                label parameter ({{$index}})
+                input.form-control(
+                  type = "text",
+                  id = "sta001InputParameter{{$index}}"
+                  placeholder = "Parameter{{$index}}"
+                  ng-model = "$ctrl.formSta001.i.parameters[$index]"
                   ng-change = "$ctrl.generate()")
         div.col-lg-12
           button.btn.btn-primary(

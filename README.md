@@ -53,7 +53,7 @@ Prod repo: ssh+git://6478633@git.dc0.gpaas.net/default.git
 
 Deployment with
 grunt build
-cp dist/* ../default
+rm cp dist/* ../default
 cd ../default
 (git init
 (git remote add origin ssh+git://6478633@git.dc0.gpaas.net/default.git
